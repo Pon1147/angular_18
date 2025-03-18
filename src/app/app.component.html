@@ -1,10 +1,60 @@
-<h1>Day 2: EXPLORE ANGULAR APP</h1>
+<h1>Day 3: Angular Data Binding</h1>
 
-<!-- ở bài này sẽ học cách khởi tạo 1 component mới
- câu lệnh khởi tạo
- 1. Bật new terminal
- 2. Di chuyển đến folder Components
- 3. dùng câu lệnh ng generate component <tên-component>
-  hoặc dùng câu lệnh rút gọn ng g c <tên-component> -->
+<!-- Ở bài này sẽ học 4 dạng data binding
+ 1. INTERPOLATION
+ 2. PROPERTY BINDING
+ 3. EVENT BINDING
+ 4. TWO-WAY BINDING
+ -->
 
-<app-hello></app-hello>
+<h2>1. INTERPOLATION </h2>
+
+<!-- INTERPOLATION  ({{ }})-->
+<!-- Là cách chèn giá trị từ component vào template.
+Dữ liệu chảy một chiều: từ component sang view (TS → HTML).
+Ví dụ: <p>Tên: {{ userName }}</p>
+userName là biến trong component, giá trị của nó sẽ hiển thị trong thẻ <p>.
+Dùng để hiển thị dữ liệu đơn giản như text. -->
+
+<p>Bên dưới là ví dụ về INTERPOLATION</p>
+
+<p>Hello, my name is {{user.name}}</p>
+
+<p>I am {{user.age}} years old</p>
+
+<p>My favorite color is {{user.color}}</p>
+
+<h2>2. PROPERTY BINDING</h2>
+
+<!-- Property Binding ([ ]) -->
+<!-- Gắn giá trị từ component vào thuộc tính (property) của HTML element.
+Cũng là một chiều: từ component sang view (TS → HTML).
+Ví dụ: <img [src]="imageUrl">
+imageUrl là biến trong component, giá trị của nó được gán vào thuộc tính src của thẻ <img>.
+Dùng khi cần điều khiển thuộc tính của element động. -->
+
+<p> Bên dưới là ví dụ về PROPERTY BINDING</p>
+<img [src]="imgURL" alt="img-1" />
+
+<h2>3.Event Binding </h2>
+
+<!-- Event Binding (()) -->
+<!-- Xử lý sự kiện từ view gửi ngược về component.
+Dữ liệu chảy một chiều: từ view sang component (HTML → TS).
+Ví dụ: <button (click)="onClick()">Nhấn</button>
+Khi nhấn button, hàm onClick() trong component được gọi.
+Dùng để phản hồi hành động của người dùng (click, input, v.v.). -->
+<p> Bên dưới là ví dụ về EVENT BINDING</p>
+<button (click)="showInfor()">Click me to show alert</button>
+
+<h2>4. Two-Way Binding </h2>
+<!-- Two-Way Binding [(ngModel)] -->
+<!-- Kết hợp Property Binding và Event Binding, dữ liệu chảy hai chiều: giữa component và view (TS ↔ HTML).
+Thường dùng với form controls qua ngModel.
+Ví dụ: <input [(ngModel)]="userName">
+userName trong component cập nhật khi người dùng nhập, và ngược lại, nếu userName thay đổi trong component, input cũng cập nhật.
+Cần import FormsModule để dùng ngModel. -->
+<p> Bên dưới là ví dụ về Two-Way BINDING</p>
+
+<input [(ngModel)]="userName" placeholder="Enter your name" />
+<p>Hello, {{ userName }}</p>
