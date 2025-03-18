@@ -5,12 +5,13 @@ const angular = require("angular-eslint");
 
 module.exports = tseslint.config(
   {
-    files: ["**/*.ts"],
+    files: ["*.ts"],
     extends: [
-      eslint.configs.recommended,
-      ...tseslint.configs.recommended,
-      ...tseslint.configs.stylistic,
-      ...angular.configs.tsRecommended,
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:@angular-eslint/recommended",
+      "plugin:@angular-eslint/template/process-inline-templates",
+      "prettier",
     ],
     processor: angular.processInlineTemplates,
     rules: {
@@ -33,11 +34,11 @@ module.exports = tseslint.config(
     },
   },
   {
-    files: ["**/*.html"],
+    files: ["*.html"],
     extends: [
-      ...angular.configs.templateRecommended,
-      ...angular.configs.templateAccessibility,
+      "plugin:@angular-eslint/template/recommended",
+      "plugin:@angular-eslint/template/accessibility",
     ],
     rules: {},
-  }
+  },
 );
