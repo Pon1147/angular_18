@@ -10,13 +10,18 @@ Nếu false, phần tử bị xóa khỏi DOM. -->
 <p>Dưới đây là ví dụ về CẤU TRÚC IF-ELSE</p>
 
 <h2>Hello there!</h2>
-<p>your name is: {{user.name}}</p>
-<input type="number" [(ngModel)]="user.age" (input)="restrictToNumber($event)" placeholder="Please input your age">
-<p>Your age is: {{user.age}}</p>
+<p>your name is: {{ user.name }}</p>
+<input
+  type="number"
+  [(ngModel)]="user.age"
+  (input)="restrictToNumber($event)"
+  placeholder="Please input your age"
+/>
+<p>Your age is: {{ user.age }}</p>
 
 <p *ngIf="user.age >= 18; else underAge">You are old enough to approve</p>
 <ng-template #underAge>
-    <p>You are not old enough to approve</p>
+  <p>You are not old enough to approve</p>
 </ng-template>
 <!-- <h2>NG-TEMPLATE</h2> -->
 <!-- Với cú pháp sử dụng dấu * ở trên, có thể các bạn sẽ thấy nó khác lạ,
