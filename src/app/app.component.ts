@@ -10,14 +10,5 @@ import { CommonModule } from '@angular/common';
 })
 export class AppComponent {
   title = 'research-v18';
-  user = {
-    name: 'Kyle',
-    age: 18,
-  };
 
-  restrictToNumber(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    input.value = input.value.replace(/[^0-9]/g, '');
-    this.user.age = Number(input.value);
-  }
 }
