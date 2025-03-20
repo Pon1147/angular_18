@@ -7,5 +7,10 @@ input {
 
 p {
   color: green;
+  font-size: 14px;
   font-weight: bold;
+}
+
+.div_1 {
+  flex-direction: row;
 }
