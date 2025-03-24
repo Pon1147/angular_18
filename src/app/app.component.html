@@ -1,1 +1,35 @@
-<app-research></app-research>
+<h1>COMPONENT INTERACTION - PASS DATA FROM PARENT TO CHILD WITH INPUT BINDING</h1>
+
+<h3>Nội dung chính: </h3>
+<ul>
+  <li>Từ parent xuống child: Sử dụng &#64;Input để binding dữ liệu.</li>
+  <li>Từ child lên parent: Sử dụng &#64;Output và EventEmitter để emit sự kiện.</li>
+</ul>
+<p>Cú pháp: &#64;Input</p>
+<ul>
+  <li>Trong child Component: <p ngStyle="color:green">{{label1}}</p>
+    <!-- Việc dùng @Input() để đưa dữ liệu từ parent component vào child component. -->
+  </li>
+  <li>Trong parent Component: <p>{{label2}}</p>
+  </li>
+</ul>
+<p>Example:</p>
+Result sau khi import từ parent component: <br>
+<app-progress [taskName]="currentTask"></app-progress>
+<p>Cách hoạt động: Parent truyền dữ liệu vào child thông qua property binding.</p>
+<p>Cú pháp: &#64;Output và EventEmitter</p>
+<ul>
+  <li>Trong child component: <p>&#64;Output() tenSuKien = new EventEmitter&lt;<code>KieuDuLieu</code>&gt;();</p>
+  </li>
+  <li>Trong parent template: <p>{{label3}}</p>
+  </li>
+</ul>
+<p>Example</p>
+<h2>Danh sách nhiệm vụ</h2>
+<app-progress [taskName]="currentTask" (taskCompleted)="onTaskCompleted($event)">
+</app-progress>
+<p>Trạng thái: {{ status }}</p>
+<app-progress></app-progress>
+<br>
+
+<app-progress [progress]="progress" [backgroundColor]="backgrounColor" [progressColor]="progressColor"></app-progress>
