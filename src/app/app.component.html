@@ -1,98 +1,51 @@
-<h2> ANGULAR STRUCTURE DIRECTIVE NGFOROF </h2>
+<h1>Day 6: ATTRIBUTE DIRECTIVE</h1>
+<h3>ATTRIBUTE là gì ?</h3>
+<br>
+<p>- Là dạng dạng dircetive dùng để thay đổi hành vi hoặc cách hiển thị của một {{label1}} <br>
+  DOM, một component hoặc là 1 derective khác mà không làm thay đổi cấu trúc của nó</p>
+<br><strong>Lưu ý: </strong>
+<br>
+<p>- Điều này khác với bài 5: Structural Directive (như *ngIf, *ngFor) nó vốn dĩ thay đổi cấu trúc của DOM</p>
+<br>
+<p> <strong>* Mục tiêu chính</strong>: Điều chỉnh giao diện (style) hoặc hành vi dựa trên dữ liệu động trong ứng dụng.
+</p>
+<p>Ví dụ built-in: Angular cung cấp hai Attribute Directive phổ biến là [class] và [style].</p>
 
-<div>
-  <h2>1. Giới thiệu về NgFor</h2>
+<h3> 2 Directive chính: [class] và [style]</h3>
+<h4>Thêm/xóa class: Dựa trên điều kiện logic trong component.
+  Áp dụng style động: Thay đổi thuộc tính CSS của phần tử dựa trên dữ liệu.</h4>
+<p>2.1: Sử dụng [class]</p>
 
-  <p>NgFor được sử dụng để lặp qua các phần tử trong một tập hợp
-    (thường là mảng) và tạo ra các phần tử HTML tương ứng cho mỗi mục.
-    Cú pháp phổ biến: *ngFor="let item of items".</p>
+Cú pháp: <br><br>
+<pre>[class.ten-class]="bieu_thuc".</pre><br>
+Cách hoạt động: Nếu biểu thức trả về true, class được thêm vào phần tử; nếu false, class bị xóa.
+<br><br>
+<p>Ví dụ cụ thể</p> <br>
+<pre>HTML: {{label2}}</pre>
+<br>
+<pre>TypeScript: {{label3}}  </pre>
 
-  <!--------------------- END --------------------->
+<p> Kết quả khi giá trị isActive = true => phần tử sẽ có class Active
+  (ví dụ: {{label4}}, ngược lại thì không)
+</p>
+<p> Sử dụng [class] trong Angular 18</p>
+<ul>
+  <li *ngFor="let task of tasks" [class.completed]="task.completed" tabindex="0" (click)="toggleTaskCompletion(task.id)"
+    (keyup)="handleKeyUp($event, task.id)">
+    {{task.name}} - {{task.completed}}</li>
+</ul> <br>
+<!-- Thêm tabindex để phần tử có thể focus -->
+<p> Sử dụng [style] trong Angular 18</p>
+<div
+  [ngStyle]="{'background-color': isActive ? 'green' : 'red', 'margin': isActive ? '20px' : '50px', 'padding': isActive ? '2%': 'none'}">
+  Hello Word!!!
+</div>
+<br>
+<div [style.width.%]="progress">Thanh tiến trình</div>
 
-  <h2>2. Cú pháp của NgFor</h2>
-
-  *ngFor="let item of items"
-  <ul>
-    <li>let item: Khai báo biến cục bộ để đại diện cho từng phần tử trong danh sách.</li>
-    <li>of items: Chỉ định tập hợp (mảng items) mà NgFor sẽ lặp qua.</li>
-  </ul>
-  Example:
-  <ul>
-    <li *ngFor="let item of items">{{item.id}}-{{item.name}} </li>
-  </ul>
-  <p>
-    Dạng đầy đủ (không dùng cú pháp ngắn *) <br>
-    *ngFor thực chất là cách viết ngắn gọn của directive NgForOf. Dạng đầy đủ sử dụng {{show}}
-  </p>
-  Example:
-  <pre><code>
-    &lt;ul&gt;
-      &lt;ng-template ngFor let-item [ngForOf]="items"&gt;
-        &lt;li&gt;{{ show2 }}&lt;/li&gt;
-      &lt;/ng-template&gt;
-    &lt;/ul&gt;
-    </code></pre>
-  <ul>
-    <li>[ngForOf]="items": Đây là input binding của directive NgForOf, nhận giá trị là tập hợp cần lặp.</li>
-    <li> let-item: Khai báo biến template để truy cập từng phần tử.</li>
-  </ul>
-
-  <!--------------------- END --------------------->
-
-  <h2>3. Các tính năng của NgForOf</h2>
-  <h3>a. Biến cục bộ:</h3>
-  <p>Ngoài biến $implicit (giá trị của mỗi phần tử, ví dụ item), bạn có thể sử dụng các biến cục bộ khác:</p>
-  <p>Ví dụ: khi chúng ta khai báo *ngFor = " let something of ***" thì lúc này something chính là biến \$imlicit</p>
-  <img [src]="imgURL" alt="img_1">
-  <!-- Trong file .html (ví dụ: app.component.html) -->
-  <p>Đối với các biến khác, chúng ta chỉ cần dùng cú pháp sau:</p>
-  Example:
-  <pre>
-    HTML:
-    {{ codeSnippet }}</pre>
-  <h3>b. Track By</h3>
-  <p>Để tối ưu hiệu suất khi render danh sách lớn, bạn có thể sử dụng trackBy. <br>Điều này giúp Angular theo dõi các
-    phần
-    tử dựa trên một giá trị duy nhất (thay vì so sánh toàn bộ object), <br>tránh việc render lại không cần thiết.</p>
-  Example: <br>
-  <pre>
-    HTML:
-    {{show3}}
-  </pre>
-  <pre>
-    TS:
-    {{show4}}
-</pre>
-  Example: <br>
-  <ul>
-    <li *ngFor="let item of items; trackBy: trackByFn">{{ item.name }}</li>
-  </ul>
-  <!--------------------- END --------------------->
-  <h3>3. Sử dụng trực tiếp NgForOf (dạng dài)</h3>
-  <p>Nếu chúng ta cần kiểm soát chi tiết hơn hoặc kết hợp với các directive khác,<br> bạn có thể sử dụng cú pháp dài với
-    {{show}} và [ngForOf].</p>
-  Example: <br>
-  <pre>
-    HTML:
-      {{show5}}
-    </pre>
-  Example: <br>
-  <ng-template ngFor let-item [ngForOf]="items" let-i="index">
-    <div>{{ i+1 }}. {{ item.name }}</div>
-  </ng-template>
-
-  <h3>SỬ DỤNG NHIỀU STRUCUTRE DIRECTIVE (chỉ thị cấu trúc) TRÊN CÙNG MỘT PHẦN TỬ</h3>
-  <p>Để sử dụng nhiều structural directives trên cùng một phần tử, <br> bạn cần tách chúng ra bằng cách sử dụng thẻ
-    {{show1}} hoặc {{show}}. <br>
-    Đây là các thẻ không được render trực tiếp vào DOM nhưng cho phép bạn áp dụng
-    nhiều directive.
-  </p>
-  Example: <br>
-  <p>Cùng kết hợp *ngIf & *ngFor trên cùng 1 phần tử</p>
-  <pre>
-    {{show6}}
-  </pre>
-  Cách giải quyết: thêm một thẻ {{show1}} hoặc {{show}} để bao bọc các directive.
-  <ng-container *ngIf="items.length > 0">
-    <li *ngFor="let item of items">{{ item.name }}</li>
-  </ng-container>
+<h3>Kết luận</h3>
+<p>
+  Day 6 giới thiệu cách sử dụng [class] và [style] để điều chỉnh giao diện một cách linh hoạt trong Angular. Đây là công
+  cụ mạnh mẽ để xử lý các tình huống cần thay đổi giao diện dựa trên dữ liệu động, như tab, thanh tiến trình, hoặc trạng
+  thái của ứng dụng. Với ví dụ cụ thể và các trường hợp áp dụng, bạn có thể dễ dàng triển khai chúng trong dự án thực tế
+  để tạo ra giao diện đẹp mắt và phản hồi nhanh chóng với người dùng.</p>

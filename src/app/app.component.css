@@ -1,3 +1,18 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 20px;
+}
+
+h3 {
+  margin-top: 30px
+}
+
 input {
   padding: 8px;
   margin: 10px 0;
@@ -9,8 +24,41 @@ p {
   color: green;
   font-size: 14px;
   font-weight: bold;
+  margin-top: 5px;
 }
 
 .div_1 {
   flex-direction: row;
+}
+
+/* tab1 */
+
+.completed {
+  text-decoration: line-through;
+  color: #28a745;
+  background-color: #e9ecef;
+  cursor: pointer;
+}
+
+li {
+  padding: 10px;
+  list-style: none;
+  cursor: pointer;
+}
+
+li:hover {
+  background-color: #f8f9fa;
+}
+
+li:focus {
+  /* Thêm style khi phần tử được focus */
+  outline: 2px solid #007bff;
+  /* Viền xanh khi focus */
+  outline-offset: 2px;
+}
+
+/* Example for [style] */
+div {
+  height: 20px;
+  background-color: #4caf50;
 }
