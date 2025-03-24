@@ -1,0 +1,159 @@
+<h1>10 QUY ƯỚC ĐẶT TÊN TRONG JAVASCRIPT</h1>
+
+<div class="container_1">
+  <h2>#1. Quy ước tên biến trong JS</h2>
+  <span>
+    <p>1.1 Nguyên tắc chung:</p>
+    <ul>
+      <li> Dùng chữ cái, số, "_" hoặc "$", nhưng không bắt đầu bằng số.</li>
+      <li> Có ý nghĩa, mô tả rõ giá trị biến chứa.</li>
+      <li>Tránh từ khóa của JavaScript (như let, if, function).</li>
+    </ul>
+  </span>
+  <span>
+    <p>1.2 Kiểu đặt tên:</p>
+    <ul>
+      <li> camelCase: Chữ cái đầu tiên của từ đầu tiên viết thường, các từ sau viết hoa chữ đầu (VD: userName,
+        totalPrice).</li>
+      <li>Không dùng ký tự đặc biệt (ngoại trừ _ và $).</li>
+    </ul>
+  </span>
+  <span>
+    <p>1.3 Ghi nhớ</p>
+    <ul>
+      <li> Đặt tên ngắn gọn, dễ đọc, phản ánh đúng nội dung (VD: age thay vì a, studentList thay vì sl).</li>
+    </ul>
+  </span>
+  <span>
+    <p>Tổng quan ngắn gọn về các kiểu viết tên biến khác nhau:</p>
+  </span>
+  <ul>
+    <li>camelCase (sử dụng trong JS)</li>
+    <li>PascalCase (sử dụng trong JS)</li>
+    <li>snake_case</li>
+    <li>kebab-case</li>
+  </ul>
+  <span>
+    <p>Ví dụ:</p>
+    <ul>
+      <li>Biến hợp lệ: `let userName = 'John'; result: {{userName}}</li>
+      <li>Biến không hợp lệ: `let 1user = 'John';</li>
+    </ul>
+  </span>
+</div>
+<div class="container_2">
+  <h2>#2. Quy ước đặt tên hằng số (const)</h2>
+  <ul>
+    <li>
+      <p>Kiểu đặt tên: UPPER_CASE với _ phân cách các từ (VD: MAX_VALUE, API_KEY).</p>
+    </li>
+    <li>
+      <p>Mục đích: Dùng cho giá trị không thay đổi trong suốt chương trình.</p>
+    </li>
+    <li>
+      <p>Ghi nhớ: Phân biệt rõ hằng số với biến để tránh nhầm lẫn khi đọc code.</p>
+    </li>
+  </ul>
+  <span>
+    <p>Ví dụ:</p>
+    <ul>
+      <li>Hằng số hợp lệ: `const MAX_VALUE = 100;`</li>
+      <li>Hằng số không hợp lệ: `const maxValue = 100;`</li>
+    </ul>
+  </span>
+</div>
+<div class="container_3">
+  <h2>#3. Quy ước đặt tên hàm</h2>
+  <p>Kiểu đặt tên: camelCase (VD: getUserInfo, calculateTotal).</p>
+  <span>
+    <p>Nguyên tắc:</p>
+    <ul>
+      <li> Bắt đầu bằng động từ mô tả hành động (VD: fetch, update, delete).</li>
+      <li> Rõ ràng, thể hiện chức năng của hàm.</li>
+    </ul>
+  </span>
+  <p>Ghi nhớ: Tên hàm nên cho biết hàm làm gì, tránh tên mơ hồ như doThis.</p>
+  <span>
+    <p>Ví dụ:</p>
+    <ul>
+      <li>Hàm hợp lệ {{label1}}</li>
+      <li>Hàm không hợp lệ {{label2}}</li>
+    </ul>
+  </span>
+</div>
+<div class="container_4">
+  <h2>#4. Quy ước đặt tên lớp (class)</h2>
+  <ul>
+    <li>
+      <p>Kiểu đặt tên: PascalCase - Mỗi từ đều viết hoa chữ đầu (VD: UserProfile, OrderDetail).</p>
+    </li>
+    <li>
+      <p>Mục đích: Dùng cho các đối tượng hoặc bản thiết kế (blueprint).</p>
+    </li>
+    <li>
+      <p>Ghi nhớ: Phân biệt với biến và hàm bằng cách luôn dùng PascalCase cho class.</p>
+    </li>
+  </ul>
+  <span>
+    <p>Ví dụ:</p>
+    <ul>
+      <li>class hợp lệ: {{label3}}</li>
+      <li>class không hợp lệ: {{label4}}</li>
+    </ul>
+  </span>
+</div>
+<div class="container_5">
+  <h2>#5. Quy ước đặt tên tệp (file)</h2>
+  <span>
+    <p>Kiểu đặt tên:</p>
+    <ul>
+      <li>Dùng chữ thường, phân cách bằng - (VD: user-profile.js, main-script.js).</li>
+      <li>Hoặc dùng camelCase (VD: userProfile.js).</li>
+    </ul>
+  </span>
+  <p>Nguyên tắc: Tên file nên liên quan đến nội dung bên trong.</p>
+  <p>Ghi nhớ: Giữ nhất quán kiểu đặt tên trong dự án (chọn 1 kiểu và áp dụng xuyên suốt).</p>
+  <span>
+    <p>Ví dụ:</p>
+    <ul>
+      <li>Tệp hợp lệ: `user-profile.ts`</li>
+      <li>Tệp không hợp lệ: `UserProfile.ts`</li>
+    </ul>
+  </span>
+</div>
+<div class="container_6">
+  <h2>#6. Một số lưu ý khác</h2>
+  <span>
+    <p>Ví dụ:</p>
+    <ul>
+      <li>Tránh viết tắt: Dùng numberOfStudents thay vì numStu.</li>
+      <li>Nhất quán: Cả team nên thống nhất quy tắc đặt tên.</li>
+      <li>Ý nghĩa: Tên phải giúp người đọc hiểu ngay không cần giải thích.</li>
+    </ul>
+  </span>
+</div>
+<div class="container_7">
+  <h2>Những điều cần ghi nhớ cho công việc</h2>
+  <span>
+    <ul>
+      <li>
+        <p>Biến: Dùng camelCase, tên rõ nghĩa (VD: customerName).</p>
+      </li>
+      <li>
+        <p>Hằng số: Dùng UPPER_CASE (VD: BASE_URL).</p>
+      </li>
+      <li>
+        <p>Hàm: Dùng camelCase, bắt đầu bằng động từ (VD: sendEmail).</p>
+      </li>
+      <li>
+        <p>Lớp: Dùng PascalCase (VD: ProductItem).</p>
+      </li>
+      <li>
+        <p>File: Dùng kebab-case hoặc camelCase, nhất quán (VD: data-service.js).</p>
+      </li>
+      <li>
+        <p>Nguyên tắc vàng: Tên phải dễ đọc, dễ hiểu, không gây nhầm lẫn, tiết kiệm thời gian debug sau này.</p>
+      </li>
+    </ul>
+  </span>
+</div>
