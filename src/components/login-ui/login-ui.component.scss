@@ -1,0 +1,29 @@
+::ng-deep .cds--label {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+::ng-deep .cds--btn-set {
+  /* Loại bỏ giới hạn chiều rộng */
+  width: 100%;
+  display: flex;
+  gap: 10px;
+}
+
+::ng-deep .cds--btn-set > .cds--btn {
+  max-inline-size: none !important;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+::ng-deep .cds--btn-set > .cds--btn > .cds--btn__icon {
+  margin-left: 8px; /* Khoảng cách giữa chữ và icon */
+  display: flex;
+  align-items: center;
+  font-size: 20px; /* Adjust icon size */
+}

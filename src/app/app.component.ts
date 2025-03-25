@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
-import { AuthorListComponent } from "../components/author-list/author-list.component";
+import { LoginUIComponent } from "../components/login-ui/login-ui.component";
+
 
 
 @Component({
@@ -7,7 +8,7 @@ import { AuthorListComponent } from "../components/author-list/author-list.compo
   standalone: true,
   styleUrls: ["./app.component.scss"],
   templateUrl: "./app.component.html",
-  imports: [AuthorListComponent],
+  imports: [LoginUIComponent],
 
 })
 export class AppComponent {
