@@ -1,0 +1,6 @@
+<app-author-detail *ngFor="let author of authors" [author]="author" (select)="onSelected($event)"></app-author-detail>
+<!-- thẻ <p> hiển thị tên tác giả được chọn với biến mới currentAuthor -->
+<p>This name has been choose: {{currentAuthor.firstName}}{{currentAuthor.lastName}}</p>
+<!-- <div *ngFor="let author of authors">{{author.lastName}}</div> -->
+
+<app-input-author></app-input-author>

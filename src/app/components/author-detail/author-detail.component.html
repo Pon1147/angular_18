@@ -1,0 +1,9 @@
+<div>
+  <!-- Hiển thị tên tác giả -->
+  <h2>{{author.firstName}}</h2>
+  <!-- Nút bấm để chọn tác giả, phát sự kiện 'selected' -->
+  <button (click)="select.emit(author)">Choose me</button>
+  <button (clcik)="delete.emit(author.id)">Delete Author</button>
+  <!-- Hiển thị email của tác giả -->
+  <p>{{author.lastName}}</p>
+</div>
