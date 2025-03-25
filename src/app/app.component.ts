@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { AuthorListComponent } from "./components/author-list/author-list.component";
+import { AuthorListComponent } from "../components/author-list/author-list.component";
 
 
 @Component({
