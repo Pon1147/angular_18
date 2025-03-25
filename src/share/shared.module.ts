@@ -22,7 +22,7 @@ import {
   RadioModule,
   PopoverModule,
 } from 'carbon-components-angular';
-import { AppCdsIconService } from './services/cds-icon-service';
+// import { AppCdsIconService } from './services/cds-icon-service';
 @NgModule({
   imports: [
     CommonModule,
@@ -72,6 +72,6 @@ import { AppCdsIconService } from './services/cds-icon-service';
     PopoverModule,
     // Add other common export modules here
   ],
-  providers: [AppCdsIconService],
+  // providers: [AppCdsIconService],
 })
-export class SharedModule {}
+export class SharedModule { }

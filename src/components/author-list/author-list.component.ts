@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthorDetailComponent } from "../author-detail/author-detail.component";
-import { InputAuthorComponent } from "../input-author/input-author.component";
+import { AuthorInputComponent } from '../author-input/author-input.component';
+
 
 // Interface định nghĩa cấu trúc dữ liệu của một tác giả
 export interface Author {
@@ -14,7 +15,7 @@ export interface Author {
 @Component({
   selector: 'app-author-list', // Tên selector để sử dụng trong HTML
   standalone: true, // Component này là standalone
-  imports: [AuthorDetailComponent, CommonModule, InputAuthorComponent], // Import các module cần thiết
+  imports: [AuthorDetailComponent, CommonModule, AuthorInputComponent], // Import các module cần thiết
   templateUrl: './author-list.component.html', // Đường dẫn đến file HTML
   styleUrl: './author-list.component.css' // Đường dẫn đến file CSS
 })
