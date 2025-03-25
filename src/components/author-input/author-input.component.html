@@ -1,4 +1,14 @@
+<!-- đây là child component -> truyền dữ liệu đến parent component (author-list) -->
 <cds-text-label>
-  Label
-  <input cdsText type="text" class="input-field">
+  New Author's First Name:
+  <input cdsText type="text" class="input-field" [(ngModel)]="newAuthorFirstName"
+    placeholder="Please enter new Author's Name">
 </cds-text-label>
+<cds-text-label>
+  New Author's Last Name:
+  <input cdsText type="text" class="input-field" [(ngModel)]="newAuthorLastName"
+    placeholder="Please enter new Author's Name">
+</cds-text-label>
+<button cdsButton="primary" (click)="onAddAuthor()">
+  Add Author
+</button>

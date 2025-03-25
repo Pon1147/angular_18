@@ -62,6 +62,7 @@ export class AuthorListComponent implements OnInit {
     this.currentAuthor = selectAuthor; // Cập nhật tác giả hiện tại
   }
 
+  // Hàm xử lý khi một tác giả bị xoá
   onDelete(id: number) {
     this.authors = this.authors.filter(author => {
       return author.id !== id
@@ -69,5 +70,15 @@ export class AuthorListComponent implements OnInit {
     if (this.currentAuthor.id === id) {
       this.currentAuthor = this.authors[0]; // Chọn tác giả đầu tiên nếu tác giả hiện tại bị xóa
     }
+  }
+
+  // Hàm xử lý khi tác giả mới được nhập vào
+  onAddAuthor(newAuthor: { firstName: string; lastName: string }) {
+    const newId = this.authors.length > 0 ? Math.max(...this.authors.map(a => a.id)) + 1 : 1;
+    this.authors.push({
+      id: newId,
+      firstName: newAuthor.firstName,
+      lastName: newAuthor.lastName // Chọn tác giả mới thêm vào
+    });
   }
 }
