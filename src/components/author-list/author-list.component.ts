@@ -73,19 +73,23 @@ export class AuthorListComponent implements OnInit {
 
   // Hàm xử lý khi tác giả mới được nhập vào
   onAddAuthor(newAuthor: { firstName: string; lastName: string }) {
-    // Generate a new unique ID for the new author
-    const newId = this.authors.length > 0 ? Math.max(...this.authors.map(a => a.id)) + 1 : 1;
+    // Tạo một ID duy nhất cho tác giả mới
+    const newId = this.authors.length > 0 ? Math.max(...this.authors.map(author => author.id)) + 1 : 1;
 
-    // Add the new author to the authors list
+    // Thêm tác giả mới vào danh sách
     this.authors.push({
       id: newId,
       firstName: newAuthor.firstName,
       lastName: newAuthor.lastName,
     });
 
-    // Optionally, set the new author as the current author
+    // Tùy chọn: Đặt tác giả mới làm tác giả hiện tại
     this.currentAuthor = this.authors[this.authors.length - 1];
 
-    console.log('New author added:', newAuthor);
+    console.log('New author added:', {
+      id: newId,
+      firstName: newAuthor.firstName,
+      lastName: newAuthor.lastName,
+    });
   }
 }

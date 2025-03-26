@@ -33,7 +33,7 @@ export class AuthorInputComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.minLength(3),
+          Validators.minLength(2),
           Validators.maxLength(50),
           this.alphaOnlyValidator, // Custom validator for alphabet-only input
         ],
@@ -42,7 +42,7 @@ export class AuthorInputComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.minLength(3),
+          Validators.minLength(2),
           Validators.maxLength(50),
           this.alphaOnlyValidator, // Custom validator for alphabet-only input
         ],
@@ -59,18 +59,20 @@ export class AuthorInputComponent implements OnInit {
   private alphaOnlyValidator(control: AbstractControl): Record<string, boolean> | null {
     const value = control.value?.trim(); // Trim whitespace
     if (!value) return null; // If no value, let the required validator handle it
-    const alphaOnly = /^[a-zA-Z]+$/; // Regex for alphabetic characters only
-    return alphaOnly.test(value) ? null : { alphaOnly: true }; // Return error if invalid
+
+    // Regex to allow alphabetic characters, spaces, and Vietnamese diacritics
+    const alphaWithVietnamese = /^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸỳỵỷỹ\s-]+$/;
+
+    return alphaWithVietnamese.test(value) ? null : { alphaOnly: true }; // Return error if invalid
   }
 
   // Method to handle form submission
   onSubmit(): void {
     if (this.authorInputForm.invalid) {
-      console.log('Form errors:', this.authorInputForm.errors);
+      // console.log('Form errors:', this.authorInputForm?.errors);
       console.log('First Name errors:', this.firstName?.errors);
       console.log('Last Name errors:', this.lastName?.errors);
-
-      // this.authorInputForm.markAllAsTouched();
+      this.authorInputForm.markAllAsTouched();
       // console.log('Form is invalid. Please check the errors.');
       return;
     }
@@ -84,7 +86,10 @@ export class AuthorInputComponent implements OnInit {
 
     this.authorAdd.emit(newAuthor);
     this.authorInputForm.reset();
-    console.log('Author submitted successfully:', newAuthor);
+    console.log('Author submitted successfully:', {
+      firstName: newAuthor.firstName,
+      lastName: newAuthor.lastName,
+    });
   }
 
   // Method to handle the "Submit" button click
