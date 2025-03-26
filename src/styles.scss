@@ -12,3 +12,7 @@
 html {
     @include styles.theme(styles.$white);
 }
+body {
+  background-image: url(./assets/img/0712161468303244.jpg);
+  background-size: cover;
+}
