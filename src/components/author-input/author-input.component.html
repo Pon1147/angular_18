@@ -1,5 +1,5 @@
 <!-- đây là child component -> truyền dữ liệu đến parent component (author-list) -->
-<cds-text-label>
+<!-- <cds-text-label>
   New Author's First Name:
   <input cdsText type="text" class="input-field" [(ngModel)]="newAuthorFirstName"
     placeholder="Please enter new Author's Name">
@@ -11,4 +11,40 @@
 </cds-text-label>
 <button cdsButton="primary" (click)="onAddAuthor()">
   Add Author
-</button>
+</button> -->
+
+<form class="formAuthorInput" [formGroup]="authorInputForm" (ngSubmit)="onSubmit()">
+  <!-- Input for First Name -->
+  <cds-text-label>
+    Enter new Author's First Name:
+    <input cdsText type="text" class="input-field" formControlName="firstName" placeholder="First Name">
+    <div *ngIf="firstName?.invalid && firstName?.touched" class="cds--form-requirement">
+      <div *ngIf="firstName?.errors?.['required']">First name is required</div>
+      <div *ngIf="firstName?.errors?.['minlength']">First name must be at least 3 characters</div>
+      <div *ngIf="firstName?.errors?.['maxlength']">First name must not exceed 50 characters</div>
+      <div *ngIf="firstName?.errors?.['alphaOnly']">First name must contain only letters (a-z, A-Z)</div>
+    </div>
+  </cds-text-label>
+  <br>
+
+  <!-- Input for Last Name -->
+  <cds-text-label>
+    Enter new Author's Last Name:
+    <input cdsText type="text" class="input-field" formControlName="lastName" placeholder="Last Name">
+    <div *ngIf="lastName?.invalid && lastName?.touched" class="cds--form-requirement">
+      <div *ngIf="lastName?.errors?.['required']">Last name is required</div>
+      <div *ngIf="lastName?.errors?.['minlength']">Last name must be at least 3 characters</div>
+      <div *ngIf="lastName?.errors?.['maxlength']">Last name must not exceed 50 characters</div>
+      <div *ngIf="lastName?.errors?.['alphaOnly']">Last name must contain only letters (a-z, A-Z)</div>
+    </div>
+  </cds-text-label>
+  <br>
+
+  <!-- Buttons -->
+  <div class="cds-button-set">
+    <button cdsButton="secondary" type="button" (click)="authorInputForm.reset()">Cancel</button>
+    <button cdsButton="primary" type="submit" (click)="onSubmitClick()">
+      Submit
+    </button>
+  </div>
+</form>
