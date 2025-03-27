@@ -41,7 +41,7 @@
           <button cdsButton="ghost">
             Log in with Softlayer
           </button>
-          <button cdsButton="primary" type="submit" [disabled]="loginForm.invalid">
+          <button cdsButton="primary" type="submit" [disabled]="loginForm.invalid" (click)="clean()">
             With icon
             <ng-icon name="typArrowRightThick"></ng-icon>
           </button>
@@ -53,6 +53,7 @@
   <div class="form-contact">
     Need help? <a href="#">Contact the IBM help desk</a>
   </div>
+
   <pre>
     {{loginForm.value | json}}
   </pre>

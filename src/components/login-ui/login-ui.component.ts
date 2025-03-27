@@ -40,6 +40,7 @@ export class LoginUIComponent implements OnInit {
   }];
 
   loginForm!: FormGroup;
+  savedLoginData: { email: string, password: string } | null = null;
 
   constructor(private fb: FormBuilder) { }
 
@@ -60,12 +61,32 @@ export class LoginUIComponent implements OnInit {
 
   onSubmit(): void {
     if (this.loginForm.valid) {
-      console.log('Form submitted successfully:', this.loginForm.value);
+      const matchingUser = this.users.find(user => user.email === this.email?.value && user.password === this.password?.value);
+      if (matchingUser) {
+        console.log('Welcom Back Admin User: ', matchingUser.email);
+      } else {
+        console.log('You log in with Email: ' + this.email?.value);
+      }
     } else {
       this.loginForm.markAllAsTouched();
       console.log('Form is invalid. Please check the errors.');
       console.log('Email is invalid. Please check the', this.email?.value);
       console.log('Password is invalid. Please check the', this.password?.value);
     }
+  }
+  clean(): void {
+    // Save the current form values
+    this.savedLoginData = {
+      email: this.email?.value || '',
+      password: this.password?.value || '',
+    };
+
+    // Clear the form fields visually
+    this.loginForm.patchValue({
+      email: '',
+      password: '',
+    });
+
+    console.log('Form visually cleared but data retained:', this.savedLoginData);
   }
 }
