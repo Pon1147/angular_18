@@ -13,41 +13,47 @@
       </p>
     </div>
     <br>
-    <div class="form-input">
+    <form class="form-input" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <!-- Form for user Input the account -->
       <cds-text-label>
         IBMid
-        <a href="#">Forgot ID ?</a>
-        <input cdsText type="text" placeholder="Example: username@ibm.com"> <!-- Input Account -->
+        <a href="#">Forgot ID?</a>
+        <input cdsText type="text" placeholder="Example: username@ibm.com" formControlName="email" />
       </cds-text-label>
       <br>
       <cds-text-label>
         Password
-        <input cdsText type="password" placeholder="Enter your password."> <!-- Input password -->
+        <input cdsText type="password" placeholder="Enter your password." formControlName="password">
+        <!-- Input password -->
       </cds-text-label>
-    </div>
-    <br>
-    <div class="form-checkbox">
-      <!-- form for User Check the box to remember ID -->
-      <cds-checkbox>
-        Remmber ID <ng-icon name="typInfoLarge" style="padding-top: 2px"></ng-icon>
-      </cds-checkbox>
-    </div>
-    <br>
-    <div class="form-button">
-      <!-- form for btn -->
-      <cds-button-set>
-        <button cdsButton="ghost">
-          Log in with Softlayer
-        </button>
-        <button cdsButton="primary">
-          With icon
-          <ng-icon name="typArrowRightThick"></ng-icon>
-        </button>
-      </cds-button-set>
-    </div>
+
+      <br>
+      <div class="form-checkbox">
+        <!-- form for User Check the box to remember ID -->
+        <cds-checkbox>
+          Remmber ID <ng-icon name="typInfoLarge" style="padding-top: 2px"></ng-icon>
+        </cds-checkbox>
+      </div>
+      <br>
+      <div class="form-button">
+        <!-- form for btn -->
+        <cds-button-set>
+          <button cdsButton="ghost">
+            Log in with Softlayer
+          </button>
+          <button cdsButton="primary" type="submit" [disabled]="loginForm.invalid">
+            With icon
+            <ng-icon name="typArrowRightThick"></ng-icon>
+          </button>
+        </cds-button-set>
+      </div>
+    </form>
   </div>
+
   <div class="form-contact">
     Need help? <a href="#">Contact the IBM help desk</a>
   </div>
+  <pre>
+    {{loginForm.value | json}}
+  </pre>
 </div>

@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { LoginUIComponent } from "../components/login-ui/login-ui.component";
+import { AuthorListComponent } from "../components/author-list/author-list.component";
 
 
 
@@ -8,7 +9,7 @@ import { LoginUIComponent } from "../components/login-ui/login-ui.component";
   standalone: true,
   styleUrls: ["./app.component.scss"],
   templateUrl: "./app.component.html",
-  imports: [LoginUIComponent],
+  imports: [LoginUIComponent, AuthorListComponent],
 
 })
 export class AppComponent {

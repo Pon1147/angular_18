@@ -5,15 +5,19 @@ import { typInfoLarge, typArrowRightThick } from '@ng-icons/typicons';
 import {
 
   ReactiveFormsModule,
-
+  FormBuilder,
+  FormGroup,
+  Validators,
+  AbstractControl
 } from '@angular/forms';
-
+import { emailValidator, passwordValidator } from '../../share/login-validation';
 
 export interface User {
   id: number;
-  emailUse: string;
-  passwordUser: string;
+  email: string;
+  password: string;
 }
+
 @Component({
   selector: 'app-login-ui',
   standalone: true,
@@ -22,45 +26,46 @@ export interface User {
   styleUrl: './login-ui.component.scss',
   viewProviders: [provideIcons({ typInfoLarge, typArrowRightThick })]
 })
-export class LoginUIComponent{
 
-  // userInputForm!: FormGroup;
+export class LoginUIComponent implements OnInit {
+  users: User[] = [{
+    id: 1,
+    email: 'test@example.com',
+    password: '19001592Aa@.'
+  },
+  {
+    id: 2,
+    email: 'test2@example.com',
+    password: 'test456'
+  }];
 
-  // constructor(private fb: FormBuilder) {
-  //   this.userInputForm = this.fb.group({
-  //     emailUser: ['', // khai báo control email và Validations của email
-  //       [
-  //         Validators.required,
-  //         Validators.email,
-  //         Validators.minLength(5),
-  //         Validators.maxLength(50),
-  //       ]
-  //     ],
-  //     passwordUser: ['', // khai báo control password và Validations cuar password
-  //       [
-  //         Validators.required,
-  //         Validators.minLength(8),
-  //         Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$'),
-  //         Validators.maxLength(50),
-  //       ]],
-  //   });
+  loginForm!: FormGroup;
 
-  // } ngOnInit(): void {
-  //   throw new Error('Method not implemented.');
-  // }
-  // ngOnSubmit(): void {
-  //   if (this.userInputForm.invalid) {
-  //     console.log('User Name Error:', this.emailUser?.errors);
-  //     console.log('User Password Error:', this.passwordUser?.errors);
-  //     this.userInputForm.markAllAsTouched();
-  //     return;
-  //   }
-  //   const formValue = this.userInputForm.value;
-  //   const inforUser: User = {
-  //     id: 0,
-  //     emailUse: formValue.emailUser.trim(),
-  //     passwordUser: formValue.passwordUser.trim(),
-  //   };
+  constructor(private fb: FormBuilder) { }
 
-  // }
+  ngOnInit(): void {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, emailValidator()]],
+      password: ['', [Validators.required, passwordValidator()]],
+    });
+  }
+
+  get email(): AbstractControl | null {
+    return this.loginForm.get('email');
+  }
+
+  get password(): AbstractControl | null {
+    return this.loginForm.get('password');
+  }
+
+  onSubmit(): void {
+    if (this.loginForm.valid) {
+      console.log('Form submitted successfully:', this.loginForm.value);
+    } else {
+      this.loginForm.markAllAsTouched();
+      console.log('Form is invalid. Please check the errors.');
+      console.log('Email is invalid. Please check the', this.email?.value);
+      console.log('Password is invalid. Please check the', this.password?.value);
+    }
+  }
 }
