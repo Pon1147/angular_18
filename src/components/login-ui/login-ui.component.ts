@@ -40,7 +40,8 @@ export class LoginUIComponent implements OnInit {
   }];
 
   loginForm!: FormGroup;
-  savedLoginData: { email: string, password: string } | null = null;
+  disabled = true;
+
 
   constructor(private fb: FormBuilder) { }
 
@@ -49,7 +50,15 @@ export class LoginUIComponent implements OnInit {
       email: ['', [Validators.required, emailValidator()]],
       password: ['', [Validators.required, passwordValidator()]],
     });
+    this.loginForm.statusChanges.subscribe((status) => {
+      this.disabled = status === 'INVALID';
+    });
   }
+  //   // Subscribe to form status changes to update the disabled property
+  //   subscribe((status: string): void => {
+  //     this.disabled = status === 'INVALID';
+  //     });
+  // }
 
   get email(): AbstractControl | null {
     return this.loginForm.get('email');
@@ -59,34 +68,62 @@ export class LoginUIComponent implements OnInit {
     return this.loginForm.get('password');
   }
 
+  get isEmailInvalid(): boolean {
+    const emailControl = this.loginForm.get('email');
+    if (!emailControl) return false;
+    return !emailControl.valid && (emailControl.dirty || emailControl.touched);
+  }
+
+  get emailInvalidText(): string {
+    const emailControl = this.loginForm.get('email');
+    if (!emailControl) return '';
+    if (emailControl.hasError('required')) {
+      return 'Email là bắt buộc';
+    }
+    if (emailControl.hasError('invalidEmail')) {
+      return 'Email không hợp lệ, vui lòng nhập đúng định dạng (ví dụ: username@ibm.com)';
+    }
+    return '';
+  }
+  get isPasswordInvalid(): boolean {
+    const passwordControl = this.loginForm.get('password');
+    if (!passwordControl) return false;
+    return !passwordControl.valid && (passwordControl.dirty || passwordControl.touched);
+  }
+
+  get passwordInvalidText(): string {
+    const passwordControl = this.loginForm.get('password');
+    if (!passwordControl) return '';
+    if (passwordControl.hasError('required')) {
+      return 'Mật khẩu là bắt buộc';
+    }
+    if (passwordControl.hasError('invalidPassword')) {
+      const errors = passwordControl.errors?.['invalidPassword'];
+      const messages: string[] = [];
+      if (!errors.minLength) messages.push('Mật khẩu phải có ít nhất 9 ký tự');
+      if (!errors.hasUpperCase) messages.push('Mật khẩu phải có ít nhất 1 chữ cái in hoa');
+      if (!errors.hasLowerCase) messages.push('Mật khẩu phải có ít nhất 1 chữ cái thường');
+      if (!errors.hasNumber) messages.push('Mật khẩu phải có ít nhất 1 số');
+      if (!errors.hasSpecialChar) messages.push('Mật khẩu phải có ít nhất 1 ký tự đặc biệt');
+      return messages.join(', ');
+    }
+    return '';
+  }
+
   onSubmit(): void {
-    if (this.loginForm.valid) {
+    if (this.loginForm.invalid) {
+      // this.loginForm.markAllAsTouched();
+      // console.log('Form is invalid. Please check the errors.');
+      // console.log('Email is invalid. Please check the', this.email?.value);
+      // console.log('Password is invalid. Please check the', this.password?.value);
+      // Form is invalid, handle the error appropriately here if needed.
+    } else {
       const matchingUser = this.users.find(user => user.email === this.email?.value && user.password === this.password?.value);
       if (matchingUser) {
         console.log('Welcom Back Admin User: ', matchingUser.email);
       } else {
         console.log('You log in with Email: ' + this.email?.value);
       }
-    } else {
-      this.loginForm.markAllAsTouched();
-      console.log('Form is invalid. Please check the errors.');
-      console.log('Email is invalid. Please check the', this.email?.value);
-      console.log('Password is invalid. Please check the', this.password?.value);
     }
-  }
-  clean(): void {
-    // Save the current form values
-    this.savedLoginData = {
-      email: this.email?.value || '',
-      password: this.password?.value || '',
-    };
-
-    // Clear the form fields visually
-    this.loginForm.patchValue({
-      email: '',
-      password: '',
-    });
-
-    console.log('Form visually cleared but data retained:', this.savedLoginData);
   }
 }

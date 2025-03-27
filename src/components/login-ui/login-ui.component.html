@@ -15,18 +15,18 @@
     <br>
     <form class="form-input" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <!-- Form for user Input the account -->
-      <cds-text-label>
+      <cds-text-label [invalid]="isEmailInvalid" [invalidText]="emailInvalidText">
+
         IBMid
         <a href="#">Forgot ID?</a>
         <input cdsText type="text" placeholder="Example: username@ibm.com" formControlName="email" />
       </cds-text-label>
       <br>
-      <cds-text-label>
+      <cds-text-label [invalid]="isPasswordInvalid" [invalidText]="passwordInvalidText">
         Password
         <input cdsText type="password" placeholder="Enter your password." formControlName="password">
         <!-- Input password -->
       </cds-text-label>
-
       <br>
       <div class="form-checkbox">
         <!-- form for User Check the box to remember ID -->
@@ -41,7 +41,7 @@
           <button cdsButton="ghost">
             Log in with Softlayer
           </button>
-          <button cdsButton="primary" type="submit" [disabled]="loginForm.invalid" (click)="clean()">
+          <button cdsButton="primary" [disabled]="loginForm.invalid">
             With icon
             <ng-icon name="typArrowRightThick"></ng-icon>
           </button>
@@ -49,12 +49,7 @@
       </div>
     </form>
   </div>
-
   <div class="form-contact">
     Need help? <a href="#">Contact the IBM help desk</a>
   </div>
-
-  <pre>
-    {{loginForm.value | json}}
-  </pre>
 </div>
