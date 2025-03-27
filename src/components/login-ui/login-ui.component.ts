@@ -112,11 +112,10 @@ export class LoginUIComponent implements OnInit {
 
   onSubmit(): void {
     if (this.loginForm.invalid) {
-      // this.loginForm.markAllAsTouched();
-      // console.log('Form is invalid. Please check the errors.');
-      // console.log('Email is invalid. Please check the', this.email?.value);
-      // console.log('Password is invalid. Please check the', this.password?.value);
-      // Form is invalid, handle the error appropriately here if needed.
+      this.loginForm.markAllAsTouched();
+      console.log('Form is invalid. Please check the errors.');
+      console.log('Email is invalid. Please check the', this.email?.value);
+      console.log('Password is invalid. Please check the', this.password?.value);
     } else {
       const matchingUser = this.users.find(user => user.email === this.email?.value && user.password === this.password?.value);
       if (matchingUser) {
