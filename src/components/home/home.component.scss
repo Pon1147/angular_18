@@ -1,5 +1,28 @@
 .home{
-  // background-color: aquamarine;
-  // width: 100%;
-  // height: 100%;
+  margin: auto;
+  padding: 0;
+  text-align: center;
+}
+.listing {
+  padding: 20px;
+}
+.listing-heading {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+.listing-item {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.listing-photo {
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+  border-radius: 8px;
 }
