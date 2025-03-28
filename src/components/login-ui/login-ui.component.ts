@@ -11,6 +11,7 @@ import {
   AbstractControl
 } from '@angular/forms';
 import { emailValidator, passwordValidator } from '../../share/login-validation';
+import { Router } from '@angular/router';
 
 export interface User {
   id: number;
@@ -43,12 +44,13 @@ export class LoginUIComponent implements OnInit {
   disabled = true;
 
 
-  constructor(private fb: FormBuilder) { }
+
+  constructor(private fb: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, emailValidator()]],
-      password: ['', [Validators.required, passwordValidator()]],
+      email: ['test@example.com', [Validators.required, emailValidator()]],
+      password: ['19001592Aa@.', [Validators.required, passwordValidator()]],
     });
     this.loginForm.statusChanges.subscribe((status) => {
       this.disabled = status === 'INVALID';
@@ -120,6 +122,8 @@ export class LoginUIComponent implements OnInit {
       const matchingUser = this.users.find(user => user.email === this.email?.value && user.password === this.password?.value);
       if (matchingUser) {
         console.log('Welcom Back Admin User: ', matchingUser.email);
+        this.router.navigate(['/home']);
+
       } else {
         console.log('You log in with Email: ' + this.email?.value);
       }

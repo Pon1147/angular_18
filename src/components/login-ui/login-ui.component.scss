@@ -30,7 +30,7 @@
   font-size: 20px; /* Adjust icon size */
 }
 .form-changecolor{
-  background-color: #ffffff;
+  background-color: #FEF9DB;
 }
 
 .form-header{
@@ -48,8 +48,32 @@
 }
 
 .form-contact {
+  color: beige;
   font-size: 12px;
   margin-top: 25px;
   padding: 0 20px;
   background-color: transparent;
+}
+
+.form-img {
+
+  background-image: url('https://i.pinimg.com/736x/2e/5c/08/2e5c083b2c81e7af1cbfd6b841a3e932.jpg'); // Đường dẫn đến hình ảnh
+  background-size: cover; // Đảm bảo hình ảnh phủ kín phần tử
+  background-position: center; // Căn giữa hình ảnh
+  background-repeat: no-repeat; // Không lặp lại hình ảnh
+  width: 100vw; // Full width of the viewport
+  height: 100vh; // Full height of the viewport
+  overflow: hidden; // Prevent scrollbars if content overflows
+}
+
+.form-login{
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+   // align-items: center; // Center content horizontally
+  max-width: 600px;
+  min-height: 100vh;
+
 }
