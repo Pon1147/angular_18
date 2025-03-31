@@ -2,3 +2,63 @@
     display: flex !important;
     justify-content: space-between;
 }
+.table-container {
+  padding: 0; /* Loại bỏ padding lớn */
+  margin: 0 auto;
+  max-width: 600px; /* Giới hạn chiều rộng của bảng */
+}
+
+h2 {
+  font-size: 24px; /* Kích thước tiêu đề */
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #161616; /* Màu chữ tối */
+}
+
+p {
+  font-size: 14px;
+  color: #525252; /* Màu chữ nhạt hơn */
+  margin-bottom: 16px;
+}
+
+cds-table {
+  width: 100%;
+  border: 1px solid #e0e0e0; /* Viền mỏng cho bảng */
+  border-radius: 0; /* Loại bỏ bo góc */
+  box-shadow: none; /* Loại bỏ bóng */
+}
+
+cds-table-header th {
+  font-size: 14px;
+  font-weight: 600;
+  background-color: #f4f4f4; /* Màu nền header */
+  color: #161616;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e0e0e0;
+  text-align: left;
+}
+
+cds-table-body td {
+  font-size: 14px;
+  color: #161616;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e0e0e0; /* Viền mỏng giữa các hàng */
+}
+
+/* Loại bỏ hiệu ứng hover */
+cds-table-body tr:hover {
+  background-color: transparent;
+}
+
+/* Đảm bảo cột có kích thước đồng đều */
+cds-table-header th,
+cds-table-body td {
+  width: 33.33%; /* Chia đều cho 3 cột */
+}
+
+/* Điều chỉnh cột checkbox */
+cds-table-body td:first-child,
+cds-table-header th:first-child {
+  width: 40px; /* Cột checkbox nhỏ hơn */
+  padding: 12px 8px;
+}

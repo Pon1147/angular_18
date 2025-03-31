@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedModule } from '../../app/share/shared.module';
 import { TableHeaderItem, TableItem, TableModel } from 'carbon-components-angular';
-import { Todo } from '../../app/share/models/todo.model';
 
 @Component({
   selector: 'app-todolist',
@@ -11,39 +10,70 @@ import { Todo } from '../../app/share/models/todo.model';
   styleUrl: './todolist.component.scss',
 })
 export class TodolistComponent implements OnInit {
+  // Binding các properties for the table header
   title = 'Todo List !!!';
   description = 'Below are Todo List';
+  // Binding giá trị cho 2 biến của properties batchText thuộc CDS
   batchText = {
     SINGLE: '1 item selected',
     MULTIPLE: '{{count}} items selected',
   };
+  // Khai báo TableModel() để sử dụng
   model = new TableModel();
-  initialTodoList: Todo[] = []; // khai báo biến initialTodoList để lưu giá trị gốc
-  todoList: Todo[] = [
-    { name: 'Research About Table', status: 'processing', date: 'Mar.28.2025' },
-    { name: 'Add Button addNewData to table', status: 'done', date: 'Mar.31.2025' },
-    { name: 'Complete Angular Assignment', status: 'pending', date: 'Apr.02.2025' },
-    { name: 'Meet with Team', status: 'processing', date: 'Apr.03.2025' },
-    { name: 'Write Report', status: 'done', date: 'Apr.04.2025' },
-    { name: 'Plan Project Timeline', status: 'pending', date: 'Apr.05.2025' },
-    { name: 'Review Code', status: 'processing', date: 'Apr.06.2025' },
-  ];
+  // Khai báo mảng dữ liệu cho TableModel() và là Hàm 2 chiều
+  initialModelData: TableItem[][] = [];
 
   constructor() {
-    //
+    // Khai báo giá trị cho header model với 3 cột Name, Status, Date bằng biến TableHeaderItem
+    this.model.header = [
+      new TableHeaderItem({ data: 'Name', title: 'Table header title', sortable: true }),
+      new TableHeaderItem({ data: 'Status', className: 'my-class', sortable: true }),
+      new TableHeaderItem({ data: 'Date', sortable: true }),
+    ];
+    // Khai báo giá trị các hàng dựa trên cột tương ứng bằng biến TableItem
+    this.model.data = [
+      [
+        new TableItem({ data: 'Research About Table', title: 'Table item title' }),
+        new TableItem({ data: 'processing' }),
+        new TableItem({ data: 'Mar.28.2025' }),
+      ],
+      [
+        new TableItem({ data: 'Add Button addNewData to table' }),
+        new TableItem({ data: 'done' }),
+        new TableItem({ data: 'Mar.31.2025' }),
+      ],
+      [
+        new TableItem({ data: 'Complete Angular Assignment' }),
+        new TableItem({ data: 'pending' }),
+        new TableItem({ data: 'Apr.02.2025' }),
+      ],
+      [
+        new TableItem({ data: 'Meet with Team' }),
+        new TableItem({ data: 'processing' }),
+        new TableItem({ data: 'Apr.03.2025' }),
+      ],
+      [
+        new TableItem({ data: 'Write Report' }),
+        new TableItem({ data: 'done' }),
+        new TableItem({ data: 'Apr.04.2025' }),
+      ],
+      [
+        new TableItem({ data: 'Plan Project Timeline' }),
+        new TableItem({ data: 'pending' }),
+        new TableItem({ data: 'Apr.05.2025' }),
+      ],
+      [
+        new TableItem({ data: 'Review Code' }),
+        new TableItem({ data: 'processing' }),
+        new TableItem({ data: 'Apr.06.2025' }),
+      ],
+    ];
+    // Khởi tạo mảng ban đầu cho initialModelData để lưu dữ liệu ban đầu của model.data
+    this.initialModelData = [...this.model.data];
   }
 
   ngOnInit(): void {
-    this.initialTodoList = [...this.todoList];
-    this.model.header = [
-      // khai báo các table header => 3 cột Name, Status, Date
-      new TableHeaderItem({ data: 'Name', title: 'Table header title' }),
-      new TableHeaderItem({ data: 'Status', classname: 'my-class' }),
-      new TableHeaderItem({ data: 'Date' }),
-    ];
-
-    this.updateTableData();
-
+    // Xử lý sự kiện khi chọn một dòng hoặc tất cả các dòng
     this.model.rowsSelectedChange.subscribe(event =>
       console.log('Bạn đang chọn dòng ' + (event + 1)),
     );
@@ -52,43 +82,33 @@ export class TodolistComponent implements OnInit {
     );
   }
 
-  // Phương thức để cập nhật model.data từ todoList
-  private updateTableData() {
-    this.model.data = this.todoList.map(todo => [
-      new TableItem({ data: todo.name, title: 'Table item title' }),
-      new TableItem({ data: todo.status }),
-      new TableItem({ data: todo.date }),
-    ]);
-    // console.log('this.model.data: ' + this.model.data);
-
-  }
-
   addNewData() {
-    const newTodo: Todo = {
-      name: `Task ${this.todoList.length + 1}`, // Tạo tên động dựa trên số lượng task
-      status: 'Pending', // Trạng thái mặc định
-      date: 'Edit', // Hành động mặc định
-    };
-    this.todoList.push(newTodo); // Thêm vào todoList
-    this.updateTableData(); // Cập nhật model.data
+    // Tạo dòng mới có dữ liệu mặc định cho Name, Status và Date
+    const newRow = [
+      new TableItem({ data: `Task ${this.model.data.length + 1}` }),
+      new TableItem({ data: 'Pending' }),
+      new TableItem({ data: 'Edit' }),
+    ];
+    // Thêm dòng mới vào model.data
+    this.model.data = [...this.model.data, newRow];
+    // Cập nhật lại table
+    this.initialModelData = [...this.model.data];
   }
 
-  // Xử lý sự kiện tìm kiếm
+  // Xử lý sự kiện khi nhập vào input search
   filterNodeNames(searchString: string) {
-    console.log('searchString:', searchString); // Changed to use object logging
-    // Log the initial state of todoList
-    console.log('todoList before filtering:', this.todoList);
-
+    // Xử lý code tìm kiếm và lọc dữ liệu theo tên task
+    console.log('searchString:', searchString);
+    console.log('model.data before filtering:', this.model.data);
+    // Nếu giá trị trả về là rỗng thì model.data bằng giá trị table ban đầu
     if (searchString.trim() === '') {
-      // Reset to initial state if search string is empty
-      this.todoList = [...this.initialTodoList];
+      this.model.data = [...this.initialModelData];
     } else {
-    this.todoList = this.initialTodoList.filter(todo =>
-        todo.name.toLowerCase().includes(searchString.toLowerCase().trim())
-    );
+      this.model.data = this.initialModelData.filter(row => {
+        const name = (row[0].data as string).toLowerCase();
+        return name.includes(searchString.toLowerCase().trim());
+      });
     }
-    // Log the filtered state and update the table
-    console.log('todoList after filtering:', this.todoList);
-    this.updateTableData(); // Add this line to update the table display
+    console.log('model.data after filtering:', this.model.data);
   }
 }
