@@ -1,17 +1,22 @@
 <cds-table-container>
+  <!-- cds header Nơi thay đổi header -->
   <cds-table-header>
     <div>
       <h4 cdsTableHeaderTitle>{{ title }}</h4>
       <p cdsTableHeaderDescription>{{ description }}</p>
     </div>
+    <!-- thêm giá trị mới cho bản = button below -->
     <cds-button-set>
       <button cdsButton="primary" (click)="addNewData()">
         Click here to add more
       </button>
     </cds-button-set>
   </cds-table-header>
+  <!-- Thanh công cụ (search), (filter),.... -->
+   {{model}}
   <cds-table-toolbar [model]="model" [batchText]="batchText" #toolbar>
-    <cds-table-toolbar-actions>
+    <!-- thêm event (change cho cds-table-toolbar-actions) -->
+    <cds-table-toolbar-actions >
       <button cdsButton="primary">
         Delete
         <svg cdsIcon="delete" size="16" class="cds--btn__icon"></svg>
@@ -26,7 +31,11 @@
       </button>
     </cds-table-toolbar-actions>
     <cds-table-toolbar-content *ngIf="!toolbar.selected">
-      <cds-table-toolbar-search [expandable]="true"></cds-table-toolbar-search>
+      <cds-table-toolbar-search
+					[expandable]="true"
+					(valueChange)="filterNodeNames($event)"
+					(clear)="filterNodeNames('')">
+				</cds-table-toolbar-search>
       <button cdsButton="ghost" class="toolbar-action">
         <svg cdsIcon="settings" size="16" class="cds--toolbar-action__icon"></svg>
       </button>
@@ -36,6 +45,7 @@
       </button>
     </cds-table-toolbar-content>
   </cds-table-toolbar>
+
     <cds-table
       [model]="model"
       [size]="'xl'"
