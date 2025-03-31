@@ -12,13 +12,7 @@ import {
 } from '@angular/forms';
 import { emailValidator, passwordValidator } from '../../app/share/validator/login-validation';
 import { Router } from '@angular/router';
-
-export interface User {
-  id: number;
-  email: string;
-  password: string;
-}
-
+import { User } from '../../app/share/models/user.model';
 @Component({
   selector: 'app-login-ui',
   standalone: true,

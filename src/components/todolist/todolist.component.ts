@@ -1,12 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedModule } from '../../app/share/shared.module';
 import { TableHeaderItem, TableItem, TableModel } from 'carbon-components-angular';
+import { Todo } from '../../app/share/models/todo.model';
 
-export interface Todo {
-  name: string;
-  status: string;
-  date: string;
-}
 
 @Component({
   selector: 'app-todolist',
