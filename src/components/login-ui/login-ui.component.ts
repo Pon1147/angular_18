@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SharedModule } from '../../share/shared.module';
+import { SharedModule } from '../../app/share/shared.module';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { typInfoLarge, typArrowRightThick } from '@ng-icons/typicons';
 import {
@@ -10,7 +10,7 @@ import {
   Validators,
   AbstractControl
 } from '@angular/forms';
-import { emailValidator, passwordValidator } from '../../share/login-validation';
+import { emailValidator, passwordValidator } from '../../app/share/validator/login-validation';
 import { Router } from '@angular/router';
 
 export interface User {
