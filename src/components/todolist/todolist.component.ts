@@ -1,6 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SimpleChanges } from '@angular/core';
 import { SharedModule } from '../../share/shared.module';
 import { TableHeaderItem, TableItem, TableModel } from 'carbon-components-angular';
+
+export interface Todo {
+  name: string;
+  status: string;
+  action: string;
+}
 
 @Component({
   selector: 'app-todolist',
@@ -16,68 +22,64 @@ export class TodolistComponent implements OnInit {
     SINGLE: '1 item selected',
     MULTIPLE: '{{count}} items selected',
   };
-  // Ủa khoang tính làm cái mảng chứa data :v
   model = new TableModel();
-  todoList: any[] = [];
+  todoList: Todo[] = [
+    { name: 'Name 1', status: 'qwer', action: 'Store' },
+    { name: 'Name 3', status: 'zwer', action: 'Store' },
+    { name: 'Name 2', status: 'swer', action: 'Store' },
+    { name: 'Name 4', status: 'twer', action: 'Store' },
+    { name: 'Name 5', status: 'twer', action: 'Store' },
+    { name: 'Name 6', status: 'twer', action: 'Store' },
+    { name: 'Name 7', status: 'twer', action: 'Store' },
+  ];
 
-  constructor() {
-    // Your initialization logic here
-  }
+  constructor() {}
+
   ngOnInit(): void {
     this.model.header = [
-      new TableHeaderItem({
-        data: 'Name',
-        title: 'Table header title',
-      }),
-      new TableHeaderItem({
-        data: 'Statur',
-        classname: 'my-class',
-      }),
-      new TableHeaderItem({
-        data: 'Action',
-      }),
+      new TableHeaderItem({ data: 'Name', title: 'Table header title' }),
+      new TableHeaderItem({ data: 'Status', classname: 'my-class' }),
+      new TableHeaderItem({ data: 'Action' }),
     ];
+
+    this.model.data = this.todoList.map(todo => [
+      new TableItem({ data: todo.name, title: 'Table item title' }),
+      new TableItem({ data: todo.status }),
+      new TableItem({ data: todo.action }),
+    ]);
+
+    this.updateTableData(); // cập nhật hàm update Data trong table
+
     this.model.rowsSelectedChange.subscribe(event => console.log(event));
     this.model.selectAllChange.subscribe(event =>
       console.log(event ? 'All rows selected!' : 'All rows deselected!'),
     );
-
-    this.model.data = [
-      [
-        new TableItem({ data: 'Name 1', title: 'Table item title' }),
-        new TableItem({ data: 'qwer' }),
-        new TableItem({ data: 'Store'})
-      ],
-      [
-        new TableItem({ data: 'Name 3' }),
-        new TableItem({ data: 'zwer' }),
-        new TableItem({ data: 'Store' }),
-      ],
-      [
-        new TableItem({ data: 'Name 2' }),
-        new TableItem({ data: 'swer' }),
-        new TableItem({ data: 'Store' }),
-      ],
-      [
-        new TableItem({ data: 'Name 4' }),
-        new TableItem({ data: 'twer' }),
-        new TableItem({ data: 'Store' }),
-      ],
-      [
-        new TableItem({ data: 'Name 5' }),
-        new TableItem({ data: 'twer' }),
-        new TableItem({ data: 'Store' }),
-      ],
-      [
-        new TableItem({ data: 'Name 6' }),
-        new TableItem({ data: 'twer' }),
-        new TableItem({ data: 'Store' }),
-      ],
-      [
-        new TableItem({ data: 'Name 7' }),
-        new TableItem({ data: 'twer' }),
-        new TableItem({ data: 'Store' }),
-      ],
-    ];
   }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['sortable']) {
+      for (let column of this.model.header) {
+        column.sortable = changes['sortable'].currentValue;
+      }
+    }
+  }
+
+  // Phương thức để cập nhật model.data từ todoList
+  private updateTableData() {
+    this.model.data = this.todoList.map(todo => [
+      new TableItem({ data: todo.name, title: 'Table item title' }),
+      new TableItem({ data: todo.status }),
+      new TableItem({ data: todo.action }),
+    ]);
+  }
+  addNewData() {
+    const newTodo: Todo = {
+      name: `Task ${this.todoList.length + 1}`, // Tạo tên động dựa trên số lượng task
+      status: 'Pending', // Trạng thái mặc định
+      action: 'Edit', // Hành động mặc định
+    };
+    this.todoList.push(newTodo); // Thêm vào todoList
+    this.updateTableData(); // Cập nhật model.data
+  }
+
 }

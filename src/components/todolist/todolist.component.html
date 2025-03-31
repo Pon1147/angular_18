@@ -9,6 +9,7 @@
         Delete
         <svg cdsIcon="delete" size="16" class="cds--btn__icon"></svg>
       </button>
+      
       <button cdsButton="primary">
         Save
         <svg cdsIcon="save" size="16" class="cds--btn__icon"></svg>
@@ -29,16 +30,21 @@
       </button>
     </cds-table-toolbar-content>
   </cds-table-toolbar>
-  <cds-table
-    [model]="model"
-    [size]="'xl'"
-    [showSelectionColumn]="true"
-    [enableSingleSelect]="false"
-    [striped]="false"
-    [sortable]="true"
-    [isDataGrid]="true"
-    [stickyHeader]="true"
-  >
-  </cds-table>
-
+    <cds-table
+      [model]="model"
+      [size]="'xl'"
+      [showSelectionColumn]="true"
+      [enableSingleSelect]="false"
+      [striped]="false"
+      [sortable]="true"
+      [isDataGrid]="true"
+      [stickyHeader]="true"
+      [skeleton]="false"
+    >
+    </cds-table>
+<cds-button-set>
+  <button cdsButton="primary" (click)="addNewData()">
+    Click here to add more
+  </button>
+</cds-button-set>
 </cds-table-container> 
