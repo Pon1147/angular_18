@@ -1,14 +1,6 @@
 <div class="home">
   <h1>Home at Angular 18</h1>
-  <section class="listing">
-    <h2 class="listing-heading">Housing Locations</h2>
-    <div class="listing-item" *ngFor="let housingLocation of housingLocationLists">
-      <img class="listing-photo" [src]="housingLocation.photo" alt="Photo of {{housingLocation.name}}" />
-      <h3>{{housingLocation.name}}</h3>
-      <p>{{housingLocation.city}}, {{housingLocation.state}}</p>
-      <p>Available Units: {{housingLocation.availableUnits}}</p>
-      <p>Wifi: {{housingLocation.wifi ? 'Yes' : 'No'}}</p>
-      <p>Laundry: {{housingLocation.laundry ? 'Yes' : 'No'}}</p>
-    </div>
-  </section>
+</div>
+<div>
+  <app-todolist></app-todolist>
 </div>
