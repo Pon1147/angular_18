@@ -5,9 +5,10 @@
       <p cdsTableHeaderDescription>{{ description }}</p>
     </div>
     <cds-button-set>
-      <button cdsButton="primary" (click)="addNewData()">Click here to add more</button>
+      <button cdsButton="primary" (click)="openAddModal()">Click here to add more</button>
     </cds-button-set>
   </cds-table-header>
+
   <cds-table-toolbar [model]="model" [batchText]="batchText" #toolbar>
     <cds-table-toolbar-actions *ngIf="toolbar.selected">
       <button cdsButton="danger" (click)="deleteSelected()">
@@ -32,17 +33,23 @@
       ></cds-table-toolbar-search>
 
       <cds-date-picker
-        dateFormat="d/m/Y"
+        dateFormat="Y-m-d"
         (valueChange)="onDateChange($event)"
         style="margin-left: 1rem"
       >
         <cds-date-picker-input
           label="Filter by Date"
-          placeholder="dd/mm/yyyy"
+          placeholder="yyyy-mm-dd"
         ></cds-date-picker-input>
       </cds-date-picker>
+
+      <button cdsButton="primary" size="sm">
+        Primary button
+        <svg cdsIcon="add" size="20" class="cds--btn__icon"></svg>
+      </button>
     </cds-table-toolbar-content>
   </cds-table-toolbar>
+
   <cds-table
     [model]="model"
     [size]="'xl'"
@@ -55,4 +62,11 @@
     [skeleton]="false"
   >
   </cds-table>
+
+  <!-- Thêm ModalAddTodoItemComponent -->
+  <app-modal-add-todo-item
+    [open]="isModalOpen"
+    (close)="closeAddModal()"
+    (addTask)="handleAddTask($event)"
+  ></app-modal-add-todo-item>
 </cds-table-container>

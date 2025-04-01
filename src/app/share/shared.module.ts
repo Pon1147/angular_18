@@ -21,11 +21,13 @@ import {
   LayerModule,
   RadioModule,
   PopoverModule,
+  ModalModule,
 } from 'carbon-components-angular';
 
 // import { AppCdsIconService } from './services/cds-icon-service';
 @NgModule({
   imports: [
+    ModalModule,
     CommonModule,
     ButtonModule,
     InputModule,
@@ -47,9 +49,10 @@ import {
     LayerModule,
     RadioModule,
     PopoverModule,
-    // Add other common import modules here
+    // Add other common import modules hereFormsModule
   ],
   exports: [
+    ModalModule,
     CommonModule,
     ReactiveFormsModule,
     ButtonModule,

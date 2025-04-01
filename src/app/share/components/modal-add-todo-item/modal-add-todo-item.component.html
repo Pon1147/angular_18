@@ -1,0 +1,46 @@
+<cds-modal [open]="open" (overlaySelected)="closeModal()">
+    <cds-modal-header (closeSelect)="closeModal()">
+      <h3 cdsModalHeaderHeading>Add New Task</h3>
+    </cds-modal-header>
+  
+    <section cdsModalBody>
+      <div class="form-group">
+        <label for="taskName">Task Name</label>
+        <input
+          id="taskName"
+          type="text"
+          class="cds--text-input"
+          [(ngModel)]="taskName"
+          placeholder="Enter task name"
+        />
+      </div>
+  
+      <div class="form-group">
+        <label for="taskStatus">Status</label>
+        <select
+          id="taskStatus"
+          class="cds--select-input"
+          [(ngModel)]="taskStatus"
+        >
+          <option value="pending">Pending</option>
+          <option value="processing">Processing</option>
+          <option value="done">Done</option>
+        </select>
+      </div>
+  
+      <div class="form-group">
+        <label for="taskDate">Date</label>
+        <cds-date-picker dateFormat="Y-m-d" (valueChange)="onDateChange($event)">
+          <cds-date-picker-input
+            id="taskDate"
+            placeholder="yyyy-mm-dd"
+          ></cds-date-picker-input>
+        </cds-date-picker>
+      </div>
+    </section>
+  
+    <cds-modal-footer>
+      <button cdsButton="ghost" (click)="closeModal()">Cancel</button>
+      <button cdsButton="primary" (click)="onAddTask()">Add Task</button>
+    </cds-modal-footer>
+  </cds-modal>
