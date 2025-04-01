@@ -4,6 +4,7 @@ import { TableHeaderItem, TableItem, TableModel } from 'carbon-components-angula
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { typFilter } from '@ng-icons/typicons';
 import { CommonModule } from '@angular/common';
+import { Task } from '../../app/share/models/todo.model';
 
 @Component({
   selector: 'app-todolist',
@@ -29,27 +30,27 @@ export class TodolistComponent implements OnInit {
   constructor() {
     // Khởi tạo header cho bảng
     this.model.header = [
-      new TableHeaderItem({ data: 'Name', title: 'Table header title', sortable: true }),
-      new TableHeaderItem({ data: 'Status', className: 'my-class', sortable: true }),
-      new TableHeaderItem({ data: 'Date', sortable: true }),
+      new TableHeaderItem({ data: 'Name', title: 'Table header title' }),
+      new TableHeaderItem({ data: 'Status' }),
+      new TableHeaderItem({ data: 'Date' }),
     ];
 
-    // Dữ liệu gốc dạng mảng thô
-    const rawData = [
-      ['Research About Table', 'processing', '2025-03-28'],
-      ['Add Button addNewData to table', 'done', '2025-03-31'],
-      ['Complete Angular Assignment', 'pending', '2025-04-02'],
-      ['Meet with Team', 'processing', '2025-04-03'],
-      ['Write Report', 'done', '2025-04-04'],
-      ['Plan Project Timeline', 'pending', '2025-04-05'],
-      ['Review Code', 'processing', '2025-04-06'],
+    // Dữ liệu gốc dạng mảng thô với định dạng DD/MM/YYYY
+    const rawData: Task[] = [
+      { name: 'Research About Table', status: 'processing', date: '28/03/2025' },
+      { name: 'Add Button addNewData to table', status: 'done', date: '31/03/2025' },
+      { name: 'Complete Angular Assignment', status: 'pending', date: '02/04/2025' },
+      { name: 'Meet with Team', status: 'processing', date: '03/04/2025' },
+      { name: 'Write Report', status: 'done', date: '04/04/2025' },
+      { name: 'Plan Project Timeline', status: 'pending', date: '05/04/2025' },
+      { name: 'Review Code', status: 'processing', date: '06/04/2025' },
     ];
 
     // Chuyển dữ liệu thô thành TableItem để sử dụng trong TableModel
     this.initialModelData = rawData.map(row => [
-      new TableItem({ data: row[0], title: 'Task details' }),
-      new TableItem({ data: row[1] }),
-      new TableItem({ data: row[2] }),
+      new TableItem({ data: row.name, title: 'Task details' }),
+      new TableItem({ data: row.status, title: 'Task status' }),
+      new TableItem({ data: row.date, title: 'Date' }),
     ]);
     this.model.data = [...this.initialModelData]; // Gán dữ liệu ban đầu cho model
   }
@@ -67,8 +68,8 @@ export class TodolistComponent implements OnInit {
 
   // Thêm một hàng mới vào bảng
   addNewData() {
-    // Tạo dữ liệu mới cho hàng
-    const newRawRow = [`Task ${this.initialModelData.length + 1}`, 'Pending', '2025-04-07'];
+    // Tạo dữ liệu mới cho hàng với định dạng DD/MM/YYYY
+    const newRawRow = [`Task ${this.initialModelData.length + 1}`, 'pending', '07/04/2025'];
     const newTableRow = [
       new TableItem({ data: newRawRow[0] }),
       new TableItem({ data: newRawRow[1] }),
@@ -80,12 +81,12 @@ export class TodolistComponent implements OnInit {
     this.applyFilters();
   }
 
-  // Định dạng ngày từ Date sang chuỗi YYYY-MM-DD
+  // Định dạng ngày từ Date sang chuỗi DD/MM/YYYY
   private formatDate(date: Date): string {
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const day = date.getDate().toString().padStart(2, '0');
-    return `${year}-${month}-${day}`;
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
   }
 
   // Hàm tập trung để áp dụng tất cả các bộ lọc (tìm kiếm theo tên và lọc theo ngày)
@@ -149,8 +150,8 @@ export class TodolistComponent implements OnInit {
     // Tạo Set chứa định danh (tên task) của các hàng cần xóa
     const identifiersToDelete = new Set(selectedRowsData.map(row => row[0].data));
     // Lọc dữ liệu gốc, giữ lại các hàng không nằm trong Set cần xóa
-    this.initialModelData = this.initialModelData.filter(initialRow =>
-      !identifiersToDelete.has(initialRow[0].data)
+    this.initialModelData = this.initialModelData.filter(
+      initialRow => !identifiersToDelete.has(initialRow[0].data)
     );
     // Áp dụng lại bộ lọc để cập nhật view
     this.applyFilters();

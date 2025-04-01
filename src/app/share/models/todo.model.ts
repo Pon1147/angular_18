@@ -1,6 +1,5 @@
-
-export interface Todo {
+export interface Task{
   name: string;
-  status: string;
-  date: string;
+  status: 'processing' | 'done' | 'pending';
+  date: string; 
 }

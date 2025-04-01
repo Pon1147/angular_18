@@ -5,9 +5,7 @@
       <p cdsTableHeaderDescription>{{ description }}</p>
     </div>
     <cds-button-set>
-      <button cdsButton="primary" (click)="addNewData()">
-        Click here to add more
-      </button>
+      <button cdsButton="primary" (click)="addNewData()">Click here to add more</button>
     </cds-button-set>
   </cds-table-header>
   <cds-table-toolbar [model]="model" [batchText]="batchText" #toolbar>
@@ -30,30 +28,31 @@
       <cds-table-toolbar-search
         [expandable]="true"
         (valueChange)="filterNodeNames($event)"
-        (clear)="filterNodeNames(null)" ></cds-table-toolbar-search>
+        (clear)="filterNodeNames(null)"
+      ></cds-table-toolbar-search>
 
       <cds-date-picker
-         dateFormat="Y-m-d"  (valueChange)="onDateChange($event)"
-         style="margin-left: 1rem;" >
+        dateFormat="d/m/Y"
+        (valueChange)="onDateChange($event)"
+        style="margin-left: 1rem"
+      >
         <cds-date-picker-input
           label="Filter by Date"
-          placeholder="yyyy-mm-dd" ></cds-date-picker-input>
+          placeholder="dd/mm/yyyy"
+        ></cds-date-picker-input>
       </cds-date-picker>
-
-      </cds-table-toolbar-content>
+    </cds-table-toolbar-content>
   </cds-table-toolbar>
-
-    <cds-table
-      [model]="model"
-      [size]="'xl'"
-      [showSelectionColumn]="true"
-      [enableSingleSelect]="false"
-      [striped]="false"
-      [sortable]="true"
-      [isDataGrid]="true"
-      [stickyHeader]="true"
-      [skeleton]="false"
-    >
-      </cds-table>
-
+  <cds-table
+    [model]="model"
+    [size]="'xl'"
+    [showSelectionColumn]="true"
+    [enableSingleSelect]="false"
+    [striped]="false"
+    [sortable]="true"
+    [isDataGrid]="true"
+    [stickyHeader]="true"
+    [skeleton]="false"
+  >
+  </cds-table>
 </cds-table-container>
