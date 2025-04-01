@@ -1,53 +1,46 @@
 <cds-table-container>
-  <!-- cds header Nơi thay đổi header -->
   <cds-table-header>
     <div>
       <h4 cdsTableHeaderTitle>{{ title }}</h4>
       <p cdsTableHeaderDescription>{{ description }}</p>
     </div>
-    <!-- thêm giá trị mới cho bản = button below -->
     <cds-button-set>
       <button cdsButton="primary" (click)="addNewData()">
         Click here to add more
       </button>
     </cds-button-set>
   </cds-table-header>
-  <!-- Thanh công cụ (search), (filter),.... -->
-
   <cds-table-toolbar [model]="model" [batchText]="batchText" #toolbar>
-    <!-- thêm event (change cho cds-table-toolbar-actions) -->
-    <cds-table-toolbar-actions >
-      <button cdsButton="primary">
+    <cds-table-toolbar-actions *ngIf="toolbar.selected">
+      <button cdsButton="danger" (click)="deleteSelected()">
         Delete
         <svg cdsIcon="delete" size="16" class="cds--btn__icon"></svg>
       </button>
-            <button cdsButton="primary">
+      <button cdsButton="primary" (click)="saveSelected()">
         Save
         <svg cdsIcon="save" size="16" class="cds--btn__icon"></svg>
       </button>
-      <button cdsButton="primary">
+      <button cdsButton="primary" (click)="downloadSelected()">
         Download
         <svg cdsIcon="download" size="16" class="cds--btn__icon"></svg>
       </button>
     </cds-table-toolbar-actions>
+
     <cds-table-toolbar-content *ngIf="!toolbar.selected">
       <cds-table-toolbar-search
         [expandable]="true"
         (valueChange)="filterNodeNames($event)"
-        (clear)="filterNodeNames('')"
-      ></cds-table-toolbar-search>
-      <cds-date-picker (valueChange)="onDateChange($event)">
+        (clear)="filterNodeNames(null)" ></cds-table-toolbar-search>
+
+      <cds-date-picker
+         dateFormat="Y-m-d"  (valueChange)="onDateChange($event)"
+         style="margin-left: 1rem;" >
         <cds-date-picker-input
           label="Filter by Date"
-          placeholder="mm/dd/yyyy"
-          (valueChange)="onDateChange($event)"
-        ></cds-date-picker-input>
+          placeholder="yyyy-mm-dd" ></cds-date-picker-input>
       </cds-date-picker>
-      <button cdsButton="primary" size="sm">
-        Primary button
-        <svg cdsIcon="add" size="20" class="cds--btn__icon"></svg>
-      </button>
-    </cds-table-toolbar-content>
+
+      </cds-table-toolbar-content>
   </cds-table-toolbar>
 
     <cds-table
@@ -61,6 +54,6 @@
       [stickyHeader]="true"
       [skeleton]="false"
     >
-    </cds-table>
+      </cds-table>
 
-</cds-table-container> 
+</cds-table-container>
