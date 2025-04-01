@@ -32,13 +32,17 @@
     </cds-table-toolbar-actions>
     <cds-table-toolbar-content *ngIf="!toolbar.selected">
       <cds-table-toolbar-search
-					[expandable]="true"
-					(valueChange)="filterNodeNames($event)"
-					(clear)="filterNodeNames('')">
-				</cds-table-toolbar-search>
-      <button cdsButton="ghost" class="toolbar-action">
-        <svg cdsIcon="settings" size="16" class="cds--toolbar-action__icon"></svg>
-      </button>
+        [expandable]="true"
+        (valueChange)="filterNodeNames($event)"
+        (clear)="filterNodeNames('')"
+      ></cds-table-toolbar-search>
+      <cds-date-picker (valueChange)="onDateChange($event)">
+        <cds-date-picker-input
+          label="Filter by Date"
+          placeholder="mm/dd/yyyy"
+          (valueChange)="onDateChange($event)"
+        ></cds-date-picker-input>
+      </cds-date-picker>
       <button cdsButton="primary" size="sm">
         Primary button
         <svg cdsIcon="add" size="20" class="cds--btn__icon"></svg>
