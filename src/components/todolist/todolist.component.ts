@@ -196,15 +196,13 @@ export class TodolistComponent implements OnInit {
   }
 
   editSelected() {
-    const selectedData = this.getSelectedRowsData();
+    const selectedData = this.getSelectedRowsData(); // Lấy dữ liệu hàng được chọn
     if (selectedData.length === 1) {
       const selectedTask = this.tasks.find(task => task.name === selectedData[0][0].data);
       if (selectedTask) {
-        this.openEditModal(selectedTask);
-        this.modalMode = 'edit';
-        this.selectedTask = selectedTask;
-        this.isModalOpen = true;
-        console.log('modalMode:', this.modalMode);
+        this.modalMode = 'edit'; // Đặt chế độ modal là edit
+        this.selectedTask = selectedTask; // Lưu task được chọn
+        this.isModalOpen = true; // Mở modal
       }
     } else {
       console.log('Vui lòng chọn đúng một hàng để chỉnh sửa.');

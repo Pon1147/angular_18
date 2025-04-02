@@ -1,29 +1,41 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { SharedModule } from '../../shared.module';
 import { Task } from '../../models/todo.model';
 
 @Component({
   selector: 'app-modal-add-todo-item',
   standalone: true,
-  imports: [ SharedModule],
+  imports: [SharedModule],
   templateUrl: './modal-add-todo-item.component.html',
   styleUrls: ['./modal-add-todo-item.component.scss'],
 })
-
-export class ModalAddTodoItemComponent {
+export class ModalAddTodoItemComponent implements OnChanges {
   @Input() open = false;
   @Input() mode: 'add' | 'edit' = 'add'; // Chế độ: thêm mới hoặc chỉnh sửa
   @Input() taskToEdit: Task | null = null; // Task cần chỉnh sửa
   @Output() close = new EventEmitter<void>();
   @Output() addTask = new EventEmitter<Task>();
 
-  heading1 = "Add Todo Item";
-  heading2 = "Edit Todo Item";
+  heading1 = 'Add Todo Item';
+  heading2 = 'Edit Todo Item';
 
   taskId: number = 0;
   taskName: string = '';
   taskStatus: 'processing' | 'done' | 'pending' = 'pending';
   taskDate: string = '';
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['taskToEdit']) {
+      console.log('Task được chọn:', this.taskToEdit);
+      if (this.mode === 'edit' && this.taskToEdit) {
+        this.taskId = this.taskToEdit.id;
+        this.taskName = this.taskToEdit.name;
+        this.taskStatus = this.taskToEdit.status;
+        this.taskDate = this.taskToEdit.date[0];
+        console.log('Dữ liệu điền sẵn:', this.taskName, this.taskStatus, this.taskDate);
+      }
+    }
+  }
 
   ngOnInit() {
     // Nếu ở chế độ chỉnh sửa, điền dữ liệu từ taskToEdit vào form
@@ -44,7 +56,7 @@ export class ModalAddTodoItemComponent {
   onAddTask() {
     if (this.taskName && this.taskStatus && this.taskDate) {
       const task: Task = {
-        id: this.mode === 'edit' ? this.taskId : 0, 
+        id: this.mode === 'edit' ? this.taskId : 0,
         name: this.taskName,
         status: this.taskStatus,
         date: [this.taskDate],
@@ -60,10 +72,7 @@ export class ModalAddTodoItemComponent {
   onDateChange(selectedDates: Date[] | null) {
     if (selectedDates && selectedDates.length > 0 && !isNaN(selectedDates[0].getTime())) {
       const date = selectedDates[0];
-      const year = date.getFullYear();
-      const month = (date.getMonth() + 1).toString().padStart(2, '0');
-      const day = date.getDate().toString().padStart(2, '0');
-      this.taskDate = `${year}-${month}-${day}`;
+      this.taskDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
     } else {
       this.taskDate = '';
     }

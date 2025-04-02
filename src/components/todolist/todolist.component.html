@@ -67,6 +67,7 @@
   <app-modal-add-todo-item
   [open]="isModalOpen"
   [mode]="modalMode"
+  [taskToEdit]="selectedTask"
   (close)="closeAddModal()"
   (addTask)="handleAddTask($event)"
 ></app-modal-add-todo-item>
