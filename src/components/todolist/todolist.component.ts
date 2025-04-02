@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedModule } from '../../app/share/shared.module';
-import { TableHeaderItem, TableItem, TableModel } from 'carbon-components-angular';
+import { PaginationModel, TableHeaderItem, TableItem, TableModel } from 'carbon-components-angular';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { typFilter } from '@ng-icons/typicons';
 import { Task } from '../../app/share/models/todo.model';
@@ -25,6 +25,7 @@ export class TodolistComponent implements OnInit {
   model = new TableModel();
   tasks: Task[] = []; // chứa toàn bộ thông tin gốc
   initialModelData: TableItem[][] = []; // Dữ liệu gốc, không thay đổi khi lọc (không chứa ID)
+  filteredData: TableItem[][] = []; // Dữ liệu sau khi lọc để hiển thị phân trang
   currentSearchString = ''; // Giá trị tìm kiếm hiện tại
   currentSelectedDateString: string | null = null; // Ngày được chọn để lọc
   isModalOpen = false; // Trạng thái mở/đóng của modal
@@ -32,7 +33,22 @@ export class TodolistComponent implements OnInit {
   modalMode: 'add' | 'edit' = 'add';
   selectedTask: Task | null = null;
 
+  //Phân trang
+  paginationModel = new PaginationModel();
+  itemsPerPageOptions = [5, 10, 15];
+
+  getEndIndex(): number {
+    if (!this.paginationModel.currentPage || !this.paginationModel.pageLength) {
+      return 0; // Trả về giá trị mặc định nếu không xác định
+    }
+    return Math.min(
+      this.paginationModel.currentPage * this.paginationModel.pageLength,
+      this.paginationModel.totalDataLength
+    );
+  }
+
   constructor() {
+   
     // Khởi tạo header cho bảng
     this.model.header = [
       new TableHeaderItem({ data: 'Name', title: 'Table header title' }),
@@ -59,6 +75,14 @@ export class TodolistComponent implements OnInit {
     ]);
     this.model.data = [...this.initialModelData]; // Gán dữ liệu ban đầu cho model
     this.tasks = rawData;
+
+    this.paginationModel = new PaginationModel();
+    this.paginationModel.pageLength = this.itemsPerPageOptions[0]; // Mặc định 5
+    this.paginationModel.currentPage = 1;
+    this.paginationModel.totalDataLength = 0; // Khởi tạo giá trị mặc định
+    this.filteredData = [...this.initialModelData];
+    this.updateTotalPages();
+    this.updateTableData();
   }
 
   ngOnInit(): void {
@@ -71,6 +95,33 @@ export class TodolistComponent implements OnInit {
       console.log(event ? 'All rows selected!' : 'All rows deselected!'),
     );
   }
+
+  // **Phương thức phân trang**
+  private updateTotalPages() {
+    this.paginationModel.totalDataLength = this.filteredData.length;
+  }
+
+  private updateTableData() {
+  if (!this.paginationModel.currentPage || !this.paginationModel.pageLength) {
+    this.model.data = [];
+    return;
+  }
+  const startIndex = (this.paginationModel.currentPage - 1) * this.paginationModel.pageLength;
+  const endIndex = startIndex + this.paginationModel.pageLength;
+  this.model.data = this.filteredData.slice(startIndex, endIndex);
+}
+
+  selectPage(page: number) {
+    this.paginationModel.currentPage = page;
+    this.updateTableData();
+  }
+
+  onPageLengthChange(event: any) {
+    this.paginationModel.pageLength = event.value; // Lấy giá trị từ event.value
+    this.paginationModel.currentPage = 1; // Quay về trang 1
+    this.updateTableData();
+  }
+
   // Mở modal để thêm task mới
   openAddModal() {
     this.modalMode = 'add';
@@ -97,6 +148,8 @@ export class TodolistComponent implements OnInit {
         new TableItem({ data: formattedTask.date[0] }),
       ];
       this.initialModelData = [...this.initialModelData, newTableRow];
+      console.log('initialModelData', this.initialModelData);
+      this.model.data = [...this.initialModelData];
     } else if (this.modalMode === 'edit' && task.id) {
       const index = this.tasks.findIndex(t => t.id === task.id);
       if (index !== -1) {

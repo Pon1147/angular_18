@@ -62,13 +62,27 @@
     [skeleton]="false"
   >
   </cds-table>
+  <!-- Thông tin phân trang -->
+  <div *ngIf="paginationModel">
+    Hiển thị {{ (paginationModel.currentPage! - 1) * paginationModel.pageLength! + 1 }} -
+    {{ getEndIndex() }}
+    của {{ paginationModel.totalDataLength }} mục
+  </div>
+
+  <!-- Thành phần phân trang -->
+  <cds-pagination
+  [model]="paginationModel"
+  [itemsPerPageOptions]="itemsPerPageOptions"
+  (selectPage)="selectPage($event)"
+  (pageLengthChange)="onPageLengthChange($event)"
+></cds-pagination>
 
   <!-- Thêm ModalAddTodoItemComponent -->
   <app-modal-add-todo-item
-  [open]="isModalOpen"
-  [mode]="modalMode"
-  [taskToEdit]="selectedTask"
-  (close)="closeAddModal()"
-  (addTask)="handleAddTask($event)"
-></app-modal-add-todo-item>
+    [open]="isModalOpen"
+    [mode]="modalMode"
+    [taskToEdit]="selectedTask"
+    (close)="closeAddModal()"
+    (addTask)="handleAddTask($event)"
+  ></app-modal-add-todo-item>
 </cds-table-container>
