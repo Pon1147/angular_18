@@ -38,11 +38,8 @@ export class TodolistComponent implements OnInit {
   itemsPerPageOptions = [5, 10, 15];
 
   getEndIndex(): number {
-    if (!this.paginationModel.currentPage || !this.paginationModel.pageLength) {
-      return 0; // Trả về giá trị mặc định nếu không xác định
-    }
     return Math.min(
-      this.paginationModel.currentPage * this.paginationModel.pageLength,
+      this.paginationModel.currentPage * this.paginationModel.pageLength!,
       this.paginationModel.totalDataLength
     );
   }
@@ -76,10 +73,8 @@ export class TodolistComponent implements OnInit {
     this.model.data = [...this.initialModelData]; // Gán dữ liệu ban đầu cho model
     this.tasks = rawData;
 
-    this.paginationModel = new PaginationModel();
-    this.paginationModel.pageLength = this.itemsPerPageOptions[0]; // Mặc định 5
+    this.paginationModel.pageLength = this.itemsPerPageOptions[0];
     this.paginationModel.currentPage = 1;
-    this.paginationModel.totalDataLength = 0; // Khởi tạo giá trị mặc định
     this.filteredData = [...this.initialModelData];
     this.updateTotalPages();
     this.updateTableData();
@@ -102,14 +97,10 @@ export class TodolistComponent implements OnInit {
   }
 
   private updateTableData() {
-  if (!this.paginationModel.currentPage || !this.paginationModel.pageLength) {
-    this.model.data = [];
-    return;
+    const startIndex = (this.paginationModel.currentPage - 1) * this.paginationModel.pageLength!;
+    const endIndex = startIndex + this.paginationModel.pageLength!;
+    this.model.data = this.filteredData.slice(startIndex, endIndex);
   }
-  const startIndex = (this.paginationModel.currentPage - 1) * this.paginationModel.pageLength;
-  const endIndex = startIndex + this.paginationModel.pageLength;
-  this.model.data = this.filteredData.slice(startIndex, endIndex);
-}
 
   selectPage(page: number) {
     this.paginationModel.currentPage = page;
@@ -166,6 +157,7 @@ export class TodolistComponent implements OnInit {
         }
       }
     }
+    this.filteredData = [...this.initialModelData];
     this.applyFilters();
     this.isModalOpen = false;
   }
@@ -185,6 +177,7 @@ export class TodolistComponent implements OnInit {
     ];
     this.initialModelData = [...this.initialModelData, newTableRow];
     this.tasks = [...this.tasks, newRawRow]; // Thêm task mới vào mảng tasks
+    this.filteredData = [...this.initialModelData];
     this.applyFilters();
     console.log('Danh sách tasks với ID:', this.tasks);
   }
@@ -217,6 +210,10 @@ export class TodolistComponent implements OnInit {
         row => (row[2]?.data as string) === this.currentSelectedDateString,
       );
     }
+    this.filteredData = filteredData;
+    this.paginationModel.currentPage = 1;
+    this.updateTotalPages();
+    this.updateTableData();
     this.model.data = filteredData;
     this.model.selectAll(false);
   }
@@ -244,6 +241,7 @@ export class TodolistComponent implements OnInit {
     const namesToDelete = new Set(selectedRowsData.map(row => row[0].data));
     this.tasks = this.tasks.filter(task => !namesToDelete.has(task.name));
     this.initialModelData = this.initialModelData.filter(row => !namesToDelete.has(row[0].data));
+    this.filteredData = this.filteredData.filter(row => !namesToDelete.has(row[0].data));
     this.applyFilters();
     this.model.selectAll(false);
   }
