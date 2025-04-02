@@ -1,8 +1,7 @@
 <cds-modal [open]="open" (overlaySelected)="closeModal()">
-    <cds-modal-header (closeSelect)="closeModal()">
-      <h3 cdsModalHeaderHeading>Add New Task</h3>
-    </cds-modal-header>
-  
+  <cds-modal-header (closeSelect)="closeModal()">
+    <h3 cdsModalHeaderHeading>{{ mode === 'add' ? heading1 : heading2 }}</h3>
+  </cds-modal-header>
     <section cdsModalBody>
       <div class="form-group">
         <label for="taskName">Task Name</label>

@@ -12,12 +12,29 @@ import { Task } from '../../models/todo.model';
 
 export class ModalAddTodoItemComponent {
   @Input() open = false;
+  @Input() mode: 'add' | 'edit' = 'add'; // Chế độ: thêm mới hoặc chỉnh sửa
+  @Input() taskToEdit: Task | null = null; // Task cần chỉnh sửa
   @Output() close = new EventEmitter<void>();
   @Output() addTask = new EventEmitter<Task>();
 
+  heading1 = "Add Todo Item";
+  heading2 = "Edit Todo Item";
+
+  taskId: number = 0;
   taskName: string = '';
   taskStatus: 'processing' | 'done' | 'pending' = 'pending';
-  taskDate: string = ''; // Chuỗi ngày định dạng yyyy-mm-dd
+  taskDate: string = '';
+
+  ngOnInit() {
+    // Nếu ở chế độ chỉnh sửa, điền dữ liệu từ taskToEdit vào form
+    console.log('Mode nhận được:', this.mode); // Kiểm tra giá trị mode
+    if (this.mode === 'edit' && this.taskToEdit) {
+      this.taskId = this.taskToEdit.id;
+      this.taskName = this.taskToEdit.name;
+      this.taskStatus = this.taskToEdit.status;
+      this.taskDate = this.taskToEdit.date[0];
+    }
+  }
 
   closeModal() {
     this.close.emit();
@@ -25,46 +42,35 @@ export class ModalAddTodoItemComponent {
   }
 
   onAddTask() {
-    console.log('Debug - Current Values:', {
-      taskName: this.taskName,
-      taskStatus: this.taskStatus,
-      taskDate: this.taskDate,
-    });
-
     if (this.taskName && this.taskStatus && this.taskDate) {
-      console.log('Trạng thái task:', this.taskStatus, 'Kiểu:', typeof this.taskStatus, this.taskDate);
-      if (this.taskStatus === 'pending') {
-        console.log('Task đang ở trạng thái pending, có thể thêm.');
-      }
-
-      const newTask: Task = {
+      const task: Task = {
+        id: this.mode === 'edit' ? this.taskId : 0, 
         name: this.taskName,
         status: this.taskStatus,
-        date: [this.taskDate], // Chuyển thành mảng chuỗi
+        date: [this.taskDate],
       };
-      this.addTask.emit(newTask);
+      this.addTask.emit(task);
+      this.resetForm();
       this.closeModal();
     } else {
       console.log('Vui lòng điền đầy đủ thông tin.');
     }
   }
 
-  // Xử lý ngày được chọn từ cds-date-picker
   onDateChange(selectedDates: Date[] | null) {
     if (selectedDates && selectedDates.length > 0 && !isNaN(selectedDates[0].getTime())) {
       const date = selectedDates[0];
       const year = date.getFullYear();
       const month = (date.getMonth() + 1).toString().padStart(2, '0');
       const day = date.getDate().toString().padStart(2, '0');
-      this.taskDate = `${year}-${month}-${day}`; // Định dạng yyyy-mm-dd
-      console.log('Ngày được chọn:', this.taskDate);
+      this.taskDate = `${year}-${month}-${day}`;
     } else {
       this.taskDate = '';
-      console.log('Không có ngày được chọn.');
     }
   }
 
   private resetForm() {
+    this.taskId = 0;
     this.taskName = '';
     this.taskStatus = 'pending';
     this.taskDate = '';

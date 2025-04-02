@@ -15,8 +15,8 @@
         Delete
         <svg cdsIcon="delete" size="16" class="cds--btn__icon"></svg>
       </button>
-      <button cdsButton="primary" (click)="saveSelected()">
-        Save
+      <button cdsButton="primary" (click)="editSelected()">
+        Edit
         <svg cdsIcon="save" size="16" class="cds--btn__icon"></svg>
       </button>
       <button cdsButton="primary" (click)="downloadSelected()">
@@ -33,7 +33,7 @@
       ></cds-table-toolbar-search>
 
       <cds-date-picker
-        dateFormat="Y-m-d"
+        dateFormat="d-m-Y"
         (valueChange)="onDateChange($event)"
         style="margin-left: 1rem"
       >
@@ -65,8 +65,9 @@
 
   <!-- Thêm ModalAddTodoItemComponent -->
   <app-modal-add-todo-item
-    [open]="isModalOpen"
-    (close)="closeAddModal()"
-    (addTask)="handleAddTask($event)"
-  ></app-modal-add-todo-item>
+  [open]="isModalOpen"
+  [mode]="modalMode"
+  (close)="closeAddModal()"
+  (addTask)="handleAddTask($event)"
+></app-modal-add-todo-item>
 </cds-table-container>
