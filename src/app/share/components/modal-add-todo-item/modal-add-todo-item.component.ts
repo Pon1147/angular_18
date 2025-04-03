@@ -34,13 +34,15 @@ export class ModalAddTodoItemComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['taskToEdit'] && this.taskToEdit && this.mode === 'edit') {
-      console.log('Task được chọn:', this.taskToEdit);
+      const formattedDate = this.formatDateForInput(this.taskToEdit.date[0]);
+      console.log('Formatted date for edit:', formattedDate);
       this.taskForm.patchValue({
         id: this.taskToEdit.id,
         name: this.taskToEdit.name,
         status: this.taskToEdit.status,
-        date: this.formatDateForInput(this.taskToEdit.date[0]), // Chuyển đổi DD/MM/YYYY sang YYYY-MM-DD
+        date: formattedDate,
       });
+      this.taskForm.markAllAsTouched(); // Đánh dấu để kiểm tra validator ngay lập tức
     } else if (this.mode === 'add') {
       this.resetForm();
     }
@@ -50,34 +52,35 @@ export class ModalAddTodoItemComponent implements OnChanges {
     this.close.emit();
     this.resetForm();
   }
-
   onAddTask() {
+    this.taskForm.markAllAsTouched();
+    console.log('Form value:', this.taskForm.value);
+    console.log('Form invalid:', this.taskForm.invalid);
+    console.log('Form errors:', this.taskForm.errors);
     if (this.taskForm.valid) {
       const task: Task = {
         id: this.mode === 'edit' ? this.taskForm.value.id : 0,
         name: this.taskForm.value.name,
         status: this.taskForm.value.status,
-        date: [this.formatDate(this.taskForm.value.date)], // Trả về mảng [string] định dạng DD/MM/YYYY
+        date: [this.formatDate(this.taskForm.value.date)],
       };
       this.addTask.emit(task);
       this.closeModal();
     } else {
-      console.log('Form không hợp lệ:', this.taskForm.errors);
+      console.log('Form không hợp lệ');
     }
   }
-
+  
   onDateChange(event: any) {
-    const selectedDates = event.value as Date[] | null;
+    const selectedDates = event as Date[] | null;
     if (selectedDates && selectedDates.length > 0 && !isNaN(selectedDates[0].getTime())) {
       const date = selectedDates[0];
-      this.taskForm.patchValue({
-        date: `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`,
-      });
+      const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+      this.taskForm.patchValue({ date: formattedDate });
     } else {
       this.taskForm.patchValue({ date: '' });
     }
   }
-
   private resetForm() {
     this.taskForm.reset({
       id: 0,
