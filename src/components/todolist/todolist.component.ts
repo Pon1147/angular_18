@@ -3,8 +3,8 @@ import { SharedModule } from '../../app/share/shared.module';
 import { PaginationModel, TableHeaderItem, TableItem, TableModel } from 'carbon-components-angular';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { typFilter } from '@ng-icons/typicons';
-import { Task } from '../../app/share/models/todo.model';
 import { ModalAddTodoItemComponent } from '../../app/share/components/modal-add-todo-item/modal-add-todo-item.component';
+import { Task } from '../../app/share/models/todo.model';
 
 @Component({
   selector: 'app-todolist',
@@ -40,12 +40,11 @@ export class TodolistComponent implements OnInit {
   getEndIndex(): number {
     return Math.min(
       this.paginationModel.currentPage * this.paginationModel.pageLength!,
-      this.paginationModel.totalDataLength
+      this.paginationModel.totalDataLength,
     );
   }
 
   constructor() {
-   
     // Khởi tạo header cho bảng
     this.model.header = [
       new TableHeaderItem({ data: 'Name', title: 'Table header title' }),

@@ -2,44 +2,74 @@
   <cds-modal-header (closeSelect)="closeModal()">
     <h3 cdsModalHeaderHeading>{{ mode === 'add' ? heading1 : heading2 }}</h3>
   </cds-modal-header>
-    <section cdsModalBody>
+
+  <section cdsModalBody>
+    <form [formGroup]="taskForm" (ngSubmit)="onAddTask()">
       <div class="form-group">
         <label for="taskName">Task Name</label>
         <input
           id="taskName"
           type="text"
           class="cds--text-input"
-          [(ngModel)]="taskName"
+          formControlName="name"
           placeholder="Enter task name"
+          [class.cds--text-input--invalid]="taskForm.get('name')!.touched && taskForm.get('name')!.invalid"
         />
+        <div
+          *ngIf="taskForm.get('name')!.touched && taskForm.get('name')!.invalid"
+          class="cds--form-requirement"
+        >
+          {{ taskForm.get('name')?.errors?.['required']?.message || taskForm.get('name')?.errors?.['minLength']?.message || 'Tên chỉ chứa chữ cái, số và khoảng trắng' }}
+        </div>
       </div>
-  
+
       <div class="form-group">
         <label for="taskStatus">Status</label>
         <select
           id="taskStatus"
           class="cds--select-input"
-          [(ngModel)]="taskStatus"
+          formControlName="status"
+          [class.cds--select-input--invalid]="taskForm.get('status')!.touched && taskForm.get('status')!.invalid"
         >
           <option value="pending">Pending</option>
           <option value="processing">Processing</option>
           <option value="done">Done</option>
         </select>
+        <div
+          *ngIf="taskForm.get('status')!.touched && taskForm.get('status')!.invalid"
+          class="cds--form-requirement"
+        >
+          {{ taskForm.get('status')?.errors?.['required']?.message }}
+        </div>
       </div>
-  
+
       <div class="form-group">
         <label for="taskDate">Date</label>
-        <cds-date-picker dateFormat="Y-m-d" (valueChange)="onDateChange($event)">
+        <cds-date-picker
+          dateFormat="Y-m-d"
+          (valueChange)="onDateChange($event)"
+        >
           <cds-date-picker-input
             id="taskDate"
             placeholder="yyyy-mm-dd"
+            formControlName="date"
+            [class.cds--date-picker__input--invalid]="taskForm.get('date')!.touched && taskForm.get('date')!.invalid"
           ></cds-date-picker-input>
         </cds-date-picker>
+        <div
+          *ngIf="taskForm.get('date')!.touched && taskForm.get('date')!.invalid"
+          class="cds--form-requirement"
+        >
+          {{ taskForm.get('date')?.errors?.['required']?.message || taskForm.get('date')?.errors?.['pastDate']?.message || 'Ngày không hợp lệ' }}
+        </div>
       </div>
-    </section>
-  
-    <cds-modal-footer>
-      <button cdsButton="ghost" (click)="closeModal()">Cancel</button>
-      <button cdsButton="primary" (click)="onAddTask()">Add Task</button>
-    </cds-modal-footer>
-  </cds-modal>
+
+      <cds-modal-footer>
+        <button cdsButton="ghost" type="button" (click)="closeModal()">Cancel</button>
+        <button cdsButton="primary" type="submit" [disabled]="taskForm.invalid">
+          {{ mode === 'add' ? 'Add Task' : 'Save Task' }}
+        </button>
+      </cds-modal-footer>
+    </form>
+  </section>
+</cds-modal>

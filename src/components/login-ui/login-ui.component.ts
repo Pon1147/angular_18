@@ -10,7 +10,7 @@ import {
   Validators,
   AbstractControl
 } from '@angular/forms';
-import { emailValidator, passwordValidator } from '../../app/share/validator/login-validation';
+import { emailValidator, passwordValidator } from '../../app/share/validator/form-validator';
 import { Router } from '@angular/router';
 import { User } from '../../app/share/models/user.model';
 @Component({
