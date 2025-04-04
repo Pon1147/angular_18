@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {
+  
   PaginationModule ,
   ButtonModule,
   InputModule,
@@ -23,11 +24,13 @@ import {
   RadioModule,
   PopoverModule,
   ModalModule,
+  
 } from 'carbon-components-angular';
 
 // import { AppCdsIconService } from './services/cds-icon-service';
 @NgModule({
   imports: [
+    
     PaginationModule ,
     ModalModule,
     CommonModule,

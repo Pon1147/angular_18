@@ -3,43 +3,48 @@ import { SharedModule } from '../../app/share/shared.module';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { typInfoLarge, typArrowRightThick } from '@ng-icons/typicons';
 import {
-
   ReactiveFormsModule,
   FormBuilder,
   FormGroup,
   Validators,
-  AbstractControl
+  AbstractControl,
 } from '@angular/forms';
 import { emailValidator, passwordValidator } from '../../app/share/validator/form-validator';
 import { Router } from '@angular/router';
 import { User } from '../../app/share/models/user.model';
+import { NotificationService, NotificationVariants } from '../../app/share/services/notification.services';
+import { NotificationComponent } from "../../app/share/components/notification/notification.component";
+
 @Component({
   selector: 'app-login-ui',
   standalone: true,
-  imports: [SharedModule, NgIcon, ReactiveFormsModule],
+  imports: [SharedModule, NgIcon, ReactiveFormsModule, NotificationComponent],
   templateUrl: './login-ui.component.html',
   styleUrl: './login-ui.component.scss',
-  viewProviders: [provideIcons({ typInfoLarge, typArrowRightThick })]
+  viewProviders: [provideIcons({ typInfoLarge, typArrowRightThick })],
 })
-
 export class LoginUIComponent implements OnInit {
-  users: User[] = [{
-    id: 1,
-    email: 'test@example.com',
-    password: '19001592Aa@.'
-  },
-  {
-    id: 2,
-    email: 'test2@example.com',
-    password: 'test456'
-  }];
+  users: User[] = [
+    {
+      id: 1,
+      email: 'test@example.com',
+      password: '19001592Aa@.',
+    },
+    {
+      id: 2,
+      email: 'test2@example.com',
+      password: 'test456',
+    },
+  ];
 
   loginForm!: FormGroup;
   disabled = true;
 
-
-
-  constructor(private fb: FormBuilder, private router: Router) { }
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private notificationService: NotificationService // Inject NotificationService
+  ) {}
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -50,11 +55,6 @@ export class LoginUIComponent implements OnInit {
       this.disabled = status === 'INVALID';
     });
   }
-  //   // Subscribe to form status changes to update the disabled property
-  //   subscribe((status: string): void => {
-  //     this.disabled = status === 'INVALID';
-  //     });
-  // }
 
   get email(): AbstractControl | null {
     return this.loginForm.get('email');
@@ -81,6 +81,7 @@ export class LoginUIComponent implements OnInit {
     }
     return '';
   }
+
   get isPasswordInvalid(): boolean {
     const passwordControl = this.loginForm.get('password');
     if (!passwordControl) return false;
@@ -110,16 +111,32 @@ export class LoginUIComponent implements OnInit {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
       console.log('Form is invalid. Please check the errors.');
-      console.log('Email is invalid. Please check the', this.email?.value);
-      console.log('Password is invalid. Please check the', this.password?.value);
+      console.log('Email:', this.email?.value);
+      console.log('Password:', this.password?.value);
     } else {
-      const matchingUser = this.users.find(user => user.email === this.email?.value && user.password === this.password?.value);
+      const matchingUser = this.users.find(
+        (user) => user.email === this.email?.value && user.password === this.password?.value
+      );
       if (matchingUser) {
-        console.log('Welcom Back Admin User: ', matchingUser.email);
+        console.log('Welcome Back Admin User:', matchingUser.email);
         this.router.navigate(['/home']);
-
+        this.notificationService.showNotification(NotificationVariants.NOTIFICATION, {
+          type: 'success',
+          title: 'Success',
+          message: 'Đăng nhập thành công',
+          showClose: true,
+          timeout: 5000
+        });
       } else {
-        console.log('You log in with Email: ' + this.email?.value);
+        console.log('You log in with Email:', this.email?.value);
+        // Hiển thị thông báo lỗi với cấu trúc đúng cho Toast notification
+        this.notificationService.showNotification(NotificationVariants.NOTIFICATION, {
+          type: 'error',
+          title: 'Đăng nhập không thành công',
+          message: 'Email hoặc mật khẩu không đúng',
+          showClose: true,
+          timeout: 5000
+        });
       }
     }
   }

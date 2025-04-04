@@ -24,3 +24,7 @@
 ## - fix [validator]: fix button add or edit alway disable.✔️
 ## - feat [notif]: add notification when the user click button ✖️
 ## - feat [notif]: cases what notification ✖️
+
+# K: (04/04/2025)
+## - feat [notif]: add notification when the user click button ✔️
+## - feat [notif]: cases what notification ✔️

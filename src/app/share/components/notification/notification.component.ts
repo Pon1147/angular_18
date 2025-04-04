@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SharedModule } from '../../shared.module';
 import { NotificationItem, NotificationService, NotificationVariants } from '../../services/notification.services';
-import { Subject } from 'rxjs';
-
+import { Subject, Subscription } from 'rxjs';
+import { NotificationContent, ActionableContent } from 'carbon-components-angular';
 
 @Component({
   selector: 'app-notification',
@@ -11,54 +11,47 @@ import { Subject } from 'rxjs';
   templateUrl: './notification.component.html',
   styleUrl: './notification.component.scss',
 })
-export class NotificationComponent {
+export class NotificationComponent implements OnInit, OnDestroy {
   actionSubject = new Subject<any>();
   notifications: NotificationItem[] = [];
+  notificationObjDefault!: NotificationContent
   readonly notifiVariants = NotificationVariants;
+  private subscription: Subscription | undefined;
 
   constructor(private readonly notificationService: NotificationService) {}
 
   ngOnInit() {
-      this.notificationService.notificationSubject$.subscribe((notifies) => {
-          this.notifications = [...notifies];
-      });
+    this.subscription = this.notificationService.notificationSubject$.subscribe((notifies) => {
+      this.notifications = [...notifies];
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   closeNotification(id: number) {
-      this.notificationService.closeNotification(id);
+    this.notificationService.closeNotification(id);
   }
 
-  showNotification() {
-      this.notificationService.showNotification(this.notifiVariants.NOTIFICATION, {
-          type: 'info',
-          title: 'Sample notification',
-          message: 'Sample info message',
-      });
+  trackById(index: number, item: NotificationItem): number {
+    return item.id;
   }
 
-  showToast() {
-      this.notificationService.showNotification(this.notifiVariants.TOAST, {
-        type: 'info', 
-        title: 'Sample toast',
-        subtitle: 'Sample subtitle message',
-        caption: 'Sample caption',
-        message: 'message',
-      });
+  // Type guards - Improved to better handle different notification types
+  isToastContent(content: any): boolean {
+    return content && 'title' in content && 'subtitle' in content;
   }
 
-  showActionable() {
-      this.notificationService.showNotification(this.notifiVariants.ACTIONABLE, {
-          type: 'success',
-          title: 'Actionable notification',
-          message: 'Sample info message',
-          subtitle: 'Sample subtitle message',
-          caption: 'Sample caption',
-          actions: [
-              {
-                  text: 'Action',
-                  click: this.actionSubject,
-              },
-          ],
-      });
+  isNotificationContent(content: NotificationContent | ActionableContent | any): content is NotificationContent {
+    console.log('');
+    
+    return content && 'message' in content && !('subtitle' in content);
+  }
+
+  isActionableContent(content: NotificationContent | ActionableContent | any): content is ActionableContent {
+    return content && 'actions' in content && Array.isArray((content as ActionableContent).actions);
   }
 }

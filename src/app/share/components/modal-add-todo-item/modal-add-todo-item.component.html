@@ -1,6 +1,6 @@
 <cds-modal [open]="open" (overlaySelected)="closeModal()">
   <cds-modal-header (closeSelect)="closeModal()">
-    <h3 cdsModalHeaderHeading>{{ mode === 'add' ? heading1 : heading2 }}</h3>
+    <h3 cdsModalHeaderHeading>{{ mode === 'add' ? 'add' : 'edit' }} Todo Item</h3>
   </cds-modal-header>
 
   <section cdsModalBody>

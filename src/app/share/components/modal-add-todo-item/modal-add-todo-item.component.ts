@@ -18,9 +18,6 @@ export class ModalAddTodoItemComponent implements OnChanges {
   @Output() close = new EventEmitter<void>();
   @Output() addTask = new EventEmitter<Task>();
 
-  heading1 = 'Add Todo Item';
-  heading2 = 'Edit Todo Item';
-
   taskForm: FormGroup;
 
   constructor(private fb: FormBuilder) {
