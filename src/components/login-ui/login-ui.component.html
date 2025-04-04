@@ -17,7 +17,6 @@
       <form class="form-input" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <!-- Form for user Input the account -->
         <cds-text-label [invalid]="isEmailInvalid" [invalidText]="emailInvalidText">
-
           IBMid
           <a href="#">Forgot ID?</a>
           <input cdsText type="text" placeholder="Example: username@ibm.com" formControlName="email" />

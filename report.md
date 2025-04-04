@@ -17,4 +17,10 @@
 ## - feat: prefill modal fields with selected task data in edit mode ✔️
 ## - feat: add pagination to todolist with selected task data in edit mode ✔️
 ## - fix: config data interm after add, edit still keep for pagination ✔️
-## - feat: import validator for form validation ✖️
+## - feat: import validator for form validation 
+
+# K: (03/04/2025)
+## - feat [validator]: comfig validator for typeof application to child modal component. ✔️
+## - fix [validator]: fix button add or edit alway disable.✔️
+## - feat [notif]: add notification when the user click button ✖️
+## - feat [notif]: cases what notification ✖️
