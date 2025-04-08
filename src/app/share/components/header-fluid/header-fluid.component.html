@@ -1,0 +1,25 @@
+<cds-header name="My Application">
+    <cds-hamburger></cds-hamburger>
+    <cds-header-navigation>
+      <ng-container *ngFor="let item of headerItems">
+        <!-- Trường hợp là item thông thường -->
+        <cds-header-item
+          *ngIf="!isMenuItem(item)"
+          [isCurrentPage]="item.isCurrentPage || false"
+          (click)="onItemClick(item)">
+          {{ item.content || '' }}
+        </cds-header-item>
+  
+        <!-- Trường hợp là menu có submenu -->
+        <cds-header-menu
+          *ngIf="isMenuItem(item)"
+          [title]="item.title || ''">
+          <cds-header-item
+            *ngFor="let subItem of item.menuItems"
+            (click)="onItemClick(subItem)">
+            {{ subItem.content || '' }}
+          </cds-header-item>
+        </cds-header-menu>
+      </ng-container>
+    </cds-header-navigation>
+   </cds-header>
