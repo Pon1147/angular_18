@@ -9,6 +9,7 @@
       <cds-header-item
         *ngIf="!isMenuItem(item)"
         [isCurrentPage]="item.isCurrentPage || false"
+        [routerLink]="item.route"
         (click)="onItemClick(item)"
         (keydown)="onItemKeydown($event, item)"
         tabindex="0"

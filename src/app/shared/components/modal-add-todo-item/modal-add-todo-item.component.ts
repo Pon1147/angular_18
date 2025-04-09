@@ -12,7 +12,7 @@ import { stringValidator, dateValidator } from '../../validator/form-validator';
   styleUrls: ['./modal-add-todo-item.component.scss'],
 })
 export class ModalAddTodoItemComponent implements OnChanges {
-  @Input() open = false;
+  @Input() open = true;
   @Input() mode: 'add' | 'edit' = 'add';
   @Input() taskToEdit: Task | null = null;
   @Output() close = new EventEmitter<void>();
@@ -20,7 +20,7 @@ export class ModalAddTodoItemComponent implements OnChanges {
 
   taskForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private readonly fb: FormBuilder) {
     this.taskForm = this.fb.group({
       id: [0],
       name: ['', stringValidator({ required: true, minLength: 3, pattern: /^[a-zA-Z0-9\s]+$/ })],

@@ -24,6 +24,7 @@ import {
   ModalModule,
   HeaderModule,
 } from 'carbon-components-angular';
+import { RouterLink } from '@angular/router';
 
 // import { AppCdsIconService } from './services/cds-icon-service';
 @NgModule({
@@ -52,6 +53,7 @@ import {
     LayerModule,
     RadioModule,
     PopoverModule,
+    RouterLink
     // Add other common import modules hereFormsModule
   ],
   exports: [
@@ -79,6 +81,7 @@ import {
     LayerModule,
     RadioModule,
     PopoverModule,
+    RouterLink
     // Add other common export modules here
   ],
   // providers: [AppCdsIconService],

@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './home.component';
+import { ModalAddTodoItemComponent } from '../../shared/components/modal-add-todo-item/modal-add-todo-item.component';
 
 export const homeRoutes: Routes = [
-  { path: '', component: HomeComponent }
-];
+  { path: 'add', component: ModalAddTodoItemComponent },
+ ];
