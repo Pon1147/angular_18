@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PaginationModel, TableHeaderItem, TableItem, TableModel } from 'carbon-components-angular';
-import {  provideIcons } from '@ng-icons/core';
+import { provideIcons } from '@ng-icons/core';
 import { typFilter } from '@ng-icons/typicons';
 import { SharedModule } from '../../../../shared/shared.module';
 import { Task } from '../../../../shared/models/todo.model';
