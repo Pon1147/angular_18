@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { SharedModule } from '../../app/share/shared.module';
 import { PaginationModel, TableHeaderItem, TableItem, TableModel } from 'carbon-components-angular';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { typFilter } from '@ng-icons/typicons';
-import { ModalAddTodoItemComponent } from '../../app/share/components/modal-add-todo-item/modal-add-todo-item.component';
-import { Task } from '../../app/share/models/todo.model';
+import { SharedModule } from '../../../../shared/shared.module';
+import { Task } from '../../../../shared/models/todo.model';
+import { ModalAddTodoItemComponent } from '../../../../shared/components/modal-add-todo-item/modal-add-todo-item.component';
 
 @Component({
   selector: 'app-todolist',

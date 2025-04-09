@@ -1,8 +1,8 @@
 import { Component } from "@angular/core";
 import { RouterOutlet } from "@angular/router";
-import { NotificationComponent } from "./share/components/notification/notification.component";
-import { HeaderItem } from "./share/models/header-fluid.interface";
-import { SharedModule } from "./share/shared.module";
+import { HeaderItem } from "./shared/models/header-fluid.interface";
+import { NotificationComponent } from "./shared/components/notification/notification.component";
+import { SharedModule } from "./shared/shared.module";
 
 @Component({
   selector: "app-root",

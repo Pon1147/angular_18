@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SharedModule } from '../../shared.module';
-import { NotificationItem, NotificationService, NotificationVariants } from '../../services/notification.services';
 import { Subject, Subscription } from 'rxjs';
 import { NotificationContent, ActionableContent } from 'carbon-components-angular';
+import { NotificationItem, NotificationService, NotificationVariants } from '../../../core/services/notification.services';
 
 @Component({
   selector: 'app-notification',

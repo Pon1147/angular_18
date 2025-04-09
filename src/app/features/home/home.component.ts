@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { TodolistComponent } from '../todolist/todolist.component';
-import { HeaderFluidComponent } from '../../app/share/components/header-fluid/header-fluid.component';
-import { HeaderItem } from '../../app/share/models/header-fluid.interface';
+import { HeaderFluidComponent } from '../../shared/components/header-fluid/header-fluid.component';
+import { HeaderItem } from '../../shared/models/header-fluid.interface';
+import { TodolistComponent } from '../todo/components/todolist/todolist.component';
 
 @Component({
   selector: 'app-home',

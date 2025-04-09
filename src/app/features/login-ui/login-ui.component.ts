@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { SharedModule } from '../../app/share/shared.module';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { typInfoLarge, typArrowRightThick } from '@ng-icons/typicons';
 import {
@@ -9,11 +8,12 @@ import {
   Validators,
   AbstractControl,
 } from '@angular/forms';
-import { emailValidator, passwordValidator } from '../../app/share/validator/form-validator';
 import { Router } from '@angular/router';
-import { User } from '../../app/share/models/user.model';
-import { NotificationService, NotificationVariants } from '../../app/share/services/notification.services';
-import { NotificationComponent } from "../../app/share/components/notification/notification.component";
+import { SharedModule } from '../../shared/shared.module';
+import { emailValidator, passwordValidator } from '../../shared/validator/form-validator';
+import { User } from '../../shared/models/user.model';
+import { NotificationComponent } from '../../shared/components/notification/notification.component';
+import { NotificationService, NotificationVariants } from '../../core/services/notification.services';
 
 @Component({
   selector: 'app-login-ui',
@@ -41,9 +41,9 @@ export class LoginUIComponent implements OnInit {
   disabled = true;
 
   constructor(
-    private fb: FormBuilder,
-    private router: Router,
-    private notificationService: NotificationService // Inject NotificationService
+    private readonly fb: FormBuilder,
+    private readonly router: Router,
+    private readonly notificationService: NotificationService // Inject NotificationService
   ) {}
 
   ngOnInit(): void {

@@ -55,8 +55,32 @@ angular_18
 │  │  ├─ app.component.ts
 │  │  ├─ app.config.ts
 │  │  ├─ app.routes.ts
-│  │  └─ share
-│  │     ├─ assets
+│  │  ├─ core
+│  │  │  ├─ guards
+│  │  │  └─ services
+│  │  │     ├─ notification.services.spec.ts
+│  │  │     └─ notification.services.ts
+│  │  ├─ features
+│  │  │  ├─ home
+│  │  │  │  ├─ home.component.html
+│  │  │  │  ├─ home.component.scss
+│  │  │  │  ├─ home.component.spec.ts
+│  │  │  │  └─ home.component.ts
+│  │  │  ├─ login-ui
+│  │  │  │  ├─ login-ui.component.html
+│  │  │  │  ├─ login-ui.component.scss
+│  │  │  │  ├─ login-ui.component.spec.ts
+│  │  │  │  └─ login-ui.component.ts
+│  │  │  └─ todo
+│  │  │     ├─ components
+│  │  │     │  └─ todolist
+│  │  │     │     ├─ todolist.component.html
+│  │  │     │     ├─ todolist.component.scss
+│  │  │     │     ├─ todolist.component.spec.ts
+│  │  │     │     └─ todolist.component.ts
+│  │  │     ├─ services
+│  │  │     └─ todo.routes.ts
+│  │  └─ shared
 │  │     ├─ components
 │  │     │  ├─ header-fluid
 │  │     │  │  ├─ header-fluid.component.html
@@ -77,9 +101,6 @@ angular_18
 │  │     │  ├─ header-fluid.interface.ts
 │  │     │  ├─ todo.model.ts
 │  │     │  └─ user.model.ts
-│  │     ├─ services
-│  │     │  ├─ notification.services.spec.ts
-│  │     │  └─ notification.services.ts
 │  │     ├─ shared.module.ts
 │  │     └─ validator
 │  │        └─ form-validator.ts
@@ -88,23 +109,6 @@ angular_18
 │  │  │  ├─ 0712161468303244.jpg
 │  │  │  └─ img_1.png
 │  │  └─ README.md
-│  ├─ components
-│  │  ├─ home
-│  │  │  ├─ home.component.html
-│  │  │  ├─ home.component.scss
-│  │  │  ├─ home.component.spec.ts
-│  │  │  └─ home.component.ts
-│  │  ├─ login-ui
-│  │  │  ├─ login-ui.component.html
-│  │  │  ├─ login-ui.component.scss
-│  │  │  ├─ login-ui.component.spec.ts
-│  │  │  └─ login-ui.component.ts
-│  │  ├─ README.md
-│  │  └─ todolist
-│  │     ├─ todolist.component.html
-│  │     ├─ todolist.component.scss
-│  │     ├─ todolist.component.spec.ts
-│  │     └─ todolist.component.ts
 │  ├─ index.html
 │  ├─ main.ts
 │  ├─ styles.css
