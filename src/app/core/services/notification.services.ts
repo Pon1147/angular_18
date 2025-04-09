@@ -1,8 +1,4 @@
 import { Injectable } from '@angular/core';
-import {
-  NotificationContent,
-  ActionableContent,
-} from 'carbon-components-angular';
 import { BehaviorSubject } from 'rxjs';
 
 export enum NotificationVariants {
@@ -27,7 +23,9 @@ export type NotificationItem =
   providedIn: 'root',
 })
 export class NotificationService {
-  private readonly notificationSubject: BehaviorSubject<NotificationItem[]> = new BehaviorSubject<NotificationItem[]>([]);
+  private readonly notificationSubject: BehaviorSubject<NotificationItem[]> = new BehaviorSubject<
+    NotificationItem[]
+  >([]);
   public notificationSubject$ = this.notificationSubject.asObservable();
 
   constructor() {}
@@ -51,7 +49,7 @@ export class NotificationService {
 
       setTimeout(() => {
         this.notificationSubject.next([
-          ...this.notificationSubject.value.filter((n) => n.id !== newNotification.id),
+          ...this.notificationSubject.value.filter(n => n.id !== newNotification.id),
         ]);
       }, 500); // Thời gian khớp với animation slideOut
     }, timeout);
@@ -59,16 +57,14 @@ export class NotificationService {
 
   public closeNotification(id: number) {
     // Ẩn thông báo trước khi xóa
-    const updatedNotifications = this.notificationSubject.value.map((notification) =>
-      notification.id === id ? { ...notification, hide: true } : notification
+    const updatedNotifications = this.notificationSubject.value.map(notification =>
+      notification.id === id ? { ...notification, hide: true } : notification,
     );
     this.notificationSubject.next(updatedNotifications);
 
     // Xóa thông báo sau khi animation hoàn tất
     setTimeout(() => {
-      this.notificationSubject.next([
-        ...this.notificationSubject.value.filter((n) => n.id !== id),
-      ]);
+      this.notificationSubject.next([...this.notificationSubject.value.filter(n => n.id !== id)]);
     }, 500);
   }
 }

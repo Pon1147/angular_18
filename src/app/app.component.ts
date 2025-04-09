@@ -16,7 +16,7 @@ import { filter } from "rxjs";
 })
 export class AppComponent {
 
-  constructor(private router: Router) {
+  constructor(private readonly router: Router) {
     // Theo dõi sự thay đổi route để kiểm tra xem có nên hiển thị header không
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
@@ -33,6 +33,7 @@ export class AppComponent {
   private checkRoute(url: string): void {
     // Có thể thêm logic khác nếu cần
   }
+  
   headerItems: HeaderItem[] = [
     { type: 'item', content: 'Home', title: 'Home', isCurrentPage: true , route: ['/home'] },
     { type: 'item', content: 'Author', title: 'Author', route: ['/author'] },
