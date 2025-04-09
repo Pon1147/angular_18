@@ -28,3 +28,7 @@
 # K: (04/04/2025)
 ## - feat [notif]: add notification when the user click button ✔️
 ## - feat [notif]: cases what notification ✔️
+
+# K: (08/04/2025)
+## - feat [header-fluid]: config ui shell style header fluid to side navigation ✔️
+## - fix [header-fluid]: fix navid width responsive ✖️

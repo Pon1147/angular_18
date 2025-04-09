@@ -1,10 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 import {
-  
-  PaginationModule ,
+  PaginationModule,
   ButtonModule,
   InputModule,
   GridModule,
@@ -24,14 +22,14 @@ import {
   RadioModule,
   PopoverModule,
   ModalModule,
-  
+  HeaderModule,
 } from 'carbon-components-angular';
 
 // import { AppCdsIconService } from './services/cds-icon-service';
 @NgModule({
   imports: [
-    
-    PaginationModule ,
+    HeaderModule,
+    PaginationModule,
     ModalModule,
     CommonModule,
     ButtonModule,
@@ -57,7 +55,8 @@ import {
     // Add other common import modules hereFormsModule
   ],
   exports: [
-    PaginationModule ,
+    HeaderModule,
+    PaginationModule,
     ModalModule,
     CommonModule,
     ReactiveFormsModule,
