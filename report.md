@@ -32,3 +32,10 @@
 # K: (08/04/2025)
 ## - feat [header-fluid]: config ui shell style header fluid to side navigation ✔️
 ## - fix [header-fluid]: fix navid width responsive ✖️
+
+
+# K: (09/04/2025)
+## - feat[header-fluid]: add cds-sidenav ✔️
+## - fix [tree]: config tree project ✔️
+## - feat[header-fluid]: add router config for header-fluid navigation ✔️
+## - feat[app]: add navigation and add/edit features with routing setup ✔️

@@ -5,7 +5,9 @@
       <p cdsTableHeaderDescription>{{ description }}</p>
     </div>
     <cds-button-set>
-      <button cdsButton="primary" (click)="openAddModal()">Click here to add more</button>
+      <button cdsButton="primary" (click)="openAddModal()" routerLink="/todo/add">
+        Click here to add more
+      </button>
     </cds-button-set>
   </cds-table-header>
 
@@ -42,7 +44,6 @@
           placeholder="yyyy-mm-dd"
         ></cds-date-picker-input>
       </cds-date-picker>
-
     </cds-table-toolbar-content>
   </cds-table-toolbar>
 
@@ -59,21 +60,12 @@
   >
   </cds-table>
 
-
   <!-- Thành phần phân trang -->
   <cds-pagination
-  [model]="paginationModel"
-  [itemsPerPageOptions]="itemsPerPageOptions"
-  (selectPage)="selectPage($event)"
-  (pageLengthChange)="onPageLengthChange($event)"
-></cds-pagination>
-
-  <!-- Thêm ModalAddTodoItemComponent -->
-  <app-modal-add-todo-item
-    [open]="isModalOpen"
-    [mode]="modalMode"
-    [taskToEdit]="selectedTask"
-    (close)="closeAddModal()"
-    (addTask)="handleAddTask($event)"
-  ></app-modal-add-todo-item>
+    [model]="paginationModel"
+    [itemsPerPageOptions]="itemsPerPageOptions"
+    (selectPage)="selectPage($event)"
+    (pageLengthChange)="onPageLengthChange($event)"
+  ></cds-pagination>
 </cds-table-container>
+<router-outlet></router-outlet>
