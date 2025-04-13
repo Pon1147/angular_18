@@ -4,9 +4,10 @@ import { PaginationModel, TableHeaderItem, TableItem, TableModel } from 'carbon-
 import { provideIcons } from '@ng-icons/core';
 import { typFilter } from '@ng-icons/typicons';
 import { Router, RouterOutlet } from '@angular/router';
-import { SharedModule } from '../../../shared/shared.module';
 import { Task } from '../../../shared/models/todo.model';
+import { DateUtilsService } from '../../../shared/service/date-utils.service';
 import { TaskService } from '../../../shared/service/task.service';
+import { SharedModule } from '../../../shared/shared.module';
 
 @Component({
   selector: 'app-todolist',
@@ -36,7 +37,8 @@ export class TodolistComponent implements OnInit {
 
   constructor(
     private readonly router: Router,
-    private readonly taskService: TaskService
+    private readonly taskService: TaskService,
+    private readonly dateUtilsService: DateUtilsService, // Inject new service
   ) {
     this.model.header = [
       new TableHeaderItem({ data: 'Name', title: 'Table header title' }),
@@ -74,7 +76,7 @@ export class TodolistComponent implements OnInit {
         this.initialModelData.length,
         this.paginationModel,
         this.model,
-        this.filteredData
+        this.filteredData,
       );
     });
   }
@@ -84,7 +86,8 @@ export class TodolistComponent implements OnInit {
   }
 
   editSelected() {
-    const selectedData = this.getSelectedRowsData();
+    const selectedData = this.taskService.getSelectedRowsData(this.model);
+
     if (selectedData.length === 1) {
       const selectedTask = this.tasks.find(task => task.name === selectedData[0][0].data);
       if (selectedTask) {
@@ -100,14 +103,19 @@ export class TodolistComponent implements OnInit {
   }
 
   onPageLengthChange(event: any) {
-    this.taskService.onPageLengthChange(event.value, this.paginationModel, this.filteredData, this.model);
+    this.taskService.onPageLengthChange(
+      event.value,
+      this.paginationModel,
+      this.filteredData,
+      this.model,
+    );
   }
 
   applyFilters() {
     this.filteredData = this.taskService.applyFilters(
       this.initialModelData,
       this.currentSearchString,
-      this.currentSelectedDateString
+      this.currentSelectedDateString,
     );
     this.taskService.updateTotalPages(this.filteredData, this.paginationModel);
     this.taskService.updateTableData(this.filteredData, this.paginationModel, this.model);
@@ -120,18 +128,11 @@ export class TodolistComponent implements OnInit {
 
   onDateChange(selectedDates: Date[] | null) {
     if (selectedDates && selectedDates.length > 0 && !isNaN(selectedDates[0].getTime())) {
-      this.currentSelectedDateString = this.formatDate(selectedDates[0]);
+      this.currentSelectedDateString = this.dateUtilsService.formatDate(selectedDates[0]); // Use service
     } else {
       this.currentSelectedDateString = null;
     }
     this.applyFilters();
-  }
-
-  private formatDate(date: Date): string {
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const year = date.getFullYear();
-    return `${day}/${month}/${year}`;
   }
 
   private getSelectedRowsData(): TableItem[][] {

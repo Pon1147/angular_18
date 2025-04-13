@@ -47,3 +47,7 @@
 ## - research about to Services,Routing ✔️
 ## - feat [service]: config logic project to services file ✖️
 ## - research about RxJS ✖️
+
+# X: (13/04/2025)
+## - refactor[todo]: move filter and pagination logic to TaskService ✔️
+## - refactor[todo]: 
