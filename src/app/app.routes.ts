@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { LoginUIComponent } from './features/login-ui/login-ui.component';
 import { HomeComponent } from './features/home/home.component';
 import { TableAuthorComponent } from './features/table-author/table-author.component';
-import { TodolistComponent } from './features/todo/components/todolist/todolist.component';
+import { TodolistComponent } from './features/todo/todolist/todolist.component';
 import { todoRoutes } from './features/todo/todo.routes';
 
 export const routes: Routes = [

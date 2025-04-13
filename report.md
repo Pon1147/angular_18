@@ -42,3 +42,8 @@
 
 # K: (10/04/2025)
 ## - feat[todo]: implement add and edit task functionality with routing ✔️
+
+# x: (11/04/2025)
+## - research about to Services,Routing ✔️
+## - feat [service]: config logic project to services file ✖️
+## - research about RxJS ✖️

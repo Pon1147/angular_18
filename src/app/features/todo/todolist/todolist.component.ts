@@ -1,12 +1,12 @@
-// todolist.component.ts
+// src/app/todolist.component.ts
 import { Component, OnInit } from '@angular/core';
 import { PaginationModel, TableHeaderItem, TableItem, TableModel } from 'carbon-components-angular';
 import { provideIcons } from '@ng-icons/core';
 import { typFilter } from '@ng-icons/typicons';
-import { SharedModule } from '../../../../shared/shared.module';
-import { Task } from '../../../../shared/models/todo.model';
 import { Router, RouterOutlet } from '@angular/router';
-import { TaskService } from '../../../../shared/service/task.service';
+import { SharedModule } from '../../../shared/shared.module';
+import { Task } from '../../../shared/models/todo.model';
+import { TaskService } from '../../../shared/service/task.service';
 
 @Component({
   selector: 'app-todolist',
@@ -36,7 +36,7 @@ export class TodolistComponent implements OnInit {
 
   constructor(
     private readonly router: Router,
-    private readonly taskService: TaskService,
+    private readonly taskService: TaskService
   ) {
     this.model.header = [
       new TableHeaderItem({ data: 'Name', title: 'Table header title' }),
@@ -55,8 +55,8 @@ export class TodolistComponent implements OnInit {
 
     this.paginationModel.pageLength = this.itemsPerPageOptions[0];
     this.paginationModel.currentPage = 1;
-    this.updateTotalPages();
-    this.updateTableData();
+    this.taskService.updateTotalPages(this.filteredData, this.paginationModel);
+    this.taskService.updateTableData(this.filteredData, this.paginationModel, this.model);
   }
 
   ngOnInit(): void {
@@ -69,7 +69,13 @@ export class TodolistComponent implements OnInit {
       ]);
       this.filteredData = [...this.initialModelData];
       this.applyFilters();
-      this.navigateToLastPageIfNewTaskAdded(tasks); // Check if a new task was added
+      this.taskService.navigateToLastPageIfNewTaskAdded(
+        tasks,
+        this.initialModelData.length,
+        this.paginationModel,
+        this.model,
+        this.filteredData
+      );
     });
   }
 
@@ -90,51 +96,21 @@ export class TodolistComponent implements OnInit {
   }
 
   selectPage(page: number) {
-    this.paginationModel.currentPage = page;
-    this.updateTableData();
+    this.taskService.selectPage(page, this.paginationModel, this.filteredData, this.model);
   }
 
   onPageLengthChange(event: any) {
-    this.paginationModel.pageLength = event.value;
-    this.paginationModel.currentPage = 1;
-    this.updateTableData();
-  }
-
-  private updateTotalPages() {
-    this.paginationModel.totalDataLength = this.filteredData.length;
-  }
-
-  private updateTableData() {
-    const startIndex = (this.paginationModel.currentPage - 1) * this.paginationModel.pageLength!;
-    const endIndex = startIndex + this.paginationModel.pageLength!;
-    this.model.data = this.filteredData.slice(startIndex, endIndex);
-  }
-
-  private navigateToLastPageIfNewTaskAdded(tasks: Task[]) {
-    const totalPages = Math.ceil(tasks.length / this.paginationModel.pageLength!);
-    if (tasks.length > this.initialModelData.length) {
-      // Check if a new task was added
-      this.paginationModel.currentPage = totalPages;
-      this.updateTableData();
-    }
+    this.taskService.onPageLengthChange(event.value, this.paginationModel, this.filteredData, this.model);
   }
 
   applyFilters() {
-    let filteredData = [...this.initialModelData];
-    if (this.currentSearchString.trim() !== '') {
-      const searchLower = this.currentSearchString.toLowerCase().trim();
-      filteredData = filteredData.filter(row =>
-        (row[0]?.data as string)?.toLowerCase().includes(searchLower),
-      );
-    }
-    if (this.currentSelectedDateString) {
-      filteredData = filteredData.filter(
-        row => (row[2]?.data as string) === this.currentSelectedDateString,
-      );
-    }
-    this.filteredData = filteredData;
-    this.updateTotalPages();
-    this.updateTableData();
+    this.filteredData = this.taskService.applyFilters(
+      this.initialModelData,
+      this.currentSearchString,
+      this.currentSelectedDateString
+    );
+    this.taskService.updateTotalPages(this.filteredData, this.paginationModel);
+    this.taskService.updateTableData(this.filteredData, this.paginationModel, this.model);
   }
 
   filterNodeNames(searchString: string | null) {
@@ -169,10 +145,12 @@ export class TodolistComponent implements OnInit {
     });
     return selectedData;
   }
+
   deleteSelected() {
     throw new Error('Method not implemented.');
-    }
-    downloadSelected() {
+  }
+
+  downloadSelected() {
     throw new Error('Method not implemented.');
-    }
+  }
 }
