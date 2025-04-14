@@ -5,7 +5,7 @@ import { TableItem, PaginationModel, TableModel } from 'carbon-components-angula
 import { Task } from '../models/todo.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TaskService {
   private readonly tasksSubject = new BehaviorSubject<Task[]>([]);
@@ -60,7 +60,7 @@ export class TaskService {
   applyFilters(
     initialData: TableItem[][],
     searchString: string,
-    selectedDate: string | null
+    selectedDate: string | null,
   ): TableItem[][] {
     try {
       if (!initialData) return [];
@@ -115,7 +115,7 @@ export class TaskService {
     initialDataLength: number,
     paginationModel: PaginationModel,
     tableModel: TableModel,
-    filteredData: TableItem[][]
+    filteredData: TableItem[][],
   ): void {
     try {
       if (!tasks || !paginationModel || !tableModel || !filteredData) return;
@@ -133,7 +133,7 @@ export class TaskService {
     page: number,
     paginationModel: PaginationModel,
     filteredData: TableItem[][],
-    tableModel: TableModel
+    tableModel: TableModel,
   ): void {
     try {
       if (page < 1 || !paginationModel || !filteredData || !tableModel) return;
@@ -148,7 +148,7 @@ export class TaskService {
     pageLength: number,
     paginationModel: PaginationModel,
     filteredData: TableItem[][],
-    tableModel: TableModel
+    tableModel: TableModel,
   ): void {
     try {
       if (pageLength < 1 || !paginationModel || !filteredData || !tableModel) return;

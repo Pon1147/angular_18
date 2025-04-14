@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedModule } from '../../shared.module';
 import { CustomNotification } from '../../interface/types/notification.interface';
-import { NotificationService } from '../../../core/services/notification.service';
+import { NotificationService } from '../../service/notification.service';
 
 @Component({
   selector: 'app-notification',

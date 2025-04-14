@@ -78,15 +78,15 @@ export class ModalAddTodoItemComponent implements OnInit {
     }
   }
 
-  onDateChange(event: any) {
-    const selectedDates = event as Date[] | null;
+  onDateChange(event: Date[] | null) {
+    const selectedDates = event;
     if (selectedDates && selectedDates.length > 0 && !isNaN(selectedDates[0].getTime())) {
       const date = selectedDates[0];
       const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
       this.taskForm.patchValue({ date: formattedDate });
     }
   }
-
+  
   private formatDateForInput(dateStr: string): string {
     const [day, month, year] = dateStr.split('/');
     return `${year}-${month}-${day}`;

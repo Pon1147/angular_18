@@ -62,10 +62,10 @@
 
   <!-- Thành phần phân trang -->
   <cds-pagination
-    [model]="paginationModel"
-    [itemsPerPageOptions]="itemsPerPageOptions"
-    (selectPage)="selectPage($event)"
-    (pageLengthChange)="onPageLengthChange($event)"
-  ></cds-pagination>
+  [model]="paginationModel"
+  [itemsPerPageOptions]="itemsPerPageOptions"
+  (selectPage)="selectPage($event)"
+  (change)="onPageLengthChange($event)"
+></cds-pagination>
 </cds-table-container>
 <router-outlet></router-outlet>

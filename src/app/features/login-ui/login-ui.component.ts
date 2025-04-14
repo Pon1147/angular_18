@@ -13,8 +13,8 @@ import { Router } from '@angular/router';
 import { SharedModule } from '../../shared/shared.module';
 import { User } from '../../shared/models/user.model';
 import { NotificationComponent } from '../../shared/components/notification/notification.component';
-import { NotificationService } from '../../core/services/notification.service';
 import { FormValidationService } from '../../shared/service/form-validation.service';
+import { NotificationService } from '../../shared/service/notification.service';
 
 @Component({
   selector: 'app-login-ui',
@@ -103,7 +103,7 @@ export class LoginUIComponent implements OnInit {
       });
     } else {
       const matchingUser = this.users.find(
-        (user: { email: any; password: any }) =>
+        (user: { email: string; password: string }) =>
           user.email === this.email?.value && user.password === this.password?.value,
       );
       if (matchingUser) {

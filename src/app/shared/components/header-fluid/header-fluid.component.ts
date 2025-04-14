@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class HeaderFluidComponent implements OnInit {
   @Input() headerItems: HeaderItem[] = [];
-  hasHamburger: boolean = false;
+  hasHamburger = false;
 
   constructor(
     private readonly elementRef: ElementRef,

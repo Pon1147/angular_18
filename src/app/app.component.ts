@@ -20,9 +20,7 @@ export class AppComponent {
     // Theo dõi sự thay đổi route để kiểm tra xem có nên hiển thị header không
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
-    ).subscribe((event: NavigationEnd) => {
-      this.checkRoute();
-    });
+    ).subscribe();
   }
 
   shouldShowHeader(): boolean {
