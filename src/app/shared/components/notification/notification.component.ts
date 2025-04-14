@@ -1,8 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SharedModule } from '../../shared.module';
-import { Subject, Subscription } from 'rxjs';
-import { NotificationContent, ActionableContent } from 'carbon-components-angular';
-import { NotificationItem, NotificationService, NotificationVariants } from '../../../core/services/notification.services';
+import { CustomNotification } from '../../interface/types/notification.interface';
+import { NotificationService } from '../../../core/services/notification.service';
 
 @Component({
   selector: 'app-notification',
@@ -11,47 +10,19 @@ import { NotificationItem, NotificationService, NotificationVariants } from '../
   templateUrl: './notification.component.html',
   styleUrl: './notification.component.scss',
 })
-export class NotificationComponent implements OnInit, OnDestroy {
-  actionSubject = new Subject<any>();
-  notifications: NotificationItem[] = [];
-  notificationObjDefault!: NotificationContent
-  readonly notifiVariants = NotificationVariants;
-  private subscription: Subscription | undefined;
+export class NotificationComponent implements OnInit {
+  notifications: CustomNotification[] = [];
 
   constructor(private readonly notificationService: NotificationService) {}
 
-  ngOnInit() {
-    this.subscription = this.notificationService.notificationSubject$.subscribe((notifies) => {
-      this.notifications = [...notifies];
+  ngOnInit(): void {
+    this.notificationService.notification$.subscribe(notifs => {
+      this.notifications = notifs;
+      console.log('notifications', this.notifications);
     });
   }
 
-  ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-  }
-
-  closeNotification(id: number) {
-    this.notificationService.closeNotification(id);
-  }
-
-  trackById(index: number, item: NotificationItem): number {
-    return item.id;
-  }
-
-  // Type guards - Improved to better handle different notification types
-  isToastContent(content: any): boolean {
-    return content && 'title' in content && 'subtitle' in content;
-  }
-
-  isNotificationContent(content: NotificationContent | ActionableContent | any): content is NotificationContent {
-    console.log('');
-    
-    return content && 'message' in content && !('subtitle' in content);
-  }
-
-  isActionableContent(content: NotificationContent | ActionableContent | any): content is ActionableContent {
-    return content && 'actions' in content && Array.isArray((content as ActionableContent).actions);
-  }
+  onClose(id: number): void {
+    this.notificationService.removeNotification(id);
+  } 
 }

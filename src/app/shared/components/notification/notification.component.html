@@ -1,29 +1,9 @@
 <div class="notification-container">
-  <ng-container *ngFor="let item of notifications; trackBy: trackById">
-    <ng-container [ngSwitch]="item.variant">
-      <!-- Toast Notification -->
-      <cds-toast
-        *ngSwitchCase="notifiVariants.TOAST"
-        [notificationObj]="isToastContent(item.content) ? item.content : null"
-        [class.hide]="item.hide"
-        (close)="closeNotification(item.id)"
-      ></cds-toast>
-
-      <!-- Inline Notification -->
-      <cds-inline-notification
-        *ngSwitchCase="notifiVariants.NOTIFICATION"
-        [notificationObj]="isNotificationContent(item.content) ? item.content : notificationObjDefault"
-        [class.hide]="item.hide"
-        (close)="closeNotification(item.id)"
-      ></cds-inline-notification>
-
-      <!-- Actionable Notification -->
-      <cds-actionable-notification
-        *ngSwitchCase="notifiVariants.ACTIONABLE"
-        [notificationObj]="isActionableContent(item.content) ? item.content : notificationObjDefault"
-        [class.hide]="item.hide"
-        (close)="closeNotification(item.id)"
-      ></cds-actionable-notification>
-    </ng-container>
-  </ng-container>
+  <!-- inline-notification.component.html -->
+  <div *ngFor="let notif of notifications">
+    <cds-inline-notification
+      [notificationObj]="notif"
+      (close)="onClose(notif.id)"
+    ></cds-inline-notification>
+  </div>
 </div>
