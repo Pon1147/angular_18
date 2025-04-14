@@ -1,3 +1,4 @@
+// src/app/login-ui.component.ts
 import { Component, OnInit } from '@angular/core';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { typInfoLarge, typArrowRightThick } from '@ng-icons/typicons';
@@ -10,10 +11,10 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SharedModule } from '../../shared/shared.module';
-import { emailValidator, passwordValidator } from '../../shared/validator/form-validator';
 import { User } from '../../shared/models/user.model';
 import { NotificationComponent } from '../../shared/components/notification/notification.component';
 import { NotificationService, NotificationVariants } from '../../core/services/notification.services';
+import { FormValidationService } from '../../shared/service/form-validation.service';
 
 @Component({
   selector: 'app-login-ui',
@@ -25,16 +26,8 @@ import { NotificationService, NotificationVariants } from '../../core/services/n
 })
 export class LoginUIComponent implements OnInit {
   users: User[] = [
-    {
-      id: 1,
-      email: 'test@example.com',
-      password: '19001592Aa@.',
-    },
-    {
-      id: 2,
-      email: 'test2@example.com',
-      password: 'test456',
-    },
+    { id: 1, email: 'test@example.com', password: '19001592Aa@.' },
+    { id: 2, email: 'test2@example.com', password: 'test456' },
   ];
 
   loginForm!: FormGroup;
@@ -43,14 +36,20 @@ export class LoginUIComponent implements OnInit {
   constructor(
     private readonly fb: FormBuilder,
     private readonly router: Router,
-    private readonly notificationService: NotificationService // Inject NotificationService
+    private readonly notificationService: NotificationService,
+    private readonly formValidationService: FormValidationService
   ) {}
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
-      email: ['test@example.com', [Validators.required, emailValidator()]],
-      password: ['19001592Aa@.', [Validators.required, passwordValidator()]],
+      email: ['test@example.com', [Validators.required, this.formValidationService.emailValidator()]],
+      password: ['19001592Aa@.', [Validators.required, this.formValidationService.passwordValidator()]],
     });
+
+    // Đảm bảo form không hiển thị lỗi ngay khi khởi tạo
+    this.loginForm.markAsPristine();
+    this.loginForm.markAsUntouched();
+
     this.loginForm.statusChanges.subscribe((status) => {
       this.disabled = status === 'INVALID';
     });
@@ -65,46 +64,19 @@ export class LoginUIComponent implements OnInit {
   }
 
   get isEmailInvalid(): boolean {
-    const emailControl = this.loginForm.get('email');
-    if (!emailControl) return false;
-    return !emailControl.valid && (emailControl.dirty || emailControl.touched);
+    return this.formValidationService.isInvalid(this.email);
   }
 
   get emailInvalidText(): string {
-    const emailControl = this.loginForm.get('email');
-    if (!emailControl) return '';
-    if (emailControl.hasError('required')) {
-      return 'Email là bắt buộc';
-    }
-    if (emailControl.hasError('invalidEmail')) {
-      return 'Email không hợp lệ, vui lòng nhập đúng định dạng (ví dụ: username@ibm.com)';
-    }
-    return '';
+    return this.formValidationService.getEmailErrorMessage(this.email);
   }
 
   get isPasswordInvalid(): boolean {
-    const passwordControl = this.loginForm.get('password');
-    if (!passwordControl) return false;
-    return !passwordControl.valid && (passwordControl.dirty || passwordControl.touched);
+    return this.formValidationService.isInvalid(this.password);
   }
 
   get passwordInvalidText(): string {
-    const passwordControl = this.loginForm.get('password');
-    if (!passwordControl) return '';
-    if (passwordControl.hasError('required')) {
-      return 'Mật khẩu là bắt buộc';
-    }
-    if (passwordControl.hasError('invalidPassword')) {
-      const errors = passwordControl.errors?.['invalidPassword'];
-      const messages: string[] = [];
-      if (!errors.minLength) messages.push('Mật khẩu phải có ít nhất 9 ký tự');
-      if (!errors.hasUpperCase) messages.push('Mật khẩu phải có ít nhất 1 chữ cái in hoa');
-      if (!errors.hasLowerCase) messages.push('Mật khẩu phải có ít nhất 1 chữ cái thường');
-      if (!errors.hasNumber) messages.push('Mật khẩu phải có ít nhất 1 số');
-      if (!errors.hasSpecialChar) messages.push('Mật khẩu phải có ít nhất 1 ký tự đặc biệt');
-      return messages.join(', ');
-    }
-    return '';
+    return this.formValidationService.getPasswordErrorMessage(this.password);
   }
 
   onSubmit(): void {
@@ -125,17 +97,16 @@ export class LoginUIComponent implements OnInit {
           title: 'Success',
           message: 'Đăng nhập thành công',
           showClose: true,
-          timeout: 5000
+          timeout: 5000,
         });
       } else {
         console.log('You log in with Email:', this.email?.value);
-        // Hiển thị thông báo lỗi với cấu trúc đúng cho Toast notification
         this.notificationService.showNotification(NotificationVariants.NOTIFICATION, {
           type: 'error',
           title: 'Đăng nhập không thành công',
           message: 'Email hoặc mật khẩu không đúng',
           showClose: true,
-          timeout: 5000
+          timeout: 5000,
         });
       }
     }

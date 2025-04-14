@@ -1,15 +1,13 @@
-// task.service.ts
+// src/app/shared/service/task.service.ts
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { TableItem, PaginationModel, TableModel } from 'carbon-components-angular';
 import { Task } from '../models/todo.model';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class TaskService {
-  private readonly task: Task[] = [];
-
   private readonly tasksSubject = new BehaviorSubject<Task[]>([]);
   tasks$ = this.tasksSubject.asObservable();
 
@@ -26,56 +24,90 @@ export class TaskService {
     this.tasksSubject.next(initialTasks);
   }
 
-  addTask(task: Task) {
-    const currentTasks = this.tasksSubject.value;
-    const newId = currentTasks.length ? Math.max(...currentTasks.map(t => t.id)) + 1 : 1;
-    const newTask = { ...task, id: newId };
-    this.tasksSubject.next([...currentTasks, newTask]);
+  // CRUD Operations
+  addTask(task: Task): void {
+    try {
+      if (!task) throw new Error('Task cannot be null or undefined');
+      const currentTasks = this.tasksSubject.value;
+      const newId = currentTasks.length ? Math.max(...currentTasks.map(t => t.id)) + 1 : 1;
+      const newTask = { ...task, id: newId };
+      this.tasksSubject.next([...currentTasks, newTask]);
+    } catch (error) {
+      console.error('Error adding task:', error);
+      throw new Error('Failed to add task');
+    }
   }
-  updateTask(updatedTask: Task) {
-    const currentTasks = this.tasksSubject.value;
-    const index = currentTasks.findIndex(t => t.id === updatedTask.id);
-    if (index !== -1) {
+
+  updateTask(updatedTask: Task): void {
+    try {
+      if (!updatedTask || !updatedTask.id) throw new Error('Invalid task or task ID');
+      const currentTasks = this.tasksSubject.value;
+      const index = currentTasks.findIndex(t => t.id === updatedTask.id);
+      if (index === -1) throw new Error('Task not found');
       currentTasks[index] = updatedTask;
       this.tasksSubject.next([...currentTasks]);
+    } catch (error) {
+      console.error('Error updating task:', error);
+      throw new Error('Failed to update task');
     }
   }
 
   getTasks(): Task[] {
-    return this.tasksSubject.value;
+    return [...this.tasksSubject.value]; // Trả về bản sao để bảo vệ dữ liệu
   }
-  // Filter logic
+
+  // Filter Operations
   applyFilters(
     initialData: TableItem[][],
     searchString: string,
-    selectedDate: string | null,
+    selectedDate: string | null
   ): TableItem[][] {
-    let filteredData = [...initialData];
-    if (searchString.trim() !== '') {
-      const searchLower = searchString.toLowerCase().trim();
-      filteredData = filteredData.filter(row =>
-        (row[0]?.data as string)?.toLowerCase().includes(searchLower),
-      );
+    try {
+      if (!initialData) return [];
+      let filteredData = [...initialData];
+      if (searchString?.trim()) {
+        const searchLower = searchString.toLowerCase().trim();
+        filteredData = filteredData.filter(row => {
+          const name = row[0]?.data;
+          return name && typeof name === 'string' && name.toLowerCase().includes(searchLower);
+        });
+      }
+      if (selectedDate) {
+        filteredData = filteredData.filter(row => {
+          const date = row[2]?.data;
+          return date && typeof date === 'string' && date === selectedDate;
+        });
+      }
+      return filteredData;
+    } catch (error) {
+      console.error('Error applying filters:', error);
+      return initialData;
     }
-    if (selectedDate) {
-      filteredData = filteredData.filter(row => (row[2]?.data as string) === selectedDate);
-    }
-    return filteredData;
   }
 
-  // Pagination logic
+  // Pagination Operations
   updateTotalPages(filteredData: TableItem[][], paginationModel: PaginationModel): void {
-    paginationModel.totalDataLength = filteredData.length;
+    if (!paginationModel) return;
+    paginationModel.totalDataLength = filteredData?.length || 0;
   }
 
   updateTableData(
     filteredData: TableItem[][],
     paginationModel: PaginationModel,
-    tableModel: TableModel,
+    tableModel: TableModel
   ): void {
-    const startIndex = (paginationModel.currentPage - 1) * paginationModel.pageLength!;
-    const endIndex = startIndex + paginationModel.pageLength!;
-    tableModel.data = filteredData.slice(startIndex, endIndex);
+    try {
+      if (!filteredData || !paginationModel || !tableModel) {
+        throw new Error('Invalid parameters');
+      }
+      const pageLength = paginationModel.pageLength ?? 1; // Đảm bảo pageLength không null
+      const startIndex = (paginationModel.currentPage - 1) * pageLength;
+      const endIndex = startIndex + pageLength;
+      tableModel.data = filteredData.slice(startIndex, endIndex);
+    } catch (error) {
+      console.error('Error updating table data:', error);
+      tableModel.data = [];
+    }
   }
 
   navigateToLastPageIfNewTaskAdded(
@@ -83,12 +115,17 @@ export class TaskService {
     initialDataLength: number,
     paginationModel: PaginationModel,
     tableModel: TableModel,
-    filteredData: TableItem[][],
+    filteredData: TableItem[][]
   ): void {
-    const totalPages = Math.ceil(tasks.length / paginationModel.pageLength!);
-    if (tasks.length > initialDataLength) {
-      paginationModel.currentPage = totalPages;
-      this.updateTableData(filteredData, paginationModel, tableModel);
+    try {
+      if (!tasks || !paginationModel || !tableModel || !filteredData) return;
+      const totalPages = Math.ceil(tasks.length / (paginationModel.pageLength ?? 1));
+      if (tasks.length > initialDataLength) {
+        paginationModel.currentPage = totalPages;
+        this.updateTableData(filteredData, paginationModel, tableModel);
+      }
+    } catch (error) {
+      console.error('Error navigating to last page:', error);
     }
   }
 
@@ -96,32 +133,47 @@ export class TaskService {
     page: number,
     paginationModel: PaginationModel,
     filteredData: TableItem[][],
-    tableModel: TableModel,
+    tableModel: TableModel
   ): void {
-    paginationModel.currentPage = page;
-    this.updateTableData(filteredData, paginationModel, tableModel);
+    try {
+      if (page < 1 || !paginationModel || !filteredData || !tableModel) return;
+      paginationModel.currentPage = page;
+      this.updateTableData(filteredData, paginationModel, tableModel);
+    } catch (error) {
+      console.error('Error selecting page:', error);
+    }
   }
 
   onPageLengthChange(
     pageLength: number,
     paginationModel: PaginationModel,
     filteredData: TableItem[][],
-    tableModel: TableModel,
+    tableModel: TableModel
   ): void {
-    paginationModel.pageLength = pageLength;
-    paginationModel.currentPage = 1;
-    this.updateTableData(filteredData, paginationModel, tableModel);
+    try {
+      if (pageLength < 1 || !paginationModel || !filteredData || !tableModel) return;
+      paginationModel.pageLength = pageLength;
+      paginationModel.currentPage = 1;
+      this.updateTableData(filteredData, paginationModel, tableModel);
+    } catch (error) {
+      console.error('Error changing page length:', error);
+    }
   }
-  // Selection logic
+
+  // Selection Operations
   getSelectedRowsData(tableModel: TableModel): TableItem[][] {
-    const rowsSelectionStatus = tableModel.rowsSelected;
-    const currentViewData = tableModel.data;
-    const selectedData: TableItem[][] = [];
-    rowsSelectionStatus.forEach((isSelected, index) => {
-      if (isSelected && index < currentViewData.length) {
-        selectedData.push(currentViewData[index]);
-      }
-    });
-    return selectedData;
+    try {
+      if (!tableModel || !tableModel.rowsSelected || !tableModel.data) return [];
+      const selectedData: TableItem[][] = [];
+      tableModel.rowsSelected.forEach((isSelected, index) => {
+        if (isSelected && index < tableModel.data.length) {
+          selectedData.push(tableModel.data[index]);
+        }
+      });
+      return selectedData;
+    } catch (error) {
+      console.error('Error getting selected rows:', error);
+      return [];
+    }
   }
 }

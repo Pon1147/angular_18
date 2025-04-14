@@ -51,7 +51,7 @@ export function stringValidator(
       return { type: { message: 'Giá trị phải là kiểu chuỗi.' } };
     }
     const trimmedValue = value ? value.trim() : '';
-    if (options.minLength && trimmedValue.lenght < options.minLength) {
+    if (options.minLength && trimmedValue.length < options.minLength) {
       return { minLength: { message: `Dộ dài tối thiểu là ${options.minLength} ký tự` } };
     }
     if (options.maxLength && trimmedValue.length > options.maxLength) {
@@ -110,7 +110,6 @@ export function booleanValidator(options: { required?: boolean } = {}): Validato
     return null;
   };
 }
-
 /**
  * Validator cho kiểu Date
  * - Linh hoạt với các tùy chọn ngày

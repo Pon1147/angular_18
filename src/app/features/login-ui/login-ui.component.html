@@ -8,7 +8,7 @@
       <br>
       <div class="form-creat">
         <!-- Form Create Account -->
-        <p class="">
+        <p>
           Don't have an account?
           <a href="#">Create an IBMid</a>
         </p>
@@ -24,24 +24,23 @@
         <br>
         <cds-text-label [invalid]="isPasswordInvalid" [invalidText]="passwordInvalidText">
           Password
-          <input cdsText type="password" placeholder="Enter your password." formControlName="password">
-          <!-- Input password -->
+          <input cdsText type="password" placeholder="Enter your password" formControlName="password">
         </cds-text-label>
         <br>
         <div class="form-checkbox">
-          <!-- form for User Check the box to remember ID -->
+          <!-- Form for User Check the box to remember ID -->
           <cds-checkbox>
             Remember ID <ng-icon name="typInfoLarge" style="padding-top: 2px"></ng-icon>
           </cds-checkbox>
         </div>
         <br>
         <div class="form-button">
-          <!-- form for btn -->
+          <!-- Form for btn -->
           <cds-button-set>
             <button cdsButton="ghost">
               Log in with Softlayer
             </button>
-            <button cdsButton="primary" [disabled]="loginForm.invalid">
+            <button cdsButton="primary" [disabled]="disabled">
               Continue
               <ng-icon name="typArrowRightThick"></ng-icon>
             </button>
