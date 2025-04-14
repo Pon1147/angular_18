@@ -4,10 +4,10 @@ import { PaginationModel, TableHeaderItem, TableItem, TableModel } from 'carbon-
 import { provideIcons } from '@ng-icons/core';
 import { typFilter } from '@ng-icons/typicons';
 import { Router, RouterOutlet } from '@angular/router';
-import { Task } from '../../../shared/models/todo.model';
-import { DateUtilsService } from '../../../shared/service/date-utils.service';
-import { TaskService } from '../../../shared/service/task.service';
-import { SharedModule } from '../../../shared/shared.module';
+import { Task } from '../../shared/models/todo.model';
+import { DateUtilsService } from '../../shared/service/date-utils.service';
+import { TaskService } from '../../shared/service/task.service';
+import { SharedModule } from '../../shared/shared.module';
 
 @Component({
   selector: 'app-todolist',

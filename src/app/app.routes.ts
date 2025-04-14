@@ -14,7 +14,7 @@ export const routes: Routes = [
   {
     path: 'todo',
     loadComponent: () =>
-      import('./features/todo/todo-list/todo-list.component').then(m => m.TodolistComponent),
+      import('./features/todo-list/todo-list.component').then(m => m.TodolistComponent),
     children: [
       {
         path: 'add',

@@ -21,7 +21,7 @@ export class AppComponent {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: NavigationEnd) => {
-      this.checkRoute(event.urlAfterRedirects);
+      this.checkRoute();
     });
   }
 
@@ -30,7 +30,7 @@ export class AppComponent {
     return !this.router.url.includes('/login');
   }
 
-  private checkRoute(url: string): void {
+  private checkRoute(): void {
     // Có thể thêm logic khác nếu cần
   }
   
