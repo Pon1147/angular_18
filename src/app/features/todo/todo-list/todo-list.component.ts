@@ -14,8 +14,8 @@ import { SharedModule } from '../../../shared/shared.module';
   standalone: true,
   imports: [SharedModule, RouterOutlet],
   viewProviders: [provideIcons({ typFilter })],
-  templateUrl: './todolist.component.html',
-  styleUrls: ['./todolist.component.scss'],
+  templateUrl: './todo-list.component.html',
+  styleUrls: ['./todo-list.component.scss'],
 })
 export class TodolistComponent implements OnInit {
   title = 'Todo List !!!';

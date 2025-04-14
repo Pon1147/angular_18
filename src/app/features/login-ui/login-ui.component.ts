@@ -50,6 +50,9 @@ export class LoginUIComponent implements OnInit {
     this.loginForm.markAsPristine();
     this.loginForm.markAsUntouched();
 
+    // Cập nhật trạng thái disabled của nút đăng nhập dựa trên trạng thái form
+    this.disabled = this.loginForm.invalid;
+
     this.loginForm.statusChanges.subscribe((status) => {
       this.disabled = status === 'INVALID';
     });
@@ -110,5 +113,9 @@ export class LoginUIComponent implements OnInit {
         });
       }
     }
+  }
+  onSoftlayerLogin(): void {
+    console.log('Navigating to Softlayer login page...');
+    this.router.navigate(['/softlayer-login']);
   }
 }
