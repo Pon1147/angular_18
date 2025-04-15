@@ -28,8 +28,8 @@ export class HeaderFluidComponent implements OnInit {
     this.checkWindowSize();
   }
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event: Event): void {
+  @HostListener('window:resize')
+  onResize(): void {
     this.checkWindowSize();
   }
 
@@ -45,6 +45,12 @@ export class HeaderFluidComponent implements OnInit {
     // Nếu màn hình lớn hơn 1055px, đóng menu
     if (!this.showHamburger) {
       this.hasHamburger = false;
+    }
+  }
+  onHamburgerKeydown(event: KeyboardEvent): void {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      this.hasHamburger = !this.hasHamburger;
     }
   }
 
@@ -63,4 +69,5 @@ export class HeaderFluidComponent implements OnInit {
       this.onItemClick(item);
     }
   }
+  
 }

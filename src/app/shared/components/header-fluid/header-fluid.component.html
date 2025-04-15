@@ -1,15 +1,15 @@
 <cds-header brand="HMD" name="[9]">
-  <div
-  *ngIf="showHamburger"
-  class="custom-hamburger"
-  [class.active]="hasHamburger"
-  (click)="hasHamburger = !hasHamburger"
->
-  <button class="cds--header__menu-trigger" aria-label="Toggle menu">
-    <ng-icon *ngIf="!hasHamburger" name="typThMenu" size="16"></ng-icon>
-    <ng-icon *ngIf="hasHamburger" name="typTimes" size="16"></ng-icon>
-  </button>
-</div>
+  <div *ngIf="showHamburger" class="custom-hamburger" [class.active]="hasHamburger">
+    <button
+      (click)="hasHamburger = !hasHamburger"
+      (keydown)="onHamburgerKeydown($event)"
+      class="cds--header__menu-trigger"
+      aria-label="Toggle menu"
+    >
+      <ng-icon *ngIf="!hasHamburger" name="typThMenu" size="16"></ng-icon>
+      <ng-icon *ngIf="hasHamburger" name="typTimes" size="16"></ng-icon>
+    </button>
+  </div>
   <cds-header-navigation>
     <ng-container *ngFor="let item of headerItems">
       <cds-header-item
@@ -23,10 +23,7 @@
         {{ item.content || '' }}
       </cds-header-item>
 
-      <cds-header-menu 
-        *ngIf="isMenuItem(item)" 
-        [title]="item.title || ''"
-      >
+      <cds-header-menu *ngIf="isMenuItem(item)" [title]="item.title || ''">
         <cds-header-item
           *ngFor="let subItem of item.menuItems"
           (click)="onItemClick(subItem)"
