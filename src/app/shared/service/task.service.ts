@@ -110,7 +110,7 @@ export class TaskService {
     }
   }
 
-  navigateToLastPageIfNewTaskAdded(
+  navigateToLastPage(
     tasks: Task[],
     initialDataLength: number,
     paginationModel: PaginationModel,

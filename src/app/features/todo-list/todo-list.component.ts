@@ -64,7 +64,7 @@ export class TodolistComponent implements OnInit {
     this.taskService.updateTotalPages(this.filteredData, this.paginationModel);
     this.taskService.updateTableData(this.filteredData, this.paginationModel, this.model);
   }
-
+  
   ngOnInit(): void {
     this.taskService.tasks$.subscribe(tasks => {
       this.tasks = tasks;
@@ -75,7 +75,7 @@ export class TodolistComponent implements OnInit {
       ]);
       this.filteredData = [...this.initialModelData];
       this.applyFilters();
-      this.taskService.navigateToLastPageIfNewTaskAdded(
+      this.taskService.navigateToLastPage(
         tasks,
         this.initialModelData.length,
         this.paginationModel,
@@ -87,6 +87,9 @@ export class TodolistComponent implements OnInit {
 
   openAddModal() {
     this.router.navigate(['/todo/add']);
+  }
+  getSelectedCount(): number{
+    return this.model.rowsSelected.filter(isSelected => isSelected).length + 1;
   }
 
   editSelected() {

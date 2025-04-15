@@ -17,7 +17,7 @@
         Delete
         <svg cdsIcon="delete" size="16" class="cds--btn__icon"></svg>
       </button>
-      <button cdsButton="primary" (click)="editSelected()">
+      <button *ngIf="getSelectedCount() <= 2" cdsButton="primary" (click)="editSelected()">
         Edit
         <svg cdsIcon="save" size="16" class="cds--btn__icon"></svg>
       </button>
