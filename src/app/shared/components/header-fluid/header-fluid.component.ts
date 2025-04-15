@@ -2,13 +2,16 @@ import { Component, ElementRef, HostListener, Input, OnInit } from '@angular/cor
 import { HeaderItem } from '../../models/header-fluid.interface';
 import { SharedModule } from '../../shared.module';
 import { Router } from '@angular/router';
+import { typThMenu, typTimes } from '@ng-icons/typicons';
+import { NgIcon, provideIcons } from '@ng-icons/core';
 
 @Component({
   selector: 'app-header-fluid',
   standalone: true,
-  imports: [SharedModule], 
+  imports: [SharedModule, NgIcon],
   templateUrl: './header-fluid.component.html',
   styleUrls: ['./header-fluid.component.scss'],
+  viewProviders: [provideIcons({ typThMenu, typTimes })],
 })
 export class HeaderFluidComponent implements OnInit {
   @Input() headerItems: HeaderItem[] = [];

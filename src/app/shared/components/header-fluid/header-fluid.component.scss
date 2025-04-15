@@ -1,13 +1,57 @@
 cds-header {
+  display: flex;
+  align-items: center;
+}
+
+cds-header-navigation {
+  display: flex;
+  flex: 1;
+}
+
+cds-header-item {
+  margin-right: 1rem;
+}
+cds-sidenav {
+  margin-top: 47px;
+}
+
+.custom-hamburger {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  .cds--header__menu-trigger {
+    background: none;
+    border: none;
+    padding: 0.5rem;
     display: flex;
     align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--cds-ui-02, #e0e0e0);
+    }
+
+    &:focus {
+      outline: 2px solid var(--cds-focus, #0f62fe);
+      outline-offset: -2px;
+    }
   }
-  
-  cds-header-navigation {
-    display: flex;
-    flex: 1;
+
+  &.active {
+    .cds--header__menu-trigger {
+      background-color: var(--cds-ui-03, #dcdcdc);
+    }
   }
-  
-  cds-header-item {
-    margin-right: 1rem;
+}
+// Đảm bảo sidenav hiển thị đúng
+.cds--header__menu-toggle__hidden {
+  display: none;
+
+  @media (max-width: 1055px) {
+    display: block;
   }
+}
