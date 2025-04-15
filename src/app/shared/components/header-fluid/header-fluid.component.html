@@ -42,3 +42,9 @@
     class="cds--header__menu-toggle__hidden"
   ></cds-sidenav>
 </cds-header>
+
+<div
+  *ngIf="showHamburger && hasHamburger"
+  class="overlay"
+  (click)="hasHamburger = false"
+></div>

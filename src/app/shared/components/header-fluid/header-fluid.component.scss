@@ -19,6 +19,8 @@ cds-sidenav {
   display: flex;
   align-items: center;
   cursor: pointer;
+  position: relative; /* Đảm bảo z-index hoạt động */
+  z-index: 1000; /* Đặt z-index cao hơn để đảm bảo nó nằm trên các phần tử khác */
 
   .cds--header__menu-trigger {
     background: none;
@@ -51,8 +53,20 @@ cds-sidenav {
 // Điều chỉnh hiển thị sidenav
 .cds--header__menu-toggle__hidden {
   display: none;
+  z-index: 1000;
 
   @media (max-width: 1055px) {
     display: block;
   }
+}
+
+/* CSS cho overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Màu đen với opacity 0.5 */
+  z-index: 999; /* Dưới hamburger và sidenav */
 }

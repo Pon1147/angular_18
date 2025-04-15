@@ -41,12 +41,12 @@ export class HeaderFluidComponent implements OnInit {
   }
 
   private checkWindowSize(): void {
-    this.showHamburger = window.innerWidth < 1056;
-    // Nếu màn hình lớn hơn 1055px, đóng menu
+    this.showHamburger = window.innerWidth < 1055;
     if (!this.showHamburger) {
       this.hasHamburger = false;
     }
   }
+
   onHamburgerKeydown(event: KeyboardEvent): void {
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
@@ -69,5 +69,4 @@ export class HeaderFluidComponent implements OnInit {
       this.onItemClick(item);
     }
   }
-  
 }
