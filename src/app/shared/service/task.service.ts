@@ -1,4 +1,3 @@
-// src/app/shared/service/task.service.ts
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { TableItem, PaginationModel, TableModel } from 'carbon-components-angular';
@@ -22,6 +21,24 @@ export class TaskService {
       { id: 7, name: 'Review Code', status: 'processing', date: ['06/04/2025'] },
     ];
     this.tasksSubject.next(initialTasks);
+  }
+
+  private standardizeDate(dateStr: string): string | null {
+    try {
+      const parts = dateStr.replace(/[-\/]/g, '/').split('/');
+      if (parts.length !== 3) return null;
+
+      const day = parts[0].padStart(2, '0');
+      const month = parts[1].padStart(2, '0');
+      const year = parts[2];
+      const date = new Date(`${year}-${month}-${day}`);
+      if (isNaN(date.getTime())) return null;
+
+      return `${day}/${month}/${year}`;
+    } catch (error) {
+      console.error('Error standardizing date:', dateStr, error);
+      return null;
+    }
   }
 
   // CRUD Operations
@@ -53,7 +70,7 @@ export class TaskService {
   }
 
   getTasks(): Task[] {
-    return [...this.tasksSubject.value]; // Trả về bản sao để bảo vệ dữ liệu
+    return [...this.tasksSubject.value];
   }
 
   // Filter Operations
@@ -65,6 +82,8 @@ export class TaskService {
     try {
       if (!initialData) return [];
       let filteredData = [...initialData];
+
+      // Lọc theo search string
       if (searchString?.trim()) {
         const searchLower = searchString.toLowerCase().trim();
         filteredData = filteredData.filter(row => {
@@ -72,12 +91,25 @@ export class TaskService {
           return name && typeof name === 'string' && name.toLowerCase().includes(searchLower);
         });
       }
+
+      // Lọc theo ngày
       if (selectedDate) {
-        filteredData = filteredData.filter(row => {
-          const date = row[2]?.data;
-          return date && typeof date === 'string' && date === selectedDate;
-        });
+        const standardizedSelectedDate = this.standardizeDate(selectedDate);
+        if (standardizedSelectedDate) {
+          filteredData = filteredData.filter(row => {
+            const date = row[2]?.data;
+            if (!date || typeof date !== 'string') return false;
+            const standardizedRowDate = this.standardizeDate(date);
+            console.log(
+              `Comparing: row date=${standardizedRowDate}, selected date=${standardizedSelectedDate}`,
+            );
+            return standardizedRowDate === standardizedSelectedDate;
+          });
+        } else {
+          console.warn('Invalid selected date, skipping date filter:', selectedDate);
+        }
       }
+
       return filteredData;
     } catch (error) {
       console.error('Error applying filters:', error);
@@ -94,13 +126,13 @@ export class TaskService {
   updateTableData(
     filteredData: TableItem[][],
     paginationModel: PaginationModel,
-    tableModel: TableModel
+    tableModel: TableModel,
   ): void {
     try {
       if (!filteredData || !paginationModel || !tableModel) {
         throw new Error('Invalid parameters');
       }
-      const pageLength = paginationModel.pageLength ?? 1; // Đảm bảo pageLength không null
+      const pageLength = paginationModel.pageLength ?? 1;
       const startIndex = (paginationModel.currentPage - 1) * pageLength;
       const endIndex = startIndex + pageLength;
       tableModel.data = filteredData.slice(startIndex, endIndex);

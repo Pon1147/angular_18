@@ -13,6 +13,7 @@ import { Task } from '../../shared/models/todo.model';
 import { DateUtilsService } from '../../shared/service/date-utils.service';
 import { TaskService } from '../../shared/service/task.service';
 import { SharedModule } from '../../shared/shared.module';
+
 @Component({
   selector: 'app-todolist',
   standalone: true,
@@ -64,7 +65,7 @@ export class TodolistComponent implements OnInit {
     this.taskService.updateTotalPages(this.filteredData, this.paginationModel);
     this.taskService.updateTableData(this.filteredData, this.paginationModel, this.model);
   }
-  
+
   ngOnInit(): void {
     this.taskService.tasks$.subscribe(tasks => {
       this.tasks = tasks;
@@ -88,8 +89,9 @@ export class TodolistComponent implements OnInit {
   openAddModal() {
     this.router.navigate(['/todo/add']);
   }
-  getSelectedCount(): number{
-    return this.model.rowsSelected.filter(isSelected => isSelected).length + 1;
+
+  getSelectedCount(): number {
+    return this.model.rowsSelected.filter(isSelected => isSelected).length;
   }
 
   editSelected() {
@@ -110,18 +112,25 @@ export class TodolistComponent implements OnInit {
 
   onPageLengthChange(event: Event): void {
     const pageSelect = (event.target as HTMLSelectElement).value;
-    const pageNumber = parseInt(pageSelect)
+    const pageNumber = parseInt(pageSelect);
     this.taskService.onPageLengthChange(pageNumber, this.paginationModel, this.filteredData, this.model);
     console.log(123);
-    
   }
 
   applyFilters() {
+    console.log('Applying filters with:');
+    console.log('Search string:', this.currentSearchString);
+    console.log('Selected date:', this.currentSelectedDateString);
+    console.log('Initial data:', this.initialModelData);
+
     this.filteredData = this.taskService.applyFilters(
       this.initialModelData,
       this.currentSearchString,
       this.currentSelectedDateString,
     );
+
+    console.log('Filtered data:', this.filteredData);
+
     this.taskService.updateTotalPages(this.filteredData, this.paginationModel);
     this.taskService.updateTableData(this.filteredData, this.paginationModel, this.model);
   }
@@ -132,25 +141,41 @@ export class TodolistComponent implements OnInit {
   }
 
   onDateChange(selectedDates: Date[] | null) {
-    if (selectedDates && selectedDates.length > 0 && !isNaN(selectedDates[0].getTime())) {
-      this.currentSelectedDateString = this.dateUtilsService.formatDate(selectedDates[0]);
-    } else {
+    console.log('Selected dates from date picker:', selectedDates);
+    try {
+      if (selectedDates && selectedDates.length > 0) {
+        const selectedDate = selectedDates[0];
+        if (!isNaN(selectedDate.getTime())) {
+          const day = String(selectedDate.getDate()).padStart(2, '0');
+          const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
+          const year = selectedDate.getFullYear();
+          this.currentSelectedDateString = `${day}/${month}/${year}`;
+        } else {
+          throw new Error('Invalid date selected');
+        }
+      } else {
+        this.currentSelectedDateString = null;
+      }
+      console.log('Formatted selected date:', this.currentSelectedDateString);
+      this.applyFilters();
+    } catch (error) {
+      console.error('Error processing selected date:', error);
       this.currentSelectedDateString = null;
+      this.applyFilters();
     }
-    this.applyFilters();
   }
 
-  private getSelectedRowsData(): TableItem[][] {
-    const rowsSelectionStatus = this.model.rowsSelected;
-    const currentViewData = this.model.data;
-    const selectedData: TableItem[][] = [];
-    rowsSelectionStatus.forEach((isSelected, index) => {
-      if (isSelected && index < currentViewData.length) {
-        selectedData.push(currentViewData[index]);
-      }
-    });
-    return selectedData;
-  }
+  // private getSelectedRowsData(): TableItem[][] {
+  //   const rowsSelectionStatus = this.model.rowsSelected;
+  //   const currentViewData = this.model.data;
+  //   const selectedData: TableItem[][] = [];
+  //   rowsSelectionStatus.forEach((isSelected, index) => {
+  //     if (isSelected && index < currentViewData.length) {
+  //       selectedData.push(currentViewData[index]);
+  //     }
+  //   });
+  //   return selectedData;
+  // }
 
   deleteSelected() {
     throw new Error('Method not implemented.');
