@@ -41,7 +41,7 @@ export class HeaderFluidComponent implements OnInit {
   }
 
   private checkWindowSize(): void {
-    this.showHamburger = window.innerWidth < 1055;
+    this.showHamburger = window.innerWidth < 1056;
     if (!this.showHamburger) {
       this.hasHamburger = false;
     }
