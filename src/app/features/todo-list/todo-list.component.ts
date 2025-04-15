@@ -102,7 +102,6 @@ export class TodolistComponent implements OnInit {
         this.router.navigate(['/todo/edit', selectedTask.id]);
       }
     } else {
-      console.log('Please select exactly one row to edit.');
     }
   }
 
@@ -114,14 +113,10 @@ export class TodolistComponent implements OnInit {
     const pageSelect = (event.target as HTMLSelectElement).value;
     const pageNumber = parseInt(pageSelect);
     this.taskService.onPageLengthChange(pageNumber, this.paginationModel, this.filteredData, this.model);
-    console.log(123);
   }
 
   applyFilters() {
-    console.log('Applying filters with:');
-    console.log('Search string:', this.currentSearchString);
-    console.log('Selected date:', this.currentSelectedDateString);
-    console.log('Initial data:', this.initialModelData);
+
 
     this.filteredData = this.taskService.applyFilters(
       this.initialModelData,
@@ -129,7 +124,6 @@ export class TodolistComponent implements OnInit {
       this.currentSelectedDateString,
     );
 
-    console.log('Filtered data:', this.filteredData);
 
     this.taskService.updateTotalPages(this.filteredData, this.paginationModel);
     this.taskService.updateTableData(this.filteredData, this.paginationModel, this.model);
@@ -141,7 +135,6 @@ export class TodolistComponent implements OnInit {
   }
 
   onDateChange(selectedDates: Date[] | null) {
-    console.log('Selected dates from date picker:', selectedDates);
     try {
       if (selectedDates && selectedDates.length > 0) {
         const selectedDate = selectedDates[0];
@@ -156,7 +149,6 @@ export class TodolistComponent implements OnInit {
       } else {
         this.currentSelectedDateString = null;
       }
-      console.log('Formatted selected date:', this.currentSelectedDateString);
       this.applyFilters();
     } catch (error) {
       console.error('Error processing selected date:', error);

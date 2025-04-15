@@ -24,7 +24,6 @@ export class HeaderFluidComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log(this.headerItems);
     this.checkWindowSize();
   }
 
