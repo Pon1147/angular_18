@@ -16,6 +16,7 @@ import { NgIcon, provideIcons } from '@ng-icons/core';
 export class HeaderFluidComponent implements OnInit {
   @Input() headerItems: HeaderItem[] = [];
   hasHamburger = false;
+  showHamburger = false;
 
   constructor(
     private readonly elementRef: ElementRef,
@@ -24,11 +25,25 @@ export class HeaderFluidComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.headerItems);
+    this.checkWindowSize();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event): void {
+    this.checkWindowSize();
   }
 
   @HostListener('document:click', ['$event'])
   onClickOutside(event: Event): void {
     if (!this.elementRef.nativeElement.contains(event.target as Node)) {
+      this.hasHamburger = false;
+    }
+  }
+
+  private checkWindowSize(): void {
+    this.showHamburger = window.innerWidth < 1056;
+    // Nếu màn hình lớn hơn 1055px, đóng menu
+    if (!this.showHamburger) {
       this.hasHamburger = false;
     }
   }
