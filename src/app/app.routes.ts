@@ -33,6 +33,12 @@ export const routes: Routes = [
         data: { mode: 'edit' },
       },
     ],
+  },
+  {
+    path: 'manage/link1',
+    loadComponent: () =>
+      import('./shared/components/jest-test/jest-test.component').then(m => m.JestTestComponent),
+    data: { mode: 'jest-test' },
   }, // lazy loading module HomeModule
   {
     path: 'author',
