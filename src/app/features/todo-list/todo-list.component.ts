@@ -101,7 +101,6 @@ export class TodolistComponent implements OnInit {
       if (selectedTask) {
         this.router.navigate(['/todo/edit', selectedTask.id]);
       }
-    } else {
     }
   }
 

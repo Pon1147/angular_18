@@ -8,6 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "jest",
     "testcov": "jest --coverage",
+    "test:math": "jest -i test/my-tests.spec.ts -t \"math tests\"",
     "lint": "ng lint",
     "format": "prettier --write \"src/**/*.{ts,html,css,json}\"",
     "format:check": "prettier --check \"src/**/*.{ts,html,css,json}\""

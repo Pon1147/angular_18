@@ -43,11 +43,11 @@ export class LoginUIComponent implements OnInit {
   ngOnInit(): void {
     this.loginForm = this.fb.group({
       email: [
-        'test@example.com',
+        '',
         [Validators.required, this.formValidationService.emailValidator()],
       ],
       password: [
-        '19001592Aa@.',
+        '',
         [Validators.required, this.formValidationService.passwordValidator()],
       ],
     });

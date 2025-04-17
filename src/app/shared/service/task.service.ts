@@ -25,7 +25,7 @@ export class TaskService {
 
   private standardizeDate(dateStr: string): string | null {
     try {
-      const parts = dateStr.replace(/[-\/]/g, '/').split('/');
+      const parts = dateStr.replace(/[-/]/g, '/').split('/');
       if (parts.length !== 3) return null;
 
       const day = parts[0].padStart(2, '0');
