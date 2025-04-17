@@ -3,9 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SharedModule } from '../../shared.module';
 import { Task } from '../../models/todo.model';
-import { stringValidator, dateValidator } from '../../validator/form-validator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TaskService } from '../../service/task.service';
+import { FormValidationService } from '../../service/form-validation.service'
 
 @Component({
   selector: 'app-modal-add-todo-item',
@@ -24,12 +24,13 @@ export class ModalAddTodoItemComponent implements OnInit {
     private readonly router: Router,
     private readonly route: ActivatedRoute,
     private readonly taskService: TaskService,
+    private readonly formValidationService: FormValidationService,
   ) {
     this.taskForm = this.fb.group({
       id: [0],
-      name: ['', stringValidator({ required: true, minLength: 3, pattern: /^[a-zA-Z0-9\s]+$/ })],
-      status: ['pending', stringValidator({ required: true })],
-      date: ['', dateValidator({ required: true, allowPast: false })],
+      name: ['', this.formValidationService.stringValidator({ required: true, minLength: 3, pattern: /^[a-zA-Z0-9\s]+$/ })],
+      status: ['pending', this.formValidationService.stringValidator({ required: true })],
+      date: ['', this.formValidationService.dateValidator({ required: true, allowPast: false })],
     });
   }
 

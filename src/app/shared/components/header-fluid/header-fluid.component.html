@@ -29,6 +29,7 @@
           (click)="onItemClick(subItem)"
           (keydown)="onItemKeydown($event, subItem)"
           tabindex="0"
+          [routerLink]="subItem.route"
         >
           {{ subItem.content || '' }}
         </cds-header-item>
@@ -46,5 +47,5 @@
 <div
   *ngIf="showHamburger && hasHamburger"
   class="overlay"
-  (mouseenter)="hasHamburger = false"
+  (mousedown)="hasHamburger = false"
 ></div>
