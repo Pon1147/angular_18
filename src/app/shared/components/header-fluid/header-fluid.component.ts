@@ -60,6 +60,7 @@ export class HeaderFluidComponent implements OnInit {
   onItemClick(item: HeaderItem): void {
     const content = item.content ?? 'unknown';
     console.log(item.isCurrentPage ? `${content} is the current page` : `Navigating to ${content}`);
+   
   }
 
   onItemKeydown(event: KeyboardEvent, item: HeaderItem): void {

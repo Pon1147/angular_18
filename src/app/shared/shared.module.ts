@@ -26,7 +26,6 @@ import {
 } from 'carbon-components-angular';
 import { RouterLink } from '@angular/router';
 
-// import { AppCdsIconService } from './services/cds-icon-service';
 @NgModule({
   imports: [
     HeaderModule,
@@ -84,6 +83,5 @@ import { RouterLink } from '@angular/router';
     RouterLink
     // Add other common export modules here
   ],
-  // providers: [AppCdsIconService],
 })
 export class SharedModule {}
