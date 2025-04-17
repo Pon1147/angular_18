@@ -138,10 +138,7 @@ export class TodolistComponent implements OnInit {
       if (selectedDates && selectedDates.length > 0) {
         const selectedDate = selectedDates[0];
         if (!isNaN(selectedDate.getTime())) {
-          const day = String(selectedDate.getDate()).padStart(2, '0');
-          const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
-          const year = selectedDate.getFullYear();
-          this.currentSelectedDateString = `${day}/${month}/${year}`;
+          this.currentSelectedDateString = this.dateUtilsService.formatDate(selectedDate);
         } else {
           throw new Error('Invalid date selected');
         }
