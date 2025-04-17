@@ -51,3 +51,15 @@
 # X: (13/04/2025)
 ## - refactor[todo]: move filter and pagination logic to TaskService ✔️
 ## - refactor[todo]: 
+
+# X: (15/04/2025)
+## - fix[todolist]: resolve typescript error in pagination event handling ✔️
+## - feat[header]: add custom hamburger with typThMenu and typTimes icon ✔️
+## - fix[header]: fix accessibility for hamburger menu by moving events to button ✔️
+## - feat[header]: add overlay for hamburger menu with z-index 999 ✔️
+## - fix[header]: replace click with mouseenter on overlay to avoid accessibility errors ✔️
+## - feat[todolist]: hide edit button when selected count exceeds 2✔️
+## - fix[todolist]: fix datetime filter with standardized date comparison ✔️
+## - refactor[app]:Check Warning and Error in Console on Devtool + Delete Console.log Excessive ✔️
+## - feat[jest]: config jestjs for testing service ✔️
+
