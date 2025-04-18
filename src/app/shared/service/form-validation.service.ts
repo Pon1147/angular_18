@@ -9,6 +9,9 @@ export class FormValidationService {
   // Validator cho email
   emailValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
+      if(!control?.value){
+        return{invalidEmail: true};
+      }
       const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
       const valid = emailPattern.test(control.value);
       return valid ? null : { invalidEmail: true };
@@ -18,7 +21,10 @@ export class FormValidationService {
   // Validator cho password
   passwordValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      const value = control.value || '';
+      if(!control?.value){
+        return{invalidPassword:true};
+      }
+      const value = control.value ?? '';
       const minLength = value.length >= 9;
       const hasUpperCase = /[A-Z]/.test(value);
       const hasLowerCase = /[a-z]/.test(value);
@@ -59,12 +65,12 @@ export class FormValidationService {
     if (control.hasError('invalidPassword')) {
       const errors = control.errors?.['invalidPassword'];
       const messages: string[] = [];
-      if (!errors.minLength) messages.push('Mật khẩu phải có ít nhất 9 ký tự');
-      if (!errors.hasUpperCase) messages.push('Mật khẩu pAhải có ít nhất 1 chữ cái in hoa');
+      if (!errors.minLength) messages.push('- Mật khẩu phải có ít nhất 9 ký tự');
+      if (!errors.hasUpperCase) messages.push('Mật khẩu phải có ít nhất 1 chữ cái in hoa');
       if (!errors.hasLowerCase) messages.push('Mật khẩu phải có ít nhất 1 chữ cái thường');
       if (!errors.hasNumber) messages.push('Mật khẩu phải có ít nhất 1 số');
       if (!errors.hasSpecialChar) messages.push('Mật khẩu phải có ít nhất 1 ký tự đặc biệt');
-      return messages.join(', ');
+      return messages.join('<br>- ');
     }
     return '';
   }

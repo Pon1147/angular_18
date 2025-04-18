@@ -29,21 +29,21 @@
   align-items: center;
   font-size: 20px; /* Adjust icon size */
 }
-.form-changecolor{
-  background-color: #FEF9DB;
+.form-changecolor {
+  background-color: #fef9db;
 }
 
-.form-header{
+.form-header {
   padding-left: 20px;
   padding-right: 20px;
 }
 
-.form-creat{
+.form-creat {
   margin-bottom: 50px;
   padding-left: 20px;
   padding-right: 20px;
 }
-.form-checkbox{
+.form-checkbox {
   padding: 0 20px;
 }
 
@@ -66,14 +66,19 @@
   overflow: hidden; // Prevent scrollbars if content overflows
 }
 
-.form-login{
+.form-login {
   margin: 0 auto;
   padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-   // align-items: center; // Center content horizontally
+  // align-items: center; // Center content horizontally
   max-width: 600px;
   min-height: 100vh;
+}
 
+.error-message {
+  color: #da1e28;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
 }

@@ -22,10 +22,11 @@
           <input cdsText type="text" placeholder="Example: username@ibm.com" formControlName="email" />
         </cds-text-label>
         <br>
-        <cds-text-label [invalid]="isPasswordInvalid" [invalidText]="passwordInvalidText">
+        <cds-text-label [invalid]="isPasswordInvalid">
           Password
           <input cdsText type="password" placeholder="Enter your password" formControlName="password">
         </cds-text-label>
+        <div *ngIf="isPasswordInvalid" [innerHTML]="passwordInvalidText" class="error-message"></div>
         <br>
         <div class="form-checkbox">
           <!-- Form for User Check the box to remember ID -->
