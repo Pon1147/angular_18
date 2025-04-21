@@ -150,7 +150,10 @@ export class TaskService {
     filteredData: TableItem[][],
   ): void {
     try {
-      if (!tasks || !paginationModel || !tableModel || !filteredData) return;
+      if (!tasks || !paginationModel || !tableModel || !filteredData) {
+        console.error('Invalid parameters provided to navigateToLastPage');
+        return;
+      }
       const totalPages = Math.ceil(tasks.length / (paginationModel.pageLength ?? 1));
       if (tasks.length > initialDataLength) {
         paginationModel.currentPage = totalPages;
@@ -160,7 +163,7 @@ export class TaskService {
       console.error('Error navigating to last page:', error);
     }
   }
-
+  
   selectPage(
     page: number,
     paginationModel: PaginationModel,

@@ -28,7 +28,7 @@ export class FormValidationService {
       const minLength = value.length >= 9;
       const hasUpperCase = /[A-Z]/.test(value);
       const hasLowerCase = /[a-z]/.test(value);
-      const hasNumber = /[0-9]/.test(value);
+      const hasNumber = /\d/.test(value);
       const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value);
 
       const valid = minLength && hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar;
