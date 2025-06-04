@@ -4,11 +4,10 @@ import { CustomNotification } from '../../interface/types/notification.interface
 import { NotificationService } from '../../service/notification.service';
 
 @Component({
-  selector: 'app-notification',
-  standalone: true,
-  imports: [SharedModule],
-  templateUrl: './notification.component.html',
-  styleUrl: './notification.component.scss',
+    selector: 'app-notification',
+    imports: [SharedModule],
+    templateUrl: './notification.component.html',
+    styleUrl: './notification.component.scss'
 })
 export class NotificationComponent implements OnInit {
   notifications: CustomNotification[] = [];

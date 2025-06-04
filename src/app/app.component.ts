@@ -7,12 +7,10 @@ import { HeaderFluidComponent } from "./shared/components/header-fluid/header-fl
 import { filter } from "rxjs";
 
 @Component({
-  selector: "app-root",
-  standalone: true,
-  styleUrls: ["./app.component.scss"],
-  templateUrl: "./app.component.html",
-  imports: [RouterOutlet, NotificationComponent, SharedModule, HeaderFluidComponent],
-
+    selector: "app-root",
+    styleUrls: ["./app.component.scss"],
+    templateUrl: "./app.component.html",
+    imports: [RouterOutlet, NotificationComponent, SharedModule, HeaderFluidComponent]
 })
 export class AppComponent {
 

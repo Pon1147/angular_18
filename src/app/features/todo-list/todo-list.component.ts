@@ -15,12 +15,11 @@ import { TaskService } from '../../shared/service/task.service';
 import { SharedModule } from '../../shared/shared.module';
 
 @Component({
-  selector: 'app-todolist',
-  standalone: true,
-  imports: [SharedModule, RouterOutlet, PaginationModule],
-  viewProviders: [provideIcons({ typFilter })],
-  templateUrl: './todo-list.component.html',
-  styleUrls: ['./todo-list.component.scss'],
+    selector: 'app-todolist',
+    imports: [SharedModule, RouterOutlet, PaginationModule],
+    viewProviders: [provideIcons({ typFilter })],
+    templateUrl: './todo-list.component.html',
+    styleUrls: ['./todo-list.component.scss']
 })
 export class TodolistComponent implements OnInit {
   title = 'Todo List !!!';

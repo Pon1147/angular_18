@@ -8,11 +8,10 @@ import { TaskService } from '../../service/task.service';
 import { FormValidationService } from '../../service/form-validation.service'
 
 @Component({
-  selector: 'app-modal-add-todo-item',
-  standalone: true,
-  imports: [SharedModule],
-  templateUrl: './modal-add-todo-item.component.html',
-  styleUrls: ['./modal-add-todo-item.component.scss'],
+    selector: 'app-modal-add-todo-item',
+    imports: [SharedModule],
+    templateUrl: './modal-add-todo-item.component.html',
+    styleUrls: ['./modal-add-todo-item.component.scss']
 })
 export class ModalAddTodoItemComponent implements OnInit {
   open = true;

@@ -13,12 +13,11 @@ import { typThMenu, typTimes } from '@ng-icons/typicons';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 
 @Component({
-  selector: 'app-header-fluid',
-  standalone: true,
-  imports: [SharedModule, NgIcon],
-  templateUrl: './header-fluid.component.html',
-  styleUrls: ['./header-fluid.component.scss'],
-  viewProviders: [provideIcons({ typThMenu, typTimes })],
+    selector: 'app-header-fluid',
+    imports: [SharedModule, NgIcon],
+    templateUrl: './header-fluid.component.html',
+    styleUrls: ['./header-fluid.component.scss'],
+    viewProviders: [provideIcons({ typThMenu, typTimes })]
 })
 export class HeaderFluidComponent implements OnInit {
   @Input() headerItems: HeaderItem[] = [];

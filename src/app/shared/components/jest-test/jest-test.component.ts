@@ -2,11 +2,10 @@ import { Component } from '@angular/core';
 import { SharedModule } from '../../shared.module';
 
 @Component({
-  selector: 'app-jest-test',
-  standalone: true,
-  imports: [SharedModule],
-  templateUrl: './jest-test.component.html',
-  styleUrl: './jest-test.component.scss'
+    selector: 'app-jest-test',
+    imports: [SharedModule],
+    templateUrl: './jest-test.component.html',
+    styleUrl: './jest-test.component.scss'
 })
 export class JestTestComponent {
   type = `submit`;
