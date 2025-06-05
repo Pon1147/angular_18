@@ -60,7 +60,7 @@ export class FormValidationService {
       const errors = control.errors?.['invalidPassword'];
       const messages: string[] = [];
       if (!errors.minLength) messages.push('Mật khẩu phải có ít nhất 9 ký tự');
-      if (!errors.hasUpperCase) messages.push('Mật khẩu pAhải có ít nhất 1 chữ cái in hoa');
+      if (!errors.hasUpperCase) messages.push('Mật khẩu phải có ít nhất 1 chữ cái in hoa');
       if (!errors.hasLowerCase) messages.push('Mật khẩu phải có ít nhất 1 chữ cái thường');
       if (!errors.hasNumber) messages.push('Mật khẩu phải có ít nhất 1 số');
       if (!errors.hasSpecialChar) messages.push('Mật khẩu phải có ít nhất 1 ký tự đặc biệt');
@@ -90,7 +90,7 @@ export class FormValidationService {
       }
       const trimmedValue = value ? value.trim() : '';
       if (options.minLength && trimmedValue.length < options.minLength) {
-        return { minLength: { message: `Dộ dài tối thiểu là ${options.minLength} ký tự` } };
+        return { minLength: { message: `Độ dài tối thiểu là ${options.minLength} ký tự` } };
       }
       if (options.maxLength && trimmedValue.length > options.maxLength) {
         return { maxLength: { message: `Độ dài tối đa là ${options.maxLength} ký tự` } };
