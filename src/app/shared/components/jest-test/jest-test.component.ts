@@ -5,7 +5,7 @@ import { SharedModule } from '../../shared.module';
     selector: 'app-jest-test',
     imports: [SharedModule],
     templateUrl: './jest-test.component.html',
-    styleUrl: './jest-test.component.scss'
+    styleUrls: ['./jest-test.component.scss']
 })
 export class JestTestComponent {
   type = `submit`;

@@ -20,7 +20,7 @@ import { NotificationService } from '../../shared/service/notification.service';
     selector: 'app-login-ui',
     imports: [SharedModule, NgIcon, ReactiveFormsModule, NotificationComponent],
     templateUrl: './login-ui.component.html',
-    styleUrl: './login-ui.component.scss',
+    styleUrls: ['./login-ui.component.scss'],
     viewProviders: [provideIcons({ typInfoLarge, typArrowRightThick })]
 })
 export class LoginUIComponent implements OnInit {

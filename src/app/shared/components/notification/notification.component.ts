@@ -7,7 +7,7 @@ import { NotificationService } from '../../service/notification.service';
     selector: 'app-notification',
     imports: [SharedModule],
     templateUrl: './notification.component.html',
-    styleUrl: './notification.component.scss'
+    styleUrls: ['./notification.component.scss']
 })
 export class NotificationComponent implements OnInit {
   notifications: CustomNotification[] = [];
