@@ -85,7 +85,7 @@ export class FormValidationService {
       if (options.required && (value == null || value == undefined || value === '')) {
         return { require: { message: 'Trường này là bắt buộc !!!' } };
       }
-      if (value == null && value !== undefined && typeof value !== 'string') {
+      if (value !== null && value !== undefined && typeof value !== 'string') {
         return { type: { message: 'Giá trị phải là kiểu chuỗi.' } };
       }
       const trimmedValue = value ? value.trim() : '';

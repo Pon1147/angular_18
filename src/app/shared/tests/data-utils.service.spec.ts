@@ -52,7 +52,7 @@ describe('DateUtilsService', () => {
   });
 
   it('should throw  error for invalid date input',()=>{
-    expect(() => service.formatDate(null as any)).toThrow();
-    expect(()=> service.formatDate(undefined as any)).toThrow();
+    expect(() => service.formatDate(null as unknown as Date)).toThrow();
+    expect(()=> service.formatDate(undefined as unknown as Date)).toThrow();
   })
 });

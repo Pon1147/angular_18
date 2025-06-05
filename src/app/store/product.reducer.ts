@@ -13,8 +13,11 @@ export const initialState: ProductState = {
 
 export const productReducer = createReducer(
   initialState,
-  on(loadProductsSuccess, (state, { products }) => ({
-    ...state,
-    products,
-  }))
+  on(
+    loadProductsSuccess,
+    (state, { products }): ProductState => ({
+      ...state,
+      products,
+    })
+  )
 );
