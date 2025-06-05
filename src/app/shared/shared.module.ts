@@ -25,6 +25,8 @@ import {
   HeaderModule,
 } from 'carbon-components-angular';
 import { RouterLink } from '@angular/router';
+import { BrowserModule } from '@angular/platform-browser';
+
 
 @NgModule({
   imports: [
@@ -52,7 +54,8 @@ import { RouterLink } from '@angular/router';
     LayerModule,
     RadioModule,
     PopoverModule,
-    RouterLink
+    RouterLink,
+    BrowserModule
     // Add other common import modules hereFormsModule
   ],
   exports: [
@@ -80,7 +83,8 @@ import { RouterLink } from '@angular/router';
     LayerModule,
     RadioModule,
     PopoverModule,
-    RouterLink
+    RouterLink,
+    BrowserModule
     // Add other common export modules here
   ],
 })

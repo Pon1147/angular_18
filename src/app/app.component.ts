@@ -5,6 +5,8 @@ import { NotificationComponent } from "./shared/components/notification/notifica
 import { SharedModule } from "./shared/shared.module";
 import { HeaderFluidComponent } from "./shared/components/header-fluid/header-fluid.component";
 import { filter } from "rxjs";
+import { productReducer } from "./store/product.reducer";
+productReducer
 
 @Component({
     selector: "app-root",

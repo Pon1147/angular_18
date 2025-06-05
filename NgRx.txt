@@ -1,0 +1,36 @@
+1. Ngrx là gì ?
+- Ngrx là một framewrok giúp ta quản lý trạng thái (state) của ứng dụng Angular theo cách có tổ chứ,
+rõ ràng, và dễ cảm xúc.
+- Nó dựa trên mô hình Redux kết hợp với sức mạnh của RxJS (các Observable trong Angular).
+
+2. Tại sao cần quản lý trạng thái?
+- Đối với 1 project lớn có nhiều component, nhiều dữ liệu chia sẽ với nhau, cập nhật qua lại.
+VD: giỏ hàng mua sắm, thông tin user đăng nhập, bộ lọc tìm kiếm.
+- Nếu không quản lý tốt, các component sẽ khó đồng bộ, dẫn đến dữ liệu không nhất quán, khó debug.
+- Các state đó điều được giữ ở một chỗ gọi là store và các component lấy dữ liệu  từ store này
+tránh xung đột và dễ kiểm soát.
+
+3. Thành phần chính trong NgRx Store
+Có 4 parts:
+3.1 Store:
+Là nơi lưu trữ trạng thái (state) toàn bộ ứng dụng của bạn.
+3.2 State:
+Là dữ liệu hiện tải của ứng dụng (vd: danh sách sản phẩm, trạng thái đăng nhập)
+3.3 Action:
+Là các sự kiện hoặc "lệnh" để yêu cầu thay đổi trạng thái, vd:"thêm sản phẩm vào giỏ hàng",
+"Đăng nhập thành công".
+3.4 Reducer
+Là hàm thuần (pure function) nhận action và state hiện tại, trả về state mới (đã được cập nhật).
+Nói dễ hiểu: reducer là nơi xử lý logic thay đổi dữ liệu dựa trên action.
+
+4. Luồng dữ liệu trong ngRx
+4.1 Component hoặc service gửi một Action (ví dụ: "Thêm sản phẩm")
+4.2 Reducer nhận action và state hiện tại, trả về state mới.
+4.3 Store cập nhật state mới và phát ra cho tất cả component đang lắng nghe.
+4.4 Component nhận dữ liệu mới từ Store và cập nhật UI.
+
+5. Vì sao dùng RxJS (Observable)?
+- Store cung cấp dữ liệu dưới dạng Observable, giúp dễ dàng lắng nghe thay đổi dữ liệu (subscribe).
+theo cách bất đồng bộ
+- Bạn có thể kết hợp với các thao tác stream khác của RxJS để xử lý dữ liệu linh hoạt hơn.
+
