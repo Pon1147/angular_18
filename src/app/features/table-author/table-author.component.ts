@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
     selector: 'app-table-author',
     imports: [],
     templateUrl: './table-author.component.html',
-    styleUrl: './table-author.component.scss'
+    styleUrls: ['./table-author.component.scss']
 })
 export class TableAuthorComponent {
 
